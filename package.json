@@ -1,0 +1,27 @@
+{
+  "name": "sourcecode",
+  "version": "1.0.0",
+  "description": "Source Code for my project for the course 1dv430",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1dv430/el223na-project.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mongoDB",
+    "CRUD",
+    "https",
+    "videosharing"
+  ],
+  "author": "Edvin Larsson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/1dv430/el223na-project/issues"
+  },
+  "homepage": "https://github.com/1dv430/el223na-project#readme"
+}
