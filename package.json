@@ -4,6 +4,8 @@
   "description": "Source Code for my project for the course 1dv430",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "nodemon": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,5 +25,22 @@
   "bugs": {
     "url": "https://github.com/1dv430/el223na-project/issues"
   },
-  "homepage": "https://github.com/1dv430/el223na-project#readme"
+  "homepage": "https://github.com/1dv430/el223na-project#readme",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.14.2",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
+    "helmet": "^3.12.0",
+    "http": "0.0.0",
+    "https": "^1.0.0",
+    "mongoose": "^5.0.4",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "standard": "^10.0.3",
+    "nodemon": "^1.14.12"
+  }
 }
