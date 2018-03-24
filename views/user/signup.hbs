@@ -1,0 +1,11 @@
+<h3>Sign up here</h3>
+<form action="/signup" method="POST">
+<input type="hidden" name="_csrf" value="{{csrfToken}}">
+Username: 
+<input type="text" name="username"><br>
+Password:
+<input type="password" name="password"><br>
+Confirm password: 
+<input type="password" name="confirmPassword"><br>
+<button>Sign up</button>
+</form>

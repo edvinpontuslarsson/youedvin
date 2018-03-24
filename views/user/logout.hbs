@@ -1,0 +1,6 @@
+<h3>Are you sure you want to log out?</h3>
+<form action="/logout" method="POST">
+<input type="hidden" name="_csrf" value="{{csrfToken}}">
+<button>Yes.</button>
+</form>
+<a href="/"><button>No, please keep me logged in!</button></a>

@@ -11,7 +11,7 @@
  * @requires body-parser
  * @requires dotenv
  * @requires config/dbConfig
- * @requires routes/home/home
+ * @requires routes/
  */
 
 'use strict'
@@ -75,8 +75,18 @@ const sessionOptions = {
 }
 app.use(session(sessionOptions))
 
+// For flash messages
+app.use((req, res, next) => {
+  res.locals.flash = req.session.flash
+  delete req.session.flash
+  next()
+})
+
 // loads routes as "mini-apps"
 app.use('/', require('./routes/home/home'))
+app.use('/', require('./routes/user/logIn'))
+app.use('/', require('./routes/user/logOut'))
+app.use('/', require('./routes/user/signUp'))
 
 /**
  * Defines route for 404 not found
