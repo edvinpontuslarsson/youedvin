@@ -14,7 +14,7 @@ const router = require('express').Router()
 
 router.route('/')
     .get(async (req, res) => {
-        let knownUser = req.session.username
+        const knownUser = req.session.username
 
         if (!knownUser) {
             return res.render('home/index')

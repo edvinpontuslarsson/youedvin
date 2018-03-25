@@ -26,8 +26,8 @@ router.route('/login')
     })
     // checks for existing user and if the password is correct
     .post(csrfProtection, (req, res, next) => {
-      let username = req.body.username
-      let password = req.body.password
+      const username = req.body.username
+      const password = req.body.password
 
       User.findOne({
         username: username

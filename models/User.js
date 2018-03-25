@@ -14,7 +14,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
 // Defines schema
-let userSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true }
 })
@@ -28,7 +28,7 @@ userSchema.path('password').validate((password) => {
  * Salts and hashes password before saving it to DB
  */
 userSchema.pre('save', function (next) {
-  let user = this
+  const user = this
   bcrypt.genSalt(10, (err, salt) => {
     if (err) {
       return next(err)
@@ -58,6 +58,6 @@ userSchema.methods.comparePassword = function (candidatePassword, callback) {
 }
 
 // Creates the model object
-let User = mongoose.model('User', userSchema)
+const User = mongoose.model('User', userSchema)
 
 module.exports = User

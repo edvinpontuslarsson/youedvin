@@ -61,18 +61,30 @@ app.use(bodyParser.urlencoded({
 // The framework should look in the folder "public" for static resources
 app.use(express.static(path.join(__dirname, 'public')))
 
-// Set up for session cookie
+// Settings for session cookie
 const sessionOptions = {
   name: process.env.CookieName,
   secret: process.env.CookieSecret,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false,
     httpOnly: true,
     maxAge: 1000 * 60 * 60 * 24
   }
 }
+
+// maybe not necessary though, if https happens with nginx
+
+/**
+ * Settings for the cookie in production mode
+ * Inspired by this demo code in the course 1dv023:
+ * https://github.com/1dv023/exercise-pure-approval-SOLUTION
+ *//*
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1)
+  sessionOptions.cookie.secure = true
+}*/
+
 app.use(session(sessionOptions))
 
 // For flash messages

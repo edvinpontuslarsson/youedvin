@@ -32,11 +32,11 @@ router.route('/signup')
      * Saves user information to DB
      */
     .post(csrfProtection, async (req, res, next) => {
-        let username = req.body.username
-        let password = req.body.password
-        let confirmPassword = req.body.confirmPassword
+        const username = req.body.username
+        const password = req.body.password
+        const confirmPassword = req.body.confirmPassword
   
-        let ifAlreadyExists = await User.findOne({
+        const ifAlreadyExists = await User.findOne({
           username: username
         }, (error) => {
           if (error) {
