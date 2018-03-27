@@ -1,7 +1,7 @@
 /**
  * @author Edvin Larsson
  *
- * Starting point of the application.
+ * Starting point of the application
  *
  * @requires express
  * @requires express-session
@@ -27,7 +27,7 @@ const path = require('path')
 const bodyParser = require('body-parser')
 
 const app = express()
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 8080
 
 // helmet, for protective HTTP headers
 app.use(helmet())
