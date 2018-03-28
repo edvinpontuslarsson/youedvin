@@ -1,0 +1,17 @@
+<h3>Upload Video!</h3>
+<form enctype="multipart/form-data" action="/upload" method="post">
+<input type="hidden" name="_csrf" value="{{csrfToken}}">
+<p><label for="title">Title:</label>
+<input type="text" name="title" required></p>
+<p>
+    <label for="video">File upload:</label>
+<input type="file" required accept="video/*" name="video">
+</p>
+
+<p>
+<label for="description">Description:</label><br>
+<textarea name="description" cols="30" rows="10" value="{{value}}"></textarea>
+</p>
+
+<button>Upload</button>
+</form>

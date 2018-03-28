@@ -1,8 +1,8 @@
 /**
- * @module user.js
+ * @module user
  * @author Edvin Larsson
  *
- * Route signing up
+ * Route for signing up
  *
  * @requires express
  * @requires User

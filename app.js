@@ -73,18 +73,6 @@ const sessionOptions = {
   }
 }
 
-// maybe not necessary though, if https happens with nginx
-
-/**
- * Settings for the cookie in production mode
- * Inspired by this demo code in the course 1dv023:
- * https://github.com/1dv023/exercise-pure-approval-SOLUTION
- *//*
-if (app.get('env') === 'production') {
-  app.set('trust proxy', 1)
-  sessionOptions.cookie.secure = true
-}*/
-
 app.use(session(sessionOptions))
 
 // For flash messages
@@ -99,6 +87,7 @@ app.use('/', require('./routes/home/home'))
 app.use('/', require('./routes/user/logIn'))
 app.use('/', require('./routes/user/logOut'))
 app.use('/', require('./routes/user/signUp'))
+app.use('/', require('./routes/video/upload'))
 
 /**
  * Defines route for 404 not found
