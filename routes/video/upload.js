@@ -12,6 +12,7 @@
 'use strict'
 
 const router = require('express').Router()
+// const Video = require('../../models/Video')
 const csrf = require('csurf')
 const csrfProtection = csrf()
 
