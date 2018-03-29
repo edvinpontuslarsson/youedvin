@@ -8,10 +8,12 @@
  * @requires Video
  * @requires csurf
  * @requires formidable
+ * @requires fs
  */
 
 'use strict'
 
+const fs = require('fs')
 const router = require('express').Router()
 // const Video = require('../../models/Video')
 
@@ -47,13 +49,13 @@ router.route('/upload')
                 if (err) {
                     req.session.flash = {
                         type: 'error',
-                        text: 'Something went wrong'
+                        text: 'Something went wrong, please try again!'
                     }
                     res.redirect('/upload') 
                 }
 
-            console.log(req.fields)
-            console.log(req.files)
+            console.log(fields)
+            console.log(file)
             })
         }
     })
