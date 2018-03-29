@@ -8,6 +8,7 @@
  * @requires Video
  * @requires csurf
  * @requires formidable
+ * @requires gridfs-stream
  * @requires fs
  */
 
@@ -15,8 +16,8 @@
 
 const fs = require('fs')
 const router = require('express').Router()
-// const Video = require('../../models/Video')
-
+const Video = require('../../models/Video')
+const Grid = require('gridfs-stream')
 const csrf = require('csurf')
 const csrfProtection = csrf()
 
@@ -54,8 +55,25 @@ router.route('/upload')
                     res.redirect('/upload') 
                 }
 
-            console.log(fields)
+            console.log(fields.title)
+            console.log(fields.description)
             console.log(file)
+
+            const video = new Video({
+                title: fields.title,
+                description: fields.description,
+                createdBy: req.session.username,
+                creatorId: req.session.userid
+            })
+
+            await video.save()
+
+            req.session.flash = {
+                type: 'success',
+                text: 'The Video has been succesfully uploaded!'
+              }
+
+            res.redirect('.')
             })
         }
     })
