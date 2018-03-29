@@ -12,10 +12,7 @@
 
 'use strict'
 
-const fs = require('fs')
 const mongoose = require('mongoose')
-const crypto = require('crypto')
-const Grid = require('gridfs-stream')
 
 const videoSchema = mongoose.Schema({
     title: {
