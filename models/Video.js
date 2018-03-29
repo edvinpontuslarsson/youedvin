@@ -6,7 +6,6 @@
  *
  * @requires fs
  * @requires mongoose
- * @requires gridfs-stream
  * @requires crypto
  */
 

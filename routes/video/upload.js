@@ -17,19 +17,29 @@
 
 const mongoose = require('mongoose')
 const fs = require('fs')
+const path = require('path')
 const crypto = require('crypto')
 const router = require('express').Router()
-const Video = require('../../models/Video')
+const Lib = require('../../lib/Lib')
+const lib = new Lib()
+
+// const Video = require('../../models/Video')
+
+const multer = require('multer')
+
+// see more in this module
+const GridFsStorage = require('multer-gridfs-storage')
+
+const Grid = require('gridfs-stream')
+const connection = mongoose.connection
+
 const csrf = require('csurf')
 const csrfProtection = csrf()
 
+/*
 const formidable = require('formidable')
 const form = formidable.IncomingForm()
-
-const Grid = require('gridfs-stream')
-Grid.mongo = mongoose.mongo
-const connection = mongoose.connection
-const gfs = Grid(connection.db, mongoose.mongo)
+*/
 
 router.route('/upload')
     // renders upload form, only for logged in users
@@ -44,46 +54,31 @@ router.route('/upload')
         }
     })
 
-    // saves video upload in DB
-    // Inspired by pages 95-96 in the book "Web Development with Node & Express"
-    // by Ethan Brown
+    // saves video to DB, only for logged in users
     .post(csrfProtection, (req, res) => {
         if (!req.session.username) {
             res.status(403)
             res.render('error/403')
         } else {
-            
-            form.parse(req, async (err, fields, file) => {
-                if (err) {
-                    req.session.flash = {
-                        type: 'error',
-                        text: 'Something went wrong, please try again!'
-                    }
-                    res.redirect('/upload') 
+            // inspired by this demo: https://www.youtube.com/watch?v=3f5Q9wDePzY
+            const gfs = Grid(connection.db, mongoose.mongo)
+            gfs.collection('video')
+
+            // using this similarly to their documentation:
+            // https://www.npmjs.com/package/multer-gridfs-storage
+            const storage = new GridFsStorage({
+                url: process.env.dbURL,
+                file: (req, file) => {
+                    return new Promise((res, rej) => {
+
+                        // for security reasons, I change the name of the file
+                        const fileName = lib.randomNrs() + 
+                        path.extname(file.originalname)
+
+                        
+                    })
                 }
-
-            /*
-            console.log(fields.title)
-            console.log(fields.description)*/
-            console.log(file)
-            
-
-            const writeStream = gfs.createWriteStream({
-                // I can in Lib.func generate random name myself
-                // later, see Traversy also for extName
-                filename: 'test.mp4'
             })
-
-            fs.createReadStream(file).pipe(writeStream)
-
-            const video = new Video({
-                title: fields.title,
-                description: fields.description,
-                createdBy: req.session.username,
-                creatorId: req.session.userid
-            })
-
-            await video.save()
 
             req.session.flash = {
                 type: 'success',
@@ -91,7 +86,6 @@ router.route('/upload')
               }
 
             res.redirect('.')
-            })
         }
     })
 
