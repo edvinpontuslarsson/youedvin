@@ -33,6 +33,14 @@ const multer = require('multer')
 // see more in this module
 const GridFsStorage = require('multer-gridfs-storage')
 
+/**
+ * See this link for a module to save in schema
+ * https://www.npmjs.com/package/mongoose-gridfs
+ * "mongoose-gridfs wrap gridfs-stream to provide valid mongoose schema and model to use with MongoDB GridFS.
+
+    Each instance of mongoose-gridfs is binded to a specific GridFS collection and mongoose model or schema by using options."
+ */
+
 const Grid = require('gridfs-stream')
 const connection = mongoose.connection
 
@@ -81,6 +89,7 @@ router.route('/upload')
     })
 
     // saves video to DB, only for logged in users
+    // do I have that control now???
     .post(csrfProtection, upload.single('video'), (req, res) => {
         if (!req.session.username) {
             res.status(403)
