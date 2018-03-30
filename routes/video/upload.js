@@ -39,7 +39,9 @@ const GridFsStorage = require('multer-gridfs-storage')
  * "mongoose-gridfs wrap gridfs-stream to provide valid mongoose schema and model to use with MongoDB GridFS.
 
     Each instance of mongoose-gridfs is binded to a specific GridFS collection and mongoose model or schema by using options."
- */
+ 
+    http://blog.robertonodi.me/managing-files-with-node-js-and-mongodb-gridfs/
+    */
 
 const Grid = require('gridfs-stream')
 const connection = mongoose.connection
@@ -58,15 +60,17 @@ const storage = new GridFsStorage({
     url: process.env.dbURL,
     file: (req, file) => {
         return new Promise((resolve, reject) => {
-            console.log(nrString + path.extname(file.originalname))
-            // for security reasons, I change the name of the file
-            // const fileName = nrString + path.extname(file.originalname)
-
-            const fileInfo = {
-                fileName: nrString + path.extname(file.originalname),
-                bucketName: 'videoData'
-            }
-            resolve(fileInfo)
+            crypto.randomBytes(16, (err, buf) => {
+              if (err) {
+                return reject(err)
+              }
+              const filename = buf.toString('hex') + path.extname(file.originalname)
+              const fileInfo = {
+                filename: filename,
+                bucketName: 'uploads'
+              }
+              resolve(fileInfo)
+            })
         })
     }
 })

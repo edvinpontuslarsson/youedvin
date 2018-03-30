@@ -11,6 +11,7 @@
 'use strict'
 
 const router = require('express').Router()
+const mongoose = require('mongoose')
 
 router.route('/')
     .get(async (req, res) => {
