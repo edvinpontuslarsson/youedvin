@@ -15,13 +15,13 @@ const mongoose = require('mongoose')
 
 router.route('/')
     .get(async (req, res) => {
-        const knownUser = req.session.username
+      const knownUser = req.session.username
 
-        if (!knownUser) {
-            return res.render('home/index')
-        } else {
-            return res.render('home/index', { knownUser })
-        }        
+      if (!knownUser) {
+        return res.render('home/index')
+      } else {
+        return res.render('home/index', { knownUser })
+      }
     })
 
 module.exports = router

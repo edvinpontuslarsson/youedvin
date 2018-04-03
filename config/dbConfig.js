@@ -1,6 +1,6 @@
 /**
  * Database configuration with Mongoose
- * 
+ *
  * @author Edvin Larsson
  */
 
@@ -15,22 +15,22 @@ require('dotenv').config()
  * https://github.com/1dv023/syllabus/tree/master/lectures/03/demo
  */
 module.exports = {
-    dbConnect: () => {
-        const db = mongoose.connection
+  dbConnect: () => {
+    const db = mongoose.connection
 
-        db.on('error', console.error.bind(console, 'connection error:'))
-        
-        db.once('open', () => {
-            console.log('Connected to DB')
-        })
-        
-        process.on('SIGINT', () => {
-            db.close(() => {
-                console.log('DB connection closed')
-                process.exit(0)
-            })
-        })
-        
-        mongoose.connect(process.env.dbURL)
-    }  
+    db.on('error', console.error.bind(console, 'connection error:'))
+
+    db.once('open', () => {
+      console.log('Connected to DB')
+    })
+
+    process.on('SIGINT', () => {
+      db.close(() => {
+        console.log('DB connection closed')
+        process.exit(0)
+      })
+    })
+
+    mongoose.connect(process.env.dbURL)
+  }
 }
