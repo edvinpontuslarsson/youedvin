@@ -61,14 +61,27 @@ router.route('/upload')
         res.render('error/403')
       } else {
         const video = req.files.video
+        const extName = path.extname(video.name)
 
-        const fileName = lib.randomNrs() + path.extname(video.name)
+        if (okayFormat(extName) === false) {
+          req.session.flash = {
+            type: 'error',
+            text: 'Unsupported file format'
+          }
+          res.redirect('/upload')
+        } else {
+        const fileName = lib.randomNrs() + extName
 
-        console.log(fileName)
+        const writeStream = gfs.createWriteStream({
+              filename: fileName,
+              content_type: video.mimetype
+        })
 
-        // const writeStream = gfs.createWriteStream({
-          
-        //})
+        // inspired by method used here:
+        // https://github.com/houssem-yahiaoui/fileupload-nodejs/blob/master/routings/routing.js
+        writeStream.write(video.data, () => {
+          writeStream.end()
+        })
 
         req.session.flash = {
           type: 'success',
@@ -76,7 +89,31 @@ router.route('/upload')
         }
 
         res.redirect('.')
+        }
       }
     })
+
+/**
+ * Checks file format
+ * https://en.wikipedia.org/wiki/HTML5_video#Supported_video_and_audio_formats
+ * @param {any} extName - filename extension
+ */
+function okayFormat (extName) {
+  let answer = false
+
+    if (extName === '.webm' || 
+        extName === '.mp4' || 
+        extName === '.m4a' || 
+        extName === '.m4p' || 
+        extName === '.m4b' || 
+        extName === '.m4r' || 
+        extName === '.m4v' || 
+        extName === '.ogv' || 
+        extName === '.ogg') {
+        answer = true
+    }
+
+  return answer
+}
 
 module.exports = router
