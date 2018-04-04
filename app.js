@@ -25,6 +25,7 @@ const exphbs = require('express-handlebars')
 const helmet = require('helmet')
 const path = require('path')
 const bodyParser = require('body-parser')
+const busboyBodyParser = require('busboy-body-parser')
 
 const app = express()
 const port = process.env.PORT || 8080
@@ -53,9 +54,14 @@ app.engine('.hbs', exphbs({
 }))
 app.set('view engine', '.hbs')
 
-// Adds suport for HTML
+// Parses incoming text data
 app.use(bodyParser.urlencoded({
   extended: true
+}))
+
+// Parses incoming files
+app.use(busboyBodyParser({
+  limit: '120mb'
 }))
 
 // The framework should look in the folder "public" for static resources
