@@ -18,61 +18,27 @@
 const mongoose = require('mongoose')
 const fs = require('fs')
 const path = require('path')
-const crypto = require('crypto')
+const Grid = require('gridfs-stream')
 const router = require('express').Router()
 const Lib = require('../../lib/Lib')
 const lib = new Lib()
 
 const csrf = require('csurf')
 const csrfProtection = csrf()
+const Video = require('../../models/Video')
 
-// const Video = require('../../models/Video')
-
-const multer = require('multer')
-
-// see more in this module
-const GridFsStorage = require('multer-gridfs-storage')
-
-// see here: https://github.com/aheckmann/gridfs-stream
-
+// gridfs-stream documentation: https://github.com/aheckmann/gridfs-stream
 // has remove method
 
-// also: https://www.youtube.com/watch?v=pXHOF4GWuZQ&t=1s
-
-const Grid = require('gridfs-stream')
 const connection = mongoose.connection
+Grid.mongo = mongoose.mongo
+let gfs
 
-// using this similarly to their documentation:
-// https://www.npmjs.com/package/multer-gridfs-storage
+// inspired by method used here:
+// https://github.com/houssem-yahiaoui/fileupload-nodejs/blob/master/routings/routing.js
 connection.once('open', () => {
-  const gfs = Grid(connection.db, mongoose.mongo)
-  gfs.collection('videoData')
+  gfs = Grid(connection.db)
   console.log('Ready for video uploads')
-})
-
-const nrString = lib.randomNrs()
-
-const storage = new GridFsStorage({
-  url: process.env.dbURL,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err)
-        }
-        const filename = buf.toString('hex') + path.extname(file.originalname)
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'uploads'
-        }
-        resolve(fileInfo)
-      })
-    })
-  }
-})
-
-const upload = multer({
-  storage
 })
 
 router.route('/upload')
@@ -89,16 +55,20 @@ router.route('/upload')
     })
 
     // saves video to DB, only for logged in users
-    // do I have that control now???
-    // maybe just ask on stack overflow how I can check that
-    // try with postman to post unauthorized
-    // but this can wait
-    .post(csrfProtection, upload.single('video'), (req, res) => {
+    .post(csrfProtection, (req, res) => {
       if (!req.session.username) {
         res.status(403)
         res.render('error/403')
       } else {
-        console.log(req.file)
+        const video = req.files.video
+
+        const fileName = lib.randomNrs() + path.extname(video.name)
+
+        console.log(fileName)
+
+        // const writeStream = gfs.createWriteStream({
+          
+        //})
 
         req.session.flash = {
           type: 'success',

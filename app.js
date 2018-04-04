@@ -122,8 +122,9 @@ app.listen(port, () => {
   console.log('The application is now running on port %s', port)
 })
 
+// for testing purposes
 /*
-// for testing purposes mainly
 const Lib = require('./lib/Lib')
 const lib = new Lib()
+console.log(lib.randomNrs())
 */
