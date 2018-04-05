@@ -15,17 +15,16 @@
 
 'use strict'
 
+const router = require('express').Router()
+const Video = require('../../models/Video')
 const mongoose = require('mongoose')
-const fs = require('fs')
 const path = require('path')
 const Grid = require('gridfs-stream')
-const router = require('express').Router()
 const Lib = require('../../lib/Lib')
 const lib = new Lib()
 
 const csrf = require('csurf')
 const csrfProtection = csrf()
-const Video = require('../../models/Video')
 
 // gridfs-stream documentation: https://github.com/aheckmann/gridfs-stream
 // has remove method
@@ -55,13 +54,13 @@ router.route('/upload')
     })
 
     // saves video to DB, only for logged in users
-    .post(csrfProtection, (req, res) => {
+    .post(csrfProtection, async (req, res) => {
       if (!req.session.username) {
         res.status(403)
         res.render('error/403')
       } else {
-        const video = req.files.video
-        const extName = path.extname(video.name)
+        const file = req.files.video
+        const extName = path.extname(file.name)
 
         if (okayFormat(extName) === false) {
           req.session.flash = {
@@ -70,25 +69,48 @@ router.route('/upload')
           }
           res.redirect('/upload')
         } else {
-        const fileName = lib.randomNrs() + extName
+          const fileNick = lib.randomNrs()
+          const fileName = fileNick + extName
 
-        const writeStream = gfs.createWriteStream({
-              filename: fileName,
-              content_type: video.mimetype
-        })
+          const video = new Video({
+            fileNick: fileNick,
+            fileName: fileName,
+            title: req.body.title,
+            description: req.body.description,
+            createdBy: req.session.username,
+            creatorId: req.session.userid
+          })
+
+          // saves video info in separate schema
+          await video.save()
+
+          // changed from filename to fileName
+          const writeStream = gfs.createWriteStream({
+            fileName: fileName,
+            content_type: file.mimetype
+          })
 
         // inspired by method used here:
         // https://github.com/houssem-yahiaoui/fileupload-nodejs/blob/master/routings/routing.js
-        writeStream.write(video.data, () => {
-          writeStream.end()
-        })
+          writeStream.on('close', (video) => {
+            if (video) {
+              req.session.flash = {
+                type: 'success',
+                text: 'The Video has been succesfully uploaded!'
+              }
+            } else {
+              req.session.flash = {
+                type: 'error',
+                text: 'The Video upload failed :/'
+              }
+            }
+          })
 
-        req.session.flash = {
-          type: 'success',
-          text: 'The Video has been succesfully uploaded!'
-        }
+          writeStream.write(file.data, () => {
+            writeStream.end()
+          })
 
-        res.redirect('.')
+          res.redirect('.')
         }
       }
     })
@@ -101,17 +123,17 @@ router.route('/upload')
 function okayFormat (extName) {
   let answer = false
 
-    if (extName === '.webm' || 
-        extName === '.mp4' || 
-        extName === '.m4a' || 
-        extName === '.m4p' || 
-        extName === '.m4b' || 
-        extName === '.m4r' || 
-        extName === '.m4v' || 
-        extName === '.ogv' || 
+  if (extName === '.webm' ||
+        extName === '.mp4' ||
+        extName === '.m4a' ||
+        extName === '.m4p' ||
+        extName === '.m4b' ||
+        extName === '.m4r' ||
+        extName === '.m4v' ||
+        extName === '.ogv' ||
         extName === '.ogg') {
-        answer = true
-    }
+    answer = true
+  }
 
   return answer
 }
