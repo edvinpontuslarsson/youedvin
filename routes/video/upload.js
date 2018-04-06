@@ -84,9 +84,8 @@ router.route('/upload')
           // saves video info in separate schema
           await video.save()
 
-          // changed from filename to fileName
           const writeStream = gfs.createWriteStream({
-            fileName: fileName,
+            filename: fileName,
             content_type: file.mimetype
           })
 

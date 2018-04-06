@@ -16,13 +16,13 @@ const Video = require('../../models/Video')
 router.route('/')
     .get(async (req, res) => {
       const knownUser = req.session.username
-      const video = await getVideoInfo(req, res)
-      console.log(video)
+      const video = await getAllVideoInfo(req, res)
 
       if (!knownUser) {
-        return res.render('home/index')
+        // should probably map here and then send in
+        return res.render('home/index', { video })
       } else {
-        return res.render('home/index', { knownUser })
+        return res.render('home/index', { knownUser, video })
       }
     })
 
@@ -31,7 +31,7 @@ router.route('/')
  * @param {*} req - request
  * @param {*} res - response
  */
-async function getVideoInfo (req, res) {
+async function getAllVideoInfo (req, res) {
   try {
     const video = await Video.find({}).exec()
     return video

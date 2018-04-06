@@ -7,3 +7,7 @@
 <p><a href="/login">Log in!</a></p>
 <p><a href="/signup">Sign up!</a></p>
 {{/if}}
+<h1>Uploaded Videos</h1>
+{{#each video}}
+<a href="/play/{{this.fileNick}}">{{this.title}}</a>
+{{/each}}

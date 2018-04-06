@@ -94,6 +94,7 @@ app.use('/', require('./routes/user/logIn'))
 app.use('/', require('./routes/user/logOut'))
 app.use('/', require('./routes/user/signUp'))
 app.use('/', require('./routes/video/upload'))
+app.use('/', require('./routes/video/play'))
 
 /**
  * Defines route for 404 not found
