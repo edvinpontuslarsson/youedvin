@@ -18,27 +18,48 @@
 const router = require('express').Router()
 const Video = require('../../models/Video')
 const mongoose = require('mongoose')
+const fs = require('fs')
 const path = require('path')
-const Grid = require('gridfs-stream')
 const Lib = require('../../lib/Lib')
 const lib = new Lib()
 
 const csrf = require('csurf')
 const csrfProtection = csrf()
 
-// gridfs-stream documentation: https://github.com/aheckmann/gridfs-stream
-// has remove method
-
 const connection = mongoose.connection
-Grid.mongo = mongoose.mongo
+const Grid = require('gridfs-stream')
+const multer = require('multer')
+const GridFsStorage = require('multer-gridfs-storage')
 let gfs
 
-// inspired by method used here:
-// https://github.com/houssem-yahiaoui/fileupload-nodejs/blob/master/routings/routing.js
+// Inspired by: https://www.youtube.com/watch?v=3f5Q9wDePzY
 connection.once('open', () => {
-  gfs = Grid(connection.db)
+  gfs = Grid(connection.db, mongoose.mongo)
+  gfs.collection('videoData')
   console.log('Ready for video uploads')
 })
+
+// defines how to store
+const storage = new GridFsStorage({
+  url: process.env.dbURL,
+  file: (req, file) => {
+      return new Promise((resolve, reject) => {
+            const extName = path.extname(file.originalname)
+
+            if (okayFormat(extName) === false) {
+              reject(new Error('Unsupported file format'))
+            } else {
+              const fileName = lib.randomNrs() + extName
+              const fileInfo = {
+              filename: fileName,
+              bucketName: 'uploads'
+              }
+              resolve(fileInfo)
+            }
+      })
+  }
+})
+const upload = multer({ storage })
 
 router.route('/upload')
     // renders upload form, only for logged in users
@@ -54,63 +75,31 @@ router.route('/upload')
     })
 
     // saves video to DB, only for logged in users
-    .post(csrfProtection, async (req, res) => {
-      if (!req.session.username) {
+    .post(csrfProtection, upload.single('video'), async (req, res) => {
+      if (req.session.username) {
+        const video = new Video({
+          fileName: req.file.filename,
+          title: req.body.title,
+          description: req.body.description,
+          createdBy: req.session.username,
+          creatorId: req.session.userid
+        })
+
+        // saves video info in separate mongoose model
+        await video.save()
+
+        req.session.flash = {
+          type: 'success',
+          text: 'The Video has been succesfully uploaded!'
+        }
+
+        res.redirect('.')
+      } else {
+        // else if the video file was not posted by a logged in user,
+        // the video gets deleted from the DB
+        // should be...
         res.status(403)
         res.render('error/403')
-      } else {
-        const file = req.files.video
-        const extName = path.extname(file.name)
-
-        if (okayFormat(extName) === false) {
-          req.session.flash = {
-            type: 'error',
-            text: 'Unsupported file format'
-          }
-          res.redirect('/upload')
-        } else {
-          const fileNick = lib.randomNrs()
-          const fileName = fileNick + extName
-
-          const video = new Video({
-            fileNick: fileNick,
-            fileName: fileName,
-            title: req.body.title,
-            description: req.body.description,
-            createdBy: req.session.username,
-            creatorId: req.session.userid
-          })
-
-          // saves video info in separate schema
-          await video.save()
-
-          const writeStream = gfs.createWriteStream({
-            filename: fileName,
-            content_type: file.mimetype
-          })
-
-        // inspired by method used here:
-        // https://github.com/houssem-yahiaoui/fileupload-nodejs/blob/master/routings/routing.js
-          writeStream.on('close', (video) => {
-            if (video) {
-              req.session.flash = {
-                type: 'success',
-                text: 'The Video has been succesfully uploaded!'
-              }
-            } else {
-              req.session.flash = {
-                type: 'error',
-                text: 'The Video upload failed :/'
-              }
-            }
-          })
-
-          writeStream.write(file.data, () => {
-            writeStream.end()
-          })
-
-          res.redirect('.')
-        }
       }
     })
 

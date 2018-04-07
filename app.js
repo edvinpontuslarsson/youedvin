@@ -25,7 +25,6 @@ const exphbs = require('express-handlebars')
 const helmet = require('helmet')
 const path = require('path')
 const bodyParser = require('body-parser')
-const busboyBodyParser = require('busboy-body-parser')
 
 const app = express()
 const port = process.env.PORT || 8080
@@ -59,12 +58,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
-// Parses incoming files
-app.use(busboyBodyParser({
-  limit: '120mb'
-}))
-
-// The framework should look in the folder "public" for static resources
+// Sets path to the folder 'public' for static resources
 app.use(express.static(path.join(__dirname, 'public')))
 
 // Settings for session cookie

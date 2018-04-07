@@ -14,9 +14,6 @@
 const mongoose = require('mongoose')
 
 const videoSchema = mongoose.Schema({
-  fileNick: {
-    type: String, required: true
-  },
   fileName: {
     type: String, required: true
   },
