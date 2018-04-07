@@ -29,21 +29,26 @@ router.route('/play/:id')
 
       const videoInfo = await lib.getVideoInfo(fileName)
       const title = videoInfo.title
+
+      // test without await, should restructure
+      // watch until end, see if I need stream
+
       const videoFile = await fetchVideo(fileName)
 
       console.log(videoFile)
 
-      res.render('video/play', {
-        title
+      console.log('Hello')
+
+      res.render('video/play', { 
+        title, videoFile
       })
   })
 
 /**
  * Fetches the video file
- * Inspired by:
- * https://www.youtube.com/watch?v=3f5Q9wDePzY
  */
 function fetchVideo (fileName) {
+  // should have if no file, return 404
   return gfs.files.findOne({
     filename: fileName
   })
