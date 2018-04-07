@@ -35,20 +35,21 @@ let gfs
 // Inspired by: https://www.youtube.com/watch?v=3f5Q9wDePzY
 connection.once('open', () => {
   gfs = Grid(connection.db, mongoose.mongo)
-  gfs.collection('videoData')
-  console.log('Ready for video uploads')
+  gfs.collection('uploads')
 })
 
-// defines how to store
+// defines how to store video file uploads
 const storage = new GridFsStorage({
   url: process.env.dbURL,
   file: (req, file) => {
       return new Promise((resolve, reject) => {
             const extName = path.extname(file.originalname)
 
+            // checks the file format before storing
             if (okayFormat(extName) === false) {
-              reject(new Error('Unsupported file format'))
+              return reject(new Error('Unsupported file format'))
             } else {
+              // changes the file name before storing
               const fileName = lib.randomNrs() + extName
               const fileInfo = {
               filename: fileName,
@@ -88,6 +89,8 @@ router.route('/upload')
         // saves video info in separate mongoose model
         await video.save()
 
+        // should check first with req.files, if it has been
+        // different otherwise
         req.session.flash = {
           type: 'success',
           text: 'The Video has been succesfully uploaded!'
