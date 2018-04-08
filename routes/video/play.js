@@ -1,7 +1,5 @@
 const router = require('express').Router()
-const Video = require('../../models/Video')
 const mongoose = require('mongoose')
-const fs = require('fs')
 const Lib = require('../../lib/Lib')
 const lib = new Lib()
 
@@ -12,8 +10,6 @@ const csrfProtection = csrf()
 
 const connection = mongoose.connection
 const Grid = require('gridfs-stream')
-const multer = require('multer')
-const GridFsStorage = require('multer-gridfs-storage')
 let gfs
 
 /**
@@ -34,6 +30,10 @@ router.route('/video/:id')
   .get((req, res) => {
     const fileName = req.params.id
 
+    // see if I can do this with async await
+    // similarly to how I get VideoInfo
+    // in separate function
+    // perhaps have a readstream module
     gfs.files.findOne({
       filename: fileName
     }, (error, videoFile) => {
@@ -43,19 +43,21 @@ router.route('/video/:id')
   })
 
 router.route('/play/:id')
-  .get(async (req, res) => {      
-      const fileName = req.params.id
+  .get(async (req, res) => {
+    const fileName = req.params.id
 
-      const videoInfo = await lib.getVideoInfo(fileName)
-      const title = videoInfo.title
+    const videoInfo = await lib.getVideoInfo(fileName)
+    const title = videoInfo.title
 
-      gfs.files.findOne({
-        filename: fileName
-      }, (error, videoFile) => {
-        res.render('video/play', { 
-          title, videoFile
-        })
+    // see if I can do this with async await
+    // similarly to how I get VideoInfo
+    gfs.files.findOne({
+      filename: fileName
+    }, (error, videoFile) => {
+      res.render('video/play', {
+        title, videoFile
       })
+    })
   })
 
 module.exports = router

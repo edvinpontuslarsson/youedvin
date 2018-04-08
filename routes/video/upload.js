@@ -7,57 +7,41 @@
  * @requires express
  * @requires Video
  * @requires csurf
- * @requires formidable
- * @requires mongoose
- * @requires gridfs-stream
- * @requires fs
  */
 
 'use strict'
 
 const router = require('express').Router()
 const Video = require('../../models/Video')
-const mongoose = require('mongoose')
-const fs = require('fs')
 const path = require('path')
 const Lib = require('../../lib/Lib')
 const lib = new Lib()
+const multer = require('multer')
+const GridFsStorage = require('multer-gridfs-storage')
 
 const csrf = require('csurf')
 const csrfProtection = csrf()
-
-const connection = mongoose.connection
-const Grid = require('gridfs-stream')
-const multer = require('multer')
-const GridFsStorage = require('multer-gridfs-storage')
-let gfs
-
-// Inspired by: https://www.youtube.com/watch?v=3f5Q9wDePzY
-connection.once('open', () => {
-  gfs = Grid(connection.db, mongoose.mongo)
-  gfs.collection('uploads')
-})
 
 // defines how to store video file uploads
 const storage = new GridFsStorage({
   url: process.env.dbURL,
   file: (req, file) => {
-      return new Promise((resolve, reject) => {
-            const extName = path.extname(file.originalname)
+    return new Promise((resolve, reject) => {
+      const extName = path.extname(file.originalname)
 
             // checks the file format before storing
-            if (okayFormat(extName) === false) {
-              return reject(new Error('Unsupported file format'))
-            } else {
+      if (okayFormat(extName) === false) {
+        return reject(new Error('Unsupported file format'))
+      } else {
               // changes the file name before storing
-              const fileName = lib.randomNrs() + extName
-              const fileInfo = {
-              filename: fileName,
-              bucketName: 'uploads'
-              }
-              resolve(fileInfo)
-            }
-      })
+        const fileName = lib.randomNrs() + extName
+        const fileInfo = {
+          filename: fileName,
+          bucketName: 'uploads'
+        }
+        resolve(fileInfo)
+      }
+    })
   }
 })
 const upload = multer({ storage })
