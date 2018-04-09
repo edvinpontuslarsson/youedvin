@@ -61,6 +61,10 @@ router.route('/upload')
 
     // saves video to DB, only for logged in users
     .post(csrfProtection, upload.single('video'), async (req, res) => {
+
+      // perhaps I can use the other way of storing, could store before, retrieving was difficult
+      // send in bucketname perhaps
+
       if (req.session.username) {
         const video = new Video({
           fileName: req.file.filename,
