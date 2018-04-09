@@ -18,6 +18,12 @@ router.route('/')
       const knownUser = req.session.username
       const video = await getAllVideoInfo(req, res)
 
+      for (let i = 0; i < video.length; i += 1) {
+        if (knownUser === video[i].createdBy) {
+          video[i].canEdit = true
+        }
+      }
+
       if (!knownUser) {
         // should probably map here and then send in
         return res.render('home/index', { video })

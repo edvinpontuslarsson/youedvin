@@ -89,6 +89,7 @@ app.use('/', require('./routes/user/logOut'))
 app.use('/', require('./routes/user/signUp'))
 app.use('/', require('./routes/video/upload'))
 app.use('/', require('./routes/video/play'))
+app.use('/', require('./routes/video/deleteVideo'))
 
 /**
  * Defines route for 404 not found
@@ -104,7 +105,9 @@ app.use((req, res, next) => {
  */
 app.use((err, req, res, next) => {
   if (err.status === 404) {
-    return res.status(404).sendFile(path.join(__dirname, 'views', 'error', '404.html'))
+    res.status(404)
+    return res.render('error/404')
+    // return res.status(404).sendFile(path.join(__dirname, 'views', 'error', '404.html'))
   }
   console.log(err)
 

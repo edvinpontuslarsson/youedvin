@@ -46,18 +46,22 @@ router.route('/play/:id')
   .get(async (req, res) => {
     const fileName = req.params.id
 
-    const videoInfo = await lib.getVideoInfo(fileName)
-    const title = videoInfo.title
+    const videoInfo = await lib.getVideoInfoByFileName(fileName)
 
-    // see if I can do this with async await
+    if (videoInfo === null) {
+      res.status(404)
+      res.render('error/404')
+    } else {
+      // see if I can do this with async await
     // similarly to how I get VideoInfo
-    gfs.files.findOne({
-      filename: fileName
-    }, (error, videoFile) => {
-      res.render('video/play', {
-        title, videoFile
+      gfs.files.findOne({
+        filename: fileName
+      }, (error, videoFile) => {
+        res.render('video/play', {
+          videoInfo, videoFile
+        })
       })
-    })
+    }
   })
 
 module.exports = router

@@ -22,3 +22,6 @@ a:visited {
     background-color: red;
     color: black;
 }
+.user {
+    color: rgb(240, 240, 240);
+}

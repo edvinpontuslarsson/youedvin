@@ -9,5 +9,10 @@
 {{/if}}
 <h1>Uploaded Videos</h1>
 {{#each video}}
-<p><a href="/play/{{this.fileName}}">{{this.title}}</a></p>
+<p class="user"><a href="/play/{{this.fileName}}">{{this.title}}</a><br>
+{{this.createdBy}}, {{this.createdAt}}
+{{#if this.canEdit}}
+<br><a href="/delete/{{this.creatorId}}">Delete Video</a>
+{{/if}}
+</p>
 {{/each}}
