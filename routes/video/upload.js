@@ -92,7 +92,7 @@ router.route('/upload')
           }
         }
 
-        res.redirect('.')
+        res.redirect(`/play/${req.file.filename}`)
       } else {
         res.status(403)
         res.render('error/403')

@@ -19,7 +19,7 @@ let gfs
 connection.once('open', () => {
   gfs = Grid(connection.db, mongoose.mongo)
   gfs.collection('uploads')
-  console.log('Ready for fetching video')
+  console.log('Ready for fetching videos')
 })
 
 /**
