@@ -22,6 +22,7 @@ router.route('/signup')
      * Renders sign up page
      */
     .get(csrfProtection, (req, res) => {
+      res.status(200)
       res.render('user/signup', {
         csrfToken: req.csrfToken()
       })
@@ -44,6 +45,7 @@ router.route('/signup')
             type: 'error',
             text: 'Something went wrong'
           }
+          res.status(500)
           res.redirect('/signup')
         }
       })
@@ -53,18 +55,21 @@ router.route('/signup')
           type: 'error',
           text: 'The password needs to be at least 5 characters long'
         }
+        res.status(400)
         res.redirect('/signup')
       } else if (password !== confirmPassword) {
         req.session.flash = {
           type: 'error',
           text: 'The passwords do not match'
         }
+        res.status(400)
         res.redirect('/signup')
       } else if (ifAlreadyExists !== null) {
         req.session.flash = {
           type: 'error',
           text: 'The username is already taken, please choose a different one!'
         }
+        res.status(409)
         res.redirect('/signup')
       } else {
               // the password gets salted and hashed
@@ -80,12 +85,14 @@ router.route('/signup')
             text: `You are now a registered user, welcome aboard ${username}!`
           }
 
+          res.status(201)
           res.redirect('/login')
         } catch (error) {
           req.session.flash = {
             type: 'error',
             text: 'Something went wrong'
           }
+          res.status(500)
           res.redirect('/signup')
         }
       }

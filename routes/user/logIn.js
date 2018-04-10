@@ -20,6 +20,7 @@ const csrfProtection = csrf()
 router.route('/login')
     // renders log in page
     .get(csrfProtection, (req, res) => {
+      res.status(200)
       res.render('user/login', {
         csrfToken: req.csrfToken()
       })
@@ -32,33 +33,41 @@ router.route('/login')
       User.findOne({
         username: username
       }, (error, user) => {
+        // server error
         if (error) {
           req.session.flash = {
             type: 'error',
             text: 'Something went wrong'
           }
+          res.status(500)
           res.redirect('/login')
         }
+        // non-existing username
         if (!user) {
           req.session.flash = {
             type: 'error',
             text: 'Incorrect login info'
           }
+          res.status(401)
           res.redirect('/login')
         } else {
           user.comparePassword(password, (err, result) => {
+            // server error
             if (err) {
               req.session.flash = {
                 type: 'error',
                 text: 'Something went wrong'
               }
+              res.status(500)
               res.redirect('/login')
             }
+            // wrong password
             if (result === false) {
               req.session.flash = {
                 type: 'error',
                 text: 'Incorrect login info'
               }
+              res.status(401)
               res.redirect('/login')
             } else {
               // saves the username and id in cookie
@@ -70,6 +79,7 @@ router.route('/login')
                 text: 'You are now logged in!'
               }
 
+              res.status(303)
               res.redirect('/')
             }
           })

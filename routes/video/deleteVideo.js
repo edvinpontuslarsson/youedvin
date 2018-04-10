@@ -32,6 +32,7 @@ router.route('/delete/:id')
         res.status(403)
         res.render('error/403')
       } else {
+        res.status(200)
         res.render('video/delete', {csrfToken: req.csrfToken(), id: req.params.id})
       }
     })
@@ -45,13 +46,13 @@ router.route('/delete/:id')
         res.status(403)
         res.render('error/403')
       } else {
+        res.status(200)
         // deletes video info
         await Video.findOneAndRemove({
           creatorId: req.params.id
         })
 
         // deletes the video file
-        // inspired by method used here: https://www.youtube.com/watch?v=3f5Q9wDePzY&list=LLwTR7eKKJwFR5fxi_wzqzww&index=8&t=0s
         gfs.remove({
             filename: video.fileName, root: 'uploads'
         }, (error, gridStorage) => {

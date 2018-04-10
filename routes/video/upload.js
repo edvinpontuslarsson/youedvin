@@ -61,6 +61,7 @@ router.route('/upload')
         res.status(403)
         res.render('error/403')
       } else {
+        res.status(200)
         res.render('video/upload', {
           csrfToken: req.csrfToken()
         })
@@ -85,14 +86,16 @@ router.route('/upload')
             type: 'success',
             text: 'The Video has been succesfully uploaded!'
           }
+          res.status(201)
+          res.redirect(`/play/${req.file.filename}`)
         } else {
           req.session.flash = {
             type: 'error',
             text: 'The Video upload failed.'
           }
+          res.status(500)
+          res.redirect('/upload')
         }
-
-        res.redirect(`/play/${req.file.filename}`)
       } else {
         res.status(403)
         res.render('error/403')

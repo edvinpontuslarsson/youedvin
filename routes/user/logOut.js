@@ -23,6 +23,7 @@ router.route('/logout')
         res.status(403)
         res.render('error/403')
       } else {
+        res.status(200)
         res.render('user/logout', {
           csrfToken: req.csrfToken()
         })
@@ -32,6 +33,7 @@ router.route('/logout')
     .post(csrfProtection, (req, res) => {
       req.session.destroy()
 
+      res.status(303)
       res.redirect('/')
     })
 

@@ -26,8 +26,10 @@ router.route('/')
 
       if (!knownUser) {
         // should probably map here and then send in
+        res.status(200)
         return res.render('home/index', { video })
       } else {
+        res.status(200)
         return res.render('home/index', { knownUser, video })
       }
     })
@@ -46,6 +48,7 @@ async function getAllVideoInfo (req, res) {
       type: 'error',
       text: 'Something went wrong'
     }
+    res.status(500)
     res.redirect('/')
   }
 }

@@ -57,6 +57,7 @@ router.route('/play/:id')
       gfs.files.findOne({
         filename: fileName
       }, (error, videoFile) => {
+        res.status(200)
         res.render('video/play', {
           videoInfo, videoFile
         })
