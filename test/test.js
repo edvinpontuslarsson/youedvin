@@ -5,26 +5,41 @@ const Lib = require('../lib/Lib')
 const lib = new Lib()
 
 describe('Test of the random string generator function in Lib', () => {
+    describe('Tests the logic of testing function', () => {
+        it('with notRandom isIdentical(2) should return true', (done) => {
+            const result = isIdentical(notRandom, 2)
+            expect(result).to.eql(true)
+            done()
+        })
+
     describe('Even if called a million times, strings should never be identical', () => {
-        it('isIdentical(1000000) should return false', (done) => {
-            const result = isIdentical(1000000)
+        it('with lib.randomString isIdentical(1000000) should return false', (done) => {
+            const result = isIdentical(lib.randomString, 1000000)
             expect(result).to.eql(false)
             done()
         })
     })
 })
-
+})
 
 /**
- * Even if called a million times, strings should never be identical
- * Should therefore return false
+ * This is not random
  */
-function isIdentical (tries) {
+function notRandom () {
+    return 'the same thing every time'
+}
+
+/**
+ * 
+ * @param {*} toTest - function to test
+ * @param {*} tries - amount of times to test
+ */
+function isIdentical (toTest, tries) {
     let testString
     let identical = false
 
     for (let i = 0; i < tries; i += 1) {
-        let randomString = lib.randomString()
+        let randomString = toTest()
         if (testString === randomString) {
             identical = true
         }
