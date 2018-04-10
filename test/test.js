@@ -6,7 +6,7 @@ const lib = new Lib()
 
 describe('Test of the random string generator function in Lib', () => {
     describe('Even if called a million times, strings should never be identical', () => {
-        it('isIdentical() should return false', (done) => {
+        it('isIdentical(1000000) should return false', (done) => {
             const result = isIdentical(1000000)
             expect(result).to.eql(false)
             done()
