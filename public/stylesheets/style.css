@@ -25,3 +25,13 @@ a:visited {
 .user {
     color: rgb(240, 240, 240);
 }
+button {
+    cursor: pointer;
+}
+.big-green-btn {
+    background-color: green;
+    color: white;
+    font-size: 50px;
+    width: 300px;
+    height: 150px;
+}
