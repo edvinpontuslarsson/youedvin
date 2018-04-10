@@ -41,7 +41,7 @@ const storage = new GridFsStorage({
           return reject(new Error('Unsupported file format'))
         } else {
                 // changes the file name before storing
-          const fileName = lib.randomNrs() + extName
+          const fileName = lib.randomString() + extName
           const fileInfo = {
             filename: fileName,
             bucketName: 'uploads'
