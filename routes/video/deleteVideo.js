@@ -1,3 +1,5 @@
+'use strict'
+
 const router = require('express').Router()
 const mongoose = require('mongoose')
 const Video = require('../../models/Video')

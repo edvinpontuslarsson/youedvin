@@ -2,7 +2,7 @@
  * @module User.js
  * @author Edvin Larsson
  *
- * Model for video
+ * Model for video info
  *
  * @requires fs
  * @requires mongoose
@@ -14,6 +14,9 @@
 const mongoose = require('mongoose')
 
 const videoSchema = mongoose.Schema({
+  fileNick: {
+    type: String, required: false
+  },
   fileName: {
     type: String, required: true
   },
@@ -21,7 +24,22 @@ const videoSchema = mongoose.Schema({
     type: String, required: true
   },
   description: {
-    type: String
+    type: String, required: false
+  },
+  category: {
+    type: String, required: true, default: 'Lifestyle'
+  },
+  views: {
+    type: String, required: false
+  },
+  likes: {
+    type: String, required: false
+  },
+  dislikes: {
+    type: String, required: false
+  },
+  amountOfComments: {
+    type: String, required: false
   },
   createdAt: {
     type: Date, required: true, default: Date.now
