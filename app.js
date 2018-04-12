@@ -58,6 +58,9 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
+// To parse incoming json data, mainly for simplifying tests with Postman
+app.use(bodyParser.json())
+
 // Sets path to the folder 'public' for static resources
 app.use(express.static(path.join(__dirname, 'public')))
 

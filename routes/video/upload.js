@@ -62,6 +62,7 @@ router.route('/upload')
         res.render('error/403')
       } else {
         res.status(200)
+        res.header({ csrfToken: req.csrfToken() })
         res.render('video/upload', {
           csrfToken: req.csrfToken()
         })

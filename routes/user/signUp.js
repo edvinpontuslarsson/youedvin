@@ -23,6 +23,7 @@ router.route('/signup')
      */
     .get(csrfProtection, (req, res) => {
       res.status(200)
+      res.header({ csrfToken: req.csrfToken() })
       res.render('user/signup', {
         csrfToken: req.csrfToken()
       })

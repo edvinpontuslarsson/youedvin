@@ -35,6 +35,7 @@ router.route('/delete/:id')
         res.render('error/403')
       } else {
         res.status(200)
+        res.header({ csrfToken: req.csrfToken() })
         res.render('video/delete', {csrfToken: req.csrfToken(), id: req.params.id})
       }
     })

@@ -21,6 +21,7 @@ router.route('/login')
     // renders log in page
     .get(csrfProtection, (req, res) => {
       res.status(200)
+      res.header({ csrfToken: req.csrfToken() })
       res.render('user/login', {
         csrfToken: req.csrfToken()
       })

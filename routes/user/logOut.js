@@ -24,6 +24,7 @@ router.route('/logout')
         res.render('error/403')
       } else {
         res.status(200)
+        res.header({ csrfToken: req.csrfToken() })
         res.render('user/logout', {
           csrfToken: req.csrfToken()
         })
