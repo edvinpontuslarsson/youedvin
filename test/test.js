@@ -49,4 +49,4 @@ function isIdentical (toTest, tries) {
     return identical
 }
 
-// https://stackoverflow.com/questions/39384321/how-to-fetch-and-reuse-the-csrf-token-using-postman-rest-client/49249850#49249850
+// https://stackoverflow.com/questions/27182701/how-do-i-send-spring-csrf-token-from-postman-rest-client

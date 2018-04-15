@@ -28,7 +28,7 @@ router.route('/delete/:id')
 // checks that the user is the creator of the Video
 // then renders the page for choosing to delete the Video
     .get(csrfProtection, async (req, res) => {
-      const video = await lib.getVideoInfoBycreatorId(req.params.id)
+      const video = await lib.getVideoInfoByFileName(req.params.id)
 
       if (video.creatorId !== req.session.userid) {
         res.status(403)
@@ -40,10 +40,8 @@ router.route('/delete/:id')
       }
     })
 
-// have to delete both model and video info
-
     .post(csrfProtection, async (req, res) => {
-      const video = await lib.getVideoInfoBycreatorId(req.params.id)
+      const video = await lib.getVideoInfoByFileName(req.params.id)
 
       if (video.creatorId !== req.session.userid) {
         res.status(403)
@@ -52,7 +50,7 @@ router.route('/delete/:id')
         res.status(200)
         // deletes video info
         await Video.findOneAndRemove({
-          creatorId: req.params.id
+          fileName: req.params.id
         })
 
         // deletes the video file
