@@ -33,7 +33,8 @@ function notRandom () {
  * Calls funcToTest as many times as specified in iterations. 
  * Checks if any of the generated strings are identical. 
  * @param {*} funcToTest - function to test
- * @param {*} iterations - amount of times to test
+ * @param {number} iterations - amount of times to test
+ * @returns {boolean} identical
  */
 function isIdentical (funcToTest, iterations) {
     const testArr = []
@@ -62,6 +63,5 @@ function isIdentical (funcToTest, iterations) {
         }
     }
 
-    // boolean
     return identical
 }
