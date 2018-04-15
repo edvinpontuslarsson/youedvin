@@ -5,16 +5,16 @@ const Lib = require('../lib/Lib')
 const lib = new Lib()
 
 describe('Test of the random string generator function in Lib', () => {
-    describe('Tests the logic of testing function', () => {
-        it('with notRandom isIdentical(2) should return true', (done) => {
+    describe('Tests the logic of this testing function', () => {
+        it('isIdentical(notRandom, 2) should return true', (done) => {
             const result = isIdentical(notRandom, 2)
             expect(result).to.eql(true)
             done()
         })
 
-    describe('Even if called a million times, strings should never be identical', () => {
-        it('with lib.randomString isIdentical(1000000) should return false', (done) => {
-            const result = isIdentical(lib.randomString, 1000000)
+    describe('Even if called ten thousand times, strings should never be identical', () => {
+        it('isIdentical(lib.randomString, 10000) should return false', (done) => {
+            const result = isIdentical(lib.randomString, 10000)
             expect(result).to.eql(false)
             done()
         })
@@ -30,23 +30,38 @@ function notRandom () {
 }
 
 /**
- * 
- * @param {*} toTest - function to test
- * @param {*} tries - amount of times to test
+ * Calls funcToTest as many times as specified in iterations. 
+ * Checks if any of the generated strings are identical. 
+ * @param {*} funcToTest - function to test
+ * @param {*} iterations - amount of times to test
  */
-function isIdentical (toTest, tries) {
-    let testString
+function isIdentical (funcToTest, iterations) {
+    const testArr = []
     let identical = false
 
-    for (let i = 0; i < tries; i += 1) {
-        let randomString = toTest()
-        if (testString === randomString) {
-            identical = true
+    // loops as many times as specified when called
+    for (let i = 0; i < iterations; i += 1) {
+        let randomString = funcToTest()
+
+        // populates the test array with the first string
+        if (i === 0) {
+            testArr.push(randomString)
         }
-        testString = randomString
+
+        // checks if current string is identical with
+        // any previously generated strings
+        for (let j = 0; j < testArr.length; j += 1) {
+            if (i !== 0 && randomString === testArr[j]) {
+                identical = true
+            }
+        }
+
+        // populates the test array with the second string and onward
+        if (i >= 1) {
+            testArr.push(randomString)
+        }
     }
 
+    // boolean
     return identical
 }
-
-// https://stackoverflow.com/questions/27182701/how-do-i-send-spring-csrf-token-from-postman-rest-client
