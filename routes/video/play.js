@@ -43,7 +43,7 @@ router.route('/video/:id')
         res.status(500)
         res.redirect('/')
       }
-      
+
       const readStream = gfs.createReadStream(videoFile.filename)
       readStream.pipe(res)
     })

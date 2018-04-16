@@ -1,8 +1,6 @@
 ;(function loggedInHeader () {
-    console.log('Hello World!')
-
-    const menu = document.createElement('ul')
-    menu.innerHTML = `
+  const menu = document.createElement('ul')
+  menu.innerHTML = `
         <li class="menuItem">
             <a href="/" class="menuLink">Home Page</a>
         </li>
@@ -13,13 +11,14 @@
             <a href="/presignup" class="menuLink">Sign up!</a>
         </li>
     `
-    menu.classList.add('menu')
 
-    const header = document.getElementById('header')
+  const header = document.getElementById('mainHeader')
 
-    if (header.firstChild !== null) {
-        console.log('Remove child')
-    }
+  if (header.firstChild !== null) {
+    header.removeChild(header.firstChild)
+  }
 
-    header.appendChild(menu)
+  header.appendChild(menu)
+
+  console.log(header.firstChild)
 })()
