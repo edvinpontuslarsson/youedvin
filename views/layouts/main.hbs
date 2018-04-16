@@ -8,11 +8,7 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-    {{#if knownUser }}
-    <script src="/js/header/loggedInHeader.js"></script>
-    {{else}}
-    <script src="/js/header/strangerHeader.js"></script>
-    {{/if}}
+    <header><a href="/">Home Page</a></header>
     <p>{{>flash}}</p>
     {{{ body }}}
 </body>
