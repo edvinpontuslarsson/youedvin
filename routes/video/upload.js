@@ -97,6 +97,7 @@ router.route('/upload')
           res.status(500)
           res.redirect('/upload')
         }
+      // if the user isn't logged in
       } else {
         res.status(403)
         res.render('error/403')

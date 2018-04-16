@@ -33,7 +33,7 @@ router.route('/signup')
      * Validates username and passwords
      * Saves user information to DB
      */
-    .post(csrfProtection, async (req, res, next) => {
+    .post(csrfProtection, async (req, res) => {
       const username = req.body.username
       const password = req.body.password
       const confirmPassword = req.body.confirmPassword

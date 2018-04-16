@@ -30,6 +30,7 @@ router.route('/logout')
         })
       }
     })
+
     // destroys the session
     .post(csrfProtection, (req, res) => {
       req.session.destroy()

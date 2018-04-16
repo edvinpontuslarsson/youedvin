@@ -55,21 +55,21 @@ router.route('/delete/:id')
 
         // deletes the video file
         gfs.remove({
-            filename: video.fileName, root: 'uploads'
+          filename: video.fileName, root: 'uploads'
         }, (error, gridStorage) => {
-            if (error) {
-                req.session.flash = {
-                    type: 'error',
-                    text: 'Could not delete video.'
-                  }
-                  res.redirect('/')
-            } else {
-                req.session.flash = {
-                    type: 'success',
-                    text: 'The Video has been succesfully deleted.'
-                  }
-                  res.redirect('/')
+          if (error) {
+            req.session.flash = {
+              type: 'error',
+              text: 'Could not delete video.'
             }
+            res.redirect('/')
+          } else {
+            req.session.flash = {
+              type: 'success',
+              text: 'The Video has been succesfully deleted.'
+            }
+            res.redirect('/')
+          }
         })
       }
     })

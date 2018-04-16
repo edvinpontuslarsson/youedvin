@@ -39,6 +39,11 @@ router.route('/video/:id')
     gfs.files.findOne({
       filename: fileName
     }, (error, videoFile) => {
+      if (error) {
+        res.status(500)
+        res.redirect('/')
+      }
+      
       const readStream = gfs.createReadStream(videoFile.filename)
       readStream.pipe(res)
     })
@@ -59,6 +64,11 @@ router.route('/play/:id')
       gfs.files.findOne({
         filename: fileName
       }, (error, videoFile) => {
+        if (error) {
+          res.status(500)
+          res.redirect('/')
+        }
+
         res.status(200)
         res.render('video/play', {
           videoInfo, videoFile
