@@ -2,8 +2,8 @@
 
 const router = require('express').Router()
 const mongoose = require('mongoose')
-const Lib = require('../../lib/Lib')
-const lib = new Lib()
+const VideoLib = require('../../lib/VideoLib')
+const videoLib = new VideoLib()
 
 /*
 const csrf = require('csurf')
@@ -53,7 +53,7 @@ router.route('/play/:id')
   .get(async (req, res) => {
     const fileName = req.params.id
 
-    const videoInfo = await lib.getVideoInfoByFileName(fileName)
+    const videoInfo = await videoLib.getVideoInfoByFileName(fileName)
 
     if (videoInfo === null) {
       res.status(404)

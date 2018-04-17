@@ -38,6 +38,7 @@ router.route('/signup')
       const password = req.body.password
       const confirmPassword = req.body.confirmPassword
 
+      // searches DB for the username
       const ifAlreadyExists = await User.findOne({
         username: username
       }, (error) => {

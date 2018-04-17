@@ -1,8 +1,8 @@
 'use strict'
 
 const expect = require('chai').expect
-const Lib = require('../lib/Lib')
-const lib = new Lib()
+const VideoLib = require('../lib/VideoLib')
+const videoLib = new VideoLib()
 
 describe('Test of the random string generator function in Lib', () => {
     describe('Tests the logic of this testing function', () => {
@@ -14,7 +14,7 @@ describe('Test of the random string generator function in Lib', () => {
 
     describe('Even if called ten thousand times, strings should never be identical', () => {
         it('isIdentical(lib.randomString, 10000) should return false', (done) => {
-            const result = isIdentical(lib.randomString, 10000)
+            const result = isIdentical(videoLib.randomString, 10000)
             expect(result).to.eql(false)
             done()
         })

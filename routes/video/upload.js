@@ -14,8 +14,8 @@
 const router = require('express').Router()
 const Video = require('../../models/Video')
 const path = require('path')
-const Lib = require('../../lib/Lib')
-const lib = new Lib()
+const VideoLib = require('../../lib/VideoLib')
+const videoLib = new VideoLib()
 const multer = require('multer')
 const GridFsStorage = require('multer-gridfs-storage')
 
@@ -41,7 +41,7 @@ const storage = new GridFsStorage({
           return reject(new Error('Unsupported file format'))
         } else {
                 // changes the file name before storing
-          const fileName = lib.randomString() + extName
+          const fileName = videoLib.randomString() + extName
           const fileInfo = {
             filename: fileName,
             bucketName: 'uploads'
@@ -110,6 +110,10 @@ router.route('/upload')
  * @param {any} extName - filename extension
  */
 function okayFormat (extName) {
+  // see if I can have path here too,
+  // to be able to test that. 
+  // send in whole filename, or test path
+
   let answer = false
 
   if (extName === '.webm' ||

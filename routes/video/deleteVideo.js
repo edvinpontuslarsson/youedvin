@@ -3,8 +3,8 @@
 const router = require('express').Router()
 const mongoose = require('mongoose')
 const Video = require('../../models/Video')
-const Lib = require('../../lib/Lib')
-const lib = new Lib()
+const VideoLib = require('../../lib/VideoLib')
+const videoLib = new VideoLib()
 const csrf = require('csurf')
 
 // to set up csurf protection
@@ -28,7 +28,7 @@ router.route('/delete/:id')
 // checks that the user is the creator of the Video
 // then renders the page for choosing to delete the Video
     .get(csrfProtection, async (req, res) => {
-      const video = await lib.getVideoInfoByFileName(req.params.id)
+      const video = await videoLib.getVideoInfoByFileName(req.params.id)
 
       if (video.creatorId !== req.session.userid) {
         res.status(403)
@@ -41,7 +41,7 @@ router.route('/delete/:id')
     })
 
     .post(csrfProtection, async (req, res) => {
-      const video = await lib.getVideoInfoByFileName(req.params.id)
+      const video = await videoLib.getVideoInfoByFileName(req.params.id)
 
       if (video.creatorId !== req.session.userid) {
         res.status(403)
