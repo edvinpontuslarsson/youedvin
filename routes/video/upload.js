@@ -34,14 +34,14 @@ const storage = new GridFsStorage({
       return new Error('You cannot post unless you are logged in!')
     } else {
       return new Promise((resolve, reject) => {
-        // const extName = path.extname(file.originalname)
-
         // checks the file format before storing
-        if (/*okayFormat(extName)*/ videoLib(file.originalname) === false) {
+        if (videoLib.okayExtName(file.originalname) === false) {
           return reject(new Error('Unsupported file format'))
         } else {
-                // changes the file name before storing
-          const fileName = videoLib.randomString() + extName
+          // changes the file name before storing
+
+          // oops, extname is not defined
+          const fileName = videoLib.randomString() + path.extname(file.originalname)
           const fileInfo = {
             filename: fileName,
             bucketName: 'uploads'
@@ -103,34 +103,5 @@ router.route('/upload')
         res.render('error/403')
       }
     })
-
-/**
- * Checks file format
- * https://en.wikipedia.org/wiki/HTML5_video#Supported_video_and_audio_formats
- * @param {any} extName - filename extension
- *//**
-  * 
-  
-function okayFormat (extName) {
-  // see if I can have path here too,
-  // to be able to test that. 
-  // send in whole filename, or test path
-
-  let answer = false
-
-  if (extName === '.webm' ||
-        extName === '.mp4' ||
-        extName === '.m4a' ||
-        extName === '.m4p' ||
-        extName === '.m4b' ||
-        extName === '.m4r' ||
-        extName === '.m4v' ||
-        extName === '.ogv' ||
-        extName === '.ogg') {
-    answer = true
-  }
-
-  return answer
-}*/
 
 module.exports = router
