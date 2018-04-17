@@ -5,32 +5,31 @@
  * Route for the home page
  *
  * @requires express
- * @requires Snippet
  */
 
 'use strict'
 
 const router = require('express').Router()
-const Video = require('../../models/Video')
+const VideoInfo = require('../../models/VideoInfo')
 
 router.route('/')
     .get(async (req, res) => {
       const knownUser = req.session.username
-      const video = await getAllVideoInfo(req, res)
+      const videoInfo = await getAllVideoInfo(req, res)
 
-      for (let i = 0; i < video.length; i += 1) {
-        if (knownUser === video[i].createdBy) {
-          video[i].canEdit = true
+      for (let i = 0; i < videoInfo.length; i += 1) {
+        if (knownUser === videoInfo[i].createdBy) {
+          videoInfo[i].canEdit = true
         }
       }
 
       if (!knownUser) {
         // should probably map here and then send in
         res.status(200)
-        return res.render('home/index', { video })
+        return res.render('home/index', { videoInfo })
       } else {
         res.status(200)
-        return res.render('home/index', { knownUser, video })
+        return res.render('home/index', { knownUser, videoInfo })
       }
     })
 
@@ -41,8 +40,8 @@ router.route('/')
  */
 async function getAllVideoInfo (req, res) {
   try {
-    const video = await Video.find({}).exec()
-    return video
+    const videoInfo = await VideoInfo.find({}).exec()
+    return videoInfo
   } catch (error) {
     req.session.flash = {
       type: 'error',

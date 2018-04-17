@@ -8,7 +8,7 @@
 <p><a href="/presignup">Sign up!</a></p>
 {{/if}}
 <h1>Uploaded Videos</h1>
-{{#each video}}
+{{#each videoInfo}}
 <p class="user"><a href="/play/{{this.fileName}}">{{this.title}}</a><br>
 {{this.createdBy}}, {{this.createdAt}}
 {{#if this.canEdit}}

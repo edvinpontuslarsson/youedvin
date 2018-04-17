@@ -12,7 +12,7 @@
 'use strict'
 
 const router = require('express').Router()
-const Video = require('../../models/Video')
+const VideoInfo = require('../../models/VideoInfo')
 const path = require('path')
 const VideoLib = require('../../lib/VideoLib')
 const videoLib = new VideoLib()
@@ -39,8 +39,6 @@ const storage = new GridFsStorage({
           return reject(new Error('Unsupported file format'))
         } else {
           // changes the file name before storing
-
-          // oops, extname is not defined
           const fileName = videoLib.randomString() + path.extname(file.originalname)
           const fileInfo = {
             filename: fileName,
@@ -73,14 +71,14 @@ router.route('/upload')
     .post(csrfProtection, upload.single('video'), async (req, res) => {
       if (req.session.username) {
         // saves video info in separate mongoose model
-        const video = new Video({
+        const videoInfo = new VideoInfo({
           fileName: req.file.filename,
           title: req.body.title,
           description: req.body.description,
           createdBy: req.session.username,
           creatorId: req.session.userid
         })
-        await video.save()
+        await videoInfo.save()
 
         if (req.file) {
           req.session.flash = {

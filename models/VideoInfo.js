@@ -1,10 +1,8 @@
 /**
- * @module User.js
  * @author Edvin Larsson
  *
  * Model for video info
  *
- * @requires fs
  * @requires mongoose
  * @requires crypto
  */
@@ -13,7 +11,7 @@
 
 const mongoose = require('mongoose')
 
-const videoSchema = mongoose.Schema({
+const videoInfoSchema = mongoose.Schema({
   fileNick: {
     type: String, required: false
   },
@@ -52,6 +50,6 @@ const videoSchema = mongoose.Schema({
   }
 })
 
-const Video = mongoose.model('Video', videoSchema)
+const Videoinfo = mongoose.model('Video', videoInfoSchema)
 
-module.exports = Video
+module.exports = Videoinfo

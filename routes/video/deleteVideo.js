@@ -2,7 +2,7 @@
 
 const router = require('express').Router()
 const mongoose = require('mongoose')
-const Video = require('../../models/Video')
+const VideoInfo = require('../../models/VideoInfo')
 const VideoLib = require('../../lib/VideoLib')
 const videoLib = new VideoLib()
 const csrf = require('csurf')
@@ -49,7 +49,7 @@ router.route('/delete/:id')
       } else {
         res.status(200)
         // deletes video info
-        await Video.findOneAndRemove({
+        await VideoInfo.findOneAndRemove({
           fileName: req.params.id
         })
 
