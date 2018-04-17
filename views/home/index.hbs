@@ -1,13 +1,9 @@
 {{#if knownUser }}
 <h1>Howdy, {{ knownUser }}!</h1>
-<p><a href="/logout">Log out.</a></p>
-<p><a href="/upload">Upload video!</a></p>
 {{else}}
 <h1>Howdy, Stranger!</h1>
-<p><a href="/login">Log in!</a></p>
-<p><a href="/presignup">Sign up!</a></p>
 {{/if}}
-<h1>Uploaded Videos</h1>
+<h2>Uploaded Videos</h2>
 {{#each videoInfo}}
 <p class="user"><a href="/play/{{this.fileName}}">{{this.title}}</a><br>
 {{this.createdBy}}, {{this.createdAt}}

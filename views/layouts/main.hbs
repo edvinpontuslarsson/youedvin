@@ -8,33 +8,45 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-    <!-- If I could make the header dynamic like in flash -->
+    <!--  -->
     {{#if loggedIn }}
         <header>
             <ul>
                 <li class="menuItem">
-            <a href="/">Home Page</a>
-            </li>
-            <li class="menuItem">
-                <a href="/logout" class="menuLink">Log out</a>
-            </li>
-            <li class="menuItem">
-                <a href="/upload" class="menuLink">Upload video!</a>
-            </li>
+                    <form action="/">
+                        <input type="submit" value="Home Page" class="menuLink">
+                    </form>
+                </li>
+                <li class="menuItem">
+                    <form action="/upload">
+                        <input type="submit" value="Upload video!" class="menuLink">
+                    </form>
+                </li>
+                <li class="menuItem">
+                    <form action="/logout">
+                        <input type="submit" value="Log out" class="menuLink">
+                    </form>
+                </li>
             </ul>
         </header>
     {{else}}
         <header>
             <ul>
                 <li class="menuItem">
-            <a href="/" class="menuLink">Home Page</a>
-            </li>
-            <li class="menuItem">
-                <a href="/login" class="menuLink">Log in!</a>
-            </li>
-            <li class="menuItem">
-                <a href="/presignup" class="menuLink">Sign up!</a>
-            </li>
+                    <form action="/">
+                        <input type="submit" value="Home Page" class="menuLink">
+                    </form>
+                </li>
+                <li class="menuItem">
+                    <form action="/login">
+                        <input type="submit" value="Log in!" class="menuLink">
+                    </form>
+                </li>
+                <li class="menuItem">
+                    <form action="/presignup">
+                        <input type="submit" value="Sign up!" class="menuLink">
+                    </form>
+                </li>
             </ul>
         </header>
     {{/if}}

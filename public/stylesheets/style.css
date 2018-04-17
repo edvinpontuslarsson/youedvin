@@ -41,8 +41,9 @@ button {
     height: 150px;
 }
 .menuItem {
-    display: inline;
+    display: inline-block;
+    margin-left: 3%;
 }
 .menuLink {
-    margin-left: 3%;
+    cursor: pointer;
 }
