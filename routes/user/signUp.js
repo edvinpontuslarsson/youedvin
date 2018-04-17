@@ -52,6 +52,8 @@ router.route('/signup')
         }
       })
 
+      // when I have tested validation func, 
+      // use that instead
       if (password.length < 5) {
         req.session.flash = {
           type: 'error',

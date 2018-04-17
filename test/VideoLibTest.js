@@ -4,7 +4,7 @@ const expect = require('chai').expect
 const VideoLib = require('../lib/VideoLib')
 const videoLib = new VideoLib()
 
-describe('Test of the random string generator function in Lib', () => {
+describe('Test of randomString()', () => {
     describe('Tests the logic of this testing function', () => {
         it('isIdentical(notRandom, 2) should return true', (done) => {
             const result = isIdentical(notRandom, 2)
