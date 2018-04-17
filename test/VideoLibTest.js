@@ -3,65 +3,57 @@
 const expect = require('chai').expect
 const VideoLib = require('../lib/VideoLib')
 const videoLib = new VideoLib()
+const VideoTestingTools = require('./VideoTestingTools')
+const vidTest = new VideoTestingTools()
 
-describe('Test of randomString()', () => {
-    describe('Tests the logic of this testing function', () => {
-        it('isIdentical(notRandom, 2) should return true', (done) => {
-            const result = isIdentical(notRandom, 2)
+describe('Test of videoLib.okayExtName()', () => {
+    describe('Test with filename without extension', () => {
+        it(`videoLib.okayExtName('test') should return false`, (done) => {
+            const answer = videoLib.okayExtName('test')
+            expect(answer).to.eql(false)
+            done()
+            })
+        })
+
+    describe('Test with filename with incorrect extension', () => {
+        it(`videoLib.okayExtName('test.pdf') should return false`, (done) => {
+            const answer = videoLib.okayExtName('test.pdf')
+            expect(answer).to.eql(false)
+            done()
+            })
+        })
+
+    describe('Test with filename with correct extension', () => {
+        it(`videoLib.okayExtName('test.mp4') should return true`, (done) => {
+            const answer = videoLib.okayExtName('test.mp4')
+            expect(answer).to.eql(true)
+            done()
+            })
+        })
+
+    describe('Test with filename with correct extension', () => {
+        it(`videoLib.okayExtName('test.webm') should return true`, (done) => {
+            const answer = videoLib.okayExtName('test.webm')
+            expect(answer).to.eql(true)
+            done()
+            })
+        })
+})
+
+describe('Test of videoLib.randomString() with vidTest.isIdentical()', () => {
+    describe('Tests the logic of this testing method', () => {
+        it('vidTest.isIdentical(vidTest.notRandom, 2) should return true', (done) => {
+            const result = vidTest.isIdentical(vidTest.notRandom, 2)
             expect(result).to.eql(true)
             done()
+            })
         })
 
     describe('Even if called ten thousand times, strings should never be identical', () => {
-        it('isIdentical(lib.randomString, 10000) should return false', (done) => {
-            const result = isIdentical(videoLib.randomString, 10000)
+        it('vidTest.isIdentical(lib.randomString, 10000) should return false', (done) => {
+            const result = vidTest.isIdentical(videoLib.randomString, 10000)
             expect(result).to.eql(false)
             done()
+            })
         })
-    })
 })
-})
-
-/**
- * This is not random
- */
-function notRandom () {
-    return 'the same thing every time'
-}
-
-/**
- * Calls funcToTest as many times as specified in iterations. 
- * Checks if any of the generated strings are identical. 
- * @param {*} funcToTest - function to test
- * @param {number} iterations - amount of times to test
- * @returns {boolean} identical
- */
-function isIdentical (funcToTest, iterations) {
-    const testArr = []
-    let identical = false
-
-    // loops as many times as specified when called
-    for (let i = 0; i < iterations; i += 1) {
-        let randomString = funcToTest()
-
-        // populates the test array with the first string
-        if (i === 0) {
-            testArr.push(randomString)
-        }
-
-        // checks if current string is identical with
-        // any previously generated strings
-        for (let j = 0; j < testArr.length; j += 1) {
-            if (i !== 0 && randomString === testArr[j]) {
-                identical = true
-            }
-        }
-
-        // populates the test array with the second string and onward
-        if (i >= 1) {
-            testArr.push(randomString)
-        }
-    }
-
-    return identical
-}

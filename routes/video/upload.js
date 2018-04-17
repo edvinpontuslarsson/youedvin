@@ -34,10 +34,10 @@ const storage = new GridFsStorage({
       return new Error('You cannot post unless you are logged in!')
     } else {
       return new Promise((resolve, reject) => {
-        const extName = path.extname(file.originalname)
+        // const extName = path.extname(file.originalname)
 
-              // checks the file format before storing
-        if (okayFormat(extName) === false) {
+        // checks the file format before storing
+        if (/*okayFormat(extName)*/ videoLib(file.originalname) === false) {
           return reject(new Error('Unsupported file format'))
         } else {
                 // changes the file name before storing
@@ -108,7 +108,9 @@ router.route('/upload')
  * Checks file format
  * https://en.wikipedia.org/wiki/HTML5_video#Supported_video_and_audio_formats
  * @param {any} extName - filename extension
- */
+ *//**
+  * 
+  
 function okayFormat (extName) {
   // see if I can have path here too,
   // to be able to test that. 
@@ -129,6 +131,6 @@ function okayFormat (extName) {
   }
 
   return answer
-}
+}*/
 
 module.exports = router

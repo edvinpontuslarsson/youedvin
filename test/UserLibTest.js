@@ -4,11 +4,11 @@ const expect = require('chai').expect
 const UserLib = require('../lib/UserLib')
 const userLib = new UserLib()
 
-describe('Test of signUpValidation()', () => {
+describe('Test of userLib.signUpValidation()', () => {
     describe('Test with too short password', () => {
-        it(`signUpValidation('username', 'pass') should
+        it(`signUpValidation('username', 'pass', 'pass', null) should
         return okay: false, expected message & status 400`, (done) => {
-            const reply = userLib.signUpValidation('username', 'pass')
+            const reply = userLib.signUpValidation('username', 'pass', 'pass', null)
             expect(reply.okay).to.eql(false)
             expect(reply.message).to.eql('The password needs to be at least 5 characters long')
             expect(reply.status).to.eql(400)
@@ -17,9 +17,9 @@ describe('Test of signUpValidation()', () => {
     })
 
     describe('Test with non-matching passwords', () => {
-        it(`signUpValidation('username', 'password', 'banana') should
+        it(`signUpValidation('username', 'password', 'banana', null) should
         return okay: false, expected message & status 400`, (done) => {
-            const reply = userLib.signUpValidation('username', 'password', 'banana')
+            const reply = userLib.signUpValidation('username', 'password', 'banana', null)
             expect(reply.okay).to.eql(false)
             expect(reply.message).to.eql('The passwords do not match')
             expect(reply.status).to.eql(400)
@@ -27,7 +27,7 @@ describe('Test of signUpValidation()', () => {
         })    
     })
 
-    describe('Test with pre-existing username', () => {
+    describe('Test where fourth parameter is not null', () => {
         it(`signUpValidation('username', 'password', 'password', 'not-null') should
         return okay: false, expected message & status 409`, (done) => {
             const reply = userLib.signUpValidation('username', 'password', 'password', 'not-null')

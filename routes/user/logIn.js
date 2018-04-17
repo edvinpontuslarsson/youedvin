@@ -52,6 +52,7 @@ router.route('/login')
           res.status(401)
           res.redirect('/login')
         } else {
+          // uses bcrypt compare function
           user.comparePassword(password, (err, result) => {
             // server error
             if (err) {

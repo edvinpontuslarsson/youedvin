@@ -52,7 +52,7 @@ userSchema.methods.comparePassword = function (candidatePassword, callback) {
     if (err) {
       return callback(err)
     }
-        // result === true or false
+    // result === boolean
     callback(null, result)
   })
 }
