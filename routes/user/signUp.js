@@ -13,6 +13,8 @@
 
 const router = require('express').Router()
 const User = require('../../models/User')
+const UserLib = require('../../lib/UserLib')
+const userLib = new UserLib()
 const csrf = require('csurf')
 
 const csrfProtection = csrf()
@@ -52,37 +54,27 @@ router.route('/signup')
         }
       })
 
-      // when I have tested validation func, 
-      // use that instead
-      if (password.length < 5) {
+      // calls validation function in UserLib
+      const validation = userLib.signUpValidation(username, password, confirmPassword, ifAlreadyExists)
+
+      if (validation.okay === false) {
         req.session.flash = {
           type: 'error',
-          text: 'The password needs to be at least 5 characters long'
+          text: validation.message
         }
-        res.status(400)
+        res.status(validation.status)
         res.redirect('/signup')
-      } else if (password !== confirmPassword) {
-        req.session.flash = {
-          type: 'error',
-          text: 'The passwords do not match'
-        }
-        res.status(400)
-        res.redirect('/signup')
-      } else if (ifAlreadyExists !== null) {
-        req.session.flash = {
-          type: 'error',
-          text: 'The username is already taken, please choose a different one!'
-        }
-        res.status(409)
-        res.redirect('/signup')
-      } else {
-              // the password gets salted and hashed
-              // then the user is saved to DB
+      }
+
+      if (validation.okay === true) {
+        // the password gets salted and hashed
+        // then the user is saved to DB
         try {
           const user = await new User({
             username: username,
             password: password
           })
+
           await user.save()
           req.session.flash = {
             type: 'success',
@@ -91,6 +83,7 @@ router.route('/signup')
 
           res.status(201)
           res.redirect('/login')
+
         } catch (error) {
           req.session.flash = {
             type: 'error',
