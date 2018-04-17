@@ -78,10 +78,14 @@ const sessionOptions = {
 
 app.use(session(sessionOptions))
 
-// For flash messages
 app.use((req, res, next) => {
+  // for flash messages
   res.locals.flash = req.session.flash
   delete req.session.flash
+
+  // updates header menu for logged in users
+  res.locals.loggedIn = req.session.username
+
   next()
 })
 

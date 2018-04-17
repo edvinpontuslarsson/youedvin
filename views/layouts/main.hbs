@@ -8,7 +8,36 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body>
-    <header><a href="/">Home Page</a></header>
+    <!-- If I could make the header dynamic like in flash -->
+    {{#if loggedIn }}
+        <header>
+            <ul>
+                <li class="menuItem">
+            <a href="/">Home Page</a>
+            </li>
+            <li class="menuItem">
+                <a href="/logout" class="menuLink">Log out</a>
+            </li>
+            <li class="menuItem">
+                <a href="/upload" class="menuLink">Upload video!</a>
+            </li>
+            </ul>
+        </header>
+    {{else}}
+        <header>
+            <ul>
+                <li class="menuItem">
+            <a href="/" class="menuLink">Home Page</a>
+            </li>
+            <li class="menuItem">
+                <a href="/login" class="menuLink">Log in!</a>
+            </li>
+            <li class="menuItem">
+                <a href="/presignup" class="menuLink">Sign up!</a>
+            </li>
+            </ul>
+        </header>
+    {{/if}}
     <p>{{>flash}}</p>
     {{{ body }}}
 </body>
