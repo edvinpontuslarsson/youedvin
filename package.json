@@ -17,7 +17,6 @@
     "express",
     "mongoDB",
     "CRUD",
-    "https",
     "videosharing"
   ],
   "author": "Edvin Larsson",

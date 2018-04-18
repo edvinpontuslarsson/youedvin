@@ -76,17 +76,14 @@ const sessionOptions = {
   }
 }
 
-let production = false
-
 /**
- * For secure cookies in production mode
- * Using demo code from the course 1dv023:
+ * To trust proxy and make cookies secure in production mode
+ * Inspired by demo code from the course 1dv023:
  * https://github.com/1dv023/exercise-pure-approval-SOLUTION/blob/master/app.js
  */
-if (app.get('env') === 'production') {
+if (process.env.Environment === 'production') {
   app.set('trust proxy', 1)
   sessionOptions.cookie.secure = true
-  production = true
 }
 
 app.use(session(sessionOptions))
@@ -95,13 +92,6 @@ app.use((req, res, next) => {
   // for flash messages
   res.locals.flash = req.session.flash
   delete req.session.flash
-
-  if (production) {
-    req.session.flash = {
-      type: 'success',
-      text: 'In production!'
-    }
-  }
 
   // updates header menu for logged in users
   res.locals.loggedIn = req.session.username
