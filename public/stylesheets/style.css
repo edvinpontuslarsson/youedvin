@@ -3,7 +3,7 @@ body {
     color: rgb(255, 176, 0);
     margin-left: auto;
     margin-right: auto;
-    margin-top: auto;
+    margin-top: 75px;
     margin-bottom: auto;
     width: 75%;
     overflow: auto;
@@ -48,8 +48,8 @@ button {
     background-color: rgb(28, 28, 28);
     position: absolute;
     top: 0;
-    right: 0;
     left: 0;
+    right: 0;
     height: 50px;
 }
 #mainHeader a {
