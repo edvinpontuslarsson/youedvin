@@ -10,7 +10,7 @@
 <body>
     <!--  -->
     {{#if loggedIn }}
-        <header>
+        <header id="mainHeader">
             <ul>
                 <li class="menuItem">
                     <a href="/">Home Page</a>
@@ -24,7 +24,7 @@
             </ul>
         </header>
     {{else}}
-        <header>
+        <header id="mainHeader">
             <ul>
                 <li class="menuItem">
                     <a href="/" class="menuLink">Home Page</a>
@@ -38,7 +38,7 @@
             </ul>
         </header>
     {{/if}}
-    <p>{{>flash}}</p>
-    {{{ body }}}
+        <p>{{>flash}}</p>
+        {{{ body }}}
 </body>
 </html>

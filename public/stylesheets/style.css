@@ -11,6 +11,10 @@ body {
 }
 a {
     color: #5aa2ff;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
 }
 a:visited {
     color: #5aa2ff;
@@ -40,9 +44,27 @@ button {
     width: 300px;
     height: 150px;
 }
+#mainHeader {
+    background-color: rgb(28, 28, 28);
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 50px;
+}
+#mainHeader a {
+    color: white;
+    text-decoration: none;
+}
+#mainHeader a:hover {
+    text-decoration: underline;
+}
 .menuItem {
     display: inline-block;
     margin-left: 3%;
+}
+.menuItem:hover {
+    background-color: rgb(56, 56, 56);
 }
 .menuLink {
     cursor: pointer;
