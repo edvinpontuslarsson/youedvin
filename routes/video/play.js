@@ -59,7 +59,7 @@ router.route('/play/:id')
       res.status(404)
       res.render('error/404')
     } else {
-      // see if I can do this with async await
+    // see if I can do this with async await
     // similarly to how I get VideoInfo
       gfs.files.findOne({
         filename: fileName
@@ -67,6 +67,10 @@ router.route('/play/:id')
         if (error) {
           res.status(500)
           res.redirect('/')
+        }
+
+        if (videoInfo.createdBy === req.session.username) {
+          videoInfo.canEdit = true
         }
 
         res.status(200)

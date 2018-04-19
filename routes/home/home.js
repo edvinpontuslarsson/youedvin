@@ -17,12 +17,6 @@ router.route('/')
       const knownUser = req.session.username
       const videoInfo = await getAllVideoInfo(req, res)
 
-      for (let i = 0; i < videoInfo.length; i += 1) {
-        if (knownUser === videoInfo[i].createdBy) {
-          videoInfo[i].canEdit = true
-        }
-      }
-
       if (!knownUser) {
         // should probably map here and then send in
         res.status(200)
