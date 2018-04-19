@@ -10,17 +10,22 @@ body {
     font-size: 18px;
 }
 a {
+    color: white;
+    text-decoration: none;
+    /*
     color: rgb(255, 176, 0);
-    /*color: #5aafff;
-    text-decoration: none;*/
+    color: #5aafff;
+    */
 }
 a:hover {
     color: #5aafff;
     text-decoration: underline;
 }
 a:visited {
+    color: white;
+    /*
     color: rgb(255, 176, 0);
-    /*color: #5aafff;*/
+    color: #5aafff;*/
 }
 .flash-success {
     padding: 10px;
@@ -35,7 +40,9 @@ a:visited {
     color: black;
 }
 .user {
-    color: rgb(240, 240, 240);
+    color: rgb(255, 176, 0);
+    /*
+    color: rgb(240, 240, 240);*/
 }
 button {
     cursor: pointer;
@@ -48,12 +55,15 @@ button {
     height: 150px;
 }
 #mainHeader {
-    background-color: rgb(28, 28, 28);
+    background-color: rgb(28, 28, 28);    
+    grid-template-columns: 13% 24.5% 24.5% 24.5% 13%;
+    grid-template-rows: 50px;
+    /*
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 50px;
+    height: 50px;*/
 }
 #mainHeader a {
     color: white;

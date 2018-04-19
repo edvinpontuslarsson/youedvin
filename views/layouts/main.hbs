@@ -11,13 +11,13 @@
     {{#if loggedIn }}
         <header id="mainHeader">
             <ul>
-                <li class="menuItem">
+                <li class="menuItem" id="menu1">
                     <a href="/">Home Page</a>
                 </li>
-                <li class="menuItem">
+                <li class="menuItem" id="menu2">
                     <a href="/logout" class="menuLink">Log out</a>
                 </li>
-                <li class="menuItem">
+                <li class="menuItem" id="menu3">
                     <a href="/upload" class="menuLink">Upload video!</a>
                 </li>
             </ul>
@@ -25,13 +25,13 @@
     {{else}}
         <header id="mainHeader">
             <ul>
-                <li class="menuItem">
+                <li class="menuItem" id="menu1">
                     <a href="/" class="menuLink">Home Page</a>
                 </li>
-                <li class="menuItem">
+                <li class="menuItem" id="menu2">
                     <a href="/login" class="menuLink">Log in!</a>
                 </li>
-                <li class="menuItem">
+                <li class="menuItem" id="menu3">
                     <a href="/presignup" class="menuLink">Sign up!</a>
                 </li>
             </ul>

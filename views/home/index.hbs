@@ -6,6 +6,6 @@
 <h2>Uploaded Videos</h2>
 {{#each videoInfo}}
 <p class="user"><a href="/play/{{this.fileName}}">{{this.title}}</a><br>
-{{this.createdBy}}, {{this.createdAt}}
+Uploaded by {{this.createdBy}}, on {{this.createdAt}}
 </p>
 {{/each}}
