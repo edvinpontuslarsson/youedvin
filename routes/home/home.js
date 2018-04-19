@@ -16,19 +16,14 @@ router.route('/')
     .get(async (req, res) => {
       const knownUser = req.session.username
       const videoInfo = await getAllVideoInfo(req, res)
-      const videodArr = []
-
-      for (let i = videoInfo.length - 1; i >= 0; i -= 1) {
-        videodArr.push(videoInfo[i])
-      }
 
       if (!knownUser) {
         // should probably map here and then send in
         res.status(200)
-        return res.render('home/index', { videodArr })
+        return res.render('home/index', { videoInfo })
       } else {
         res.status(200)
-        return res.render('home/index', { knownUser, videodArr })
+        return res.render('home/index', { knownUser, videoInfo })
       }
     })
 
@@ -39,7 +34,9 @@ router.route('/')
  */
 async function getAllVideoInfo (req, res) {
   try {
-    const videoInfo = await VideoInfo.find({}).exec()
+    const videoInfo = await VideoInfo.find({}).sort({
+      createdAt: 'descending'
+    }).exec()
     return videoInfo
   } catch (error) {
     req.session.flash = {
