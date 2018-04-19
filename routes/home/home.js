@@ -28,7 +28,7 @@ router.route('/')
     })
 
 /**
- * Gets Video info
+ * Gets Video info, can limit
  * @param {*} req - request
  * @param {*} res - response
  */
@@ -36,7 +36,7 @@ async function getAllVideoInfo (req, res) {
   try {
     const videoInfo = await VideoInfo.find({}).sort({
       createdAt: 'descending'
-    }).exec()
+    }).limit(2).exec()
     return videoInfo
   } catch (error) {
     req.session.flash = {
