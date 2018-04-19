@@ -12,14 +12,14 @@ body {
     font-size: 18px;
 }
 a {
-    color: #5aa2ff;
+    color: #5aafff;
     text-decoration: none;
 }
 a:hover {
     text-decoration: underline;
 }
 a:visited {
-    color: #5aa2ff;
+    color: #5aafff;
 }
 .flash-success {
     padding: 10px;
