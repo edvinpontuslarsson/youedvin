@@ -7,38 +7,36 @@
     <title>youEdvin</title>
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
+<body>
     <!--  -->
     {{#if loggedIn }}
-        <header id="mainHeader">
-            <ul>
-                <li class="menuItem" id="menu1">
-                    <a href="/">Home Page</a>
-                </li>
-                <li class="menuItem" id="menu2">
-                    <a href="/logout" class="menuLink">Log out</a>
-                </li>
-                <li class="menuItem" id="menu3">
-                    <a href="/upload" class="menuLink">Upload video!</a>
-                </li>
-            </ul>
-        </header>
+        <div id="mainMenu">
+            <div class="menuItem" id="menu1">
+                <a href="/" class="menuLink">Home Page</a>
+            </div>
+            <div class="menuItem" id="menu2">
+                <a href="/logout" class="menuLink">Log out</a>
+            </div>
+            <div class="menuItem" id="menu3">
+                <a href="/upload" class="menuLink">Upload video!</a>
+            </div>
+        </div>     
     {{else}}
-        <header id="mainHeader">
-            <ul>
-                <li class="menuItem" id="menu1">
-                    <a href="/" class="menuLink">Home Page</a>
-                </li>
-                <li class="menuItem" id="menu2">
-                    <a href="/login" class="menuLink">Log in!</a>
-                </li>
-                <li class="menuItem" id="menu3">
-                    <a href="/presignup" class="menuLink">Sign up!</a>
-                </li>
-            </ul>
-        </header>
+        <div id="mainMenu">
+            <div class="menuItem" id="menu1">
+                <a href="/" class="menuLink">Home Page</a>
+            </div>
+            <div class="menuItem" id="menu2">
+               <a href="/login" class="menuLink">Log in!</a> 
+            </div>
+            <div class="menuItem" id="menu3">
+                <a href="/presignup" class="menuLink">Sign up!</a>
+            </div>
+        </div>
     {{/if}}
-<body>
+    <section id="mainSection">
         <p>{{>flash}}</p>
         {{{ body }}}
+    </section>
 </body>
 </html>

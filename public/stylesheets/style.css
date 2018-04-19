@@ -1,9 +1,11 @@
 body {
     background-color: rgb(56, 56, 56);
+}
+#mainSection {
     color: rgb(255, 176, 0);
     margin-left: auto;
     margin-right: auto;
-    margin-top: 75px;
+    margin-top: 45px;
     margin-bottom: auto;
     width: 75%;
     overflow: auto;
@@ -13,7 +15,6 @@ a {
     color: white;
     text-decoration: none;
     /*
-    color: rgb(255, 176, 0);
     color: #5aafff;
     */
 }
@@ -54,31 +55,33 @@ button {
     width: 300px;
     height: 150px;
 }
-#mainHeader {
+#mainMenu {
+    display: grid;
     background-color: rgb(28, 28, 28);    
-    grid-template-columns: 13% 24.5% 24.5% 24.5% 13%;
-    grid-template-rows: 50px;
-    /*
+    grid-template-columns: 13% 120px 120px 120px auto;
+    grid-template-rows: 40px;
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 50px;*/
 }
-#mainHeader a {
+.menuItem {
+    padding: 10px;
+    text-align: left;
+}
+.menuLink a {
     color: white;
     text-decoration: none;
 }
-#mainHeader a:hover {
+.menuLink a:hover {
     text-decoration: underline;
 }
-.menuItem {
-    display: inline-block;
-    margin-left: 3%;
+#menu1 {
+    grid-column-start: 2;
 }
-.menuItem:hover {
-    background-color: rgb(42, 42, 42);
+#menu2 {
+    grid-column-start: 3;
 }
-.menuLink {
-    cursor: pointer;
+#menu3 {
+    grid-column-start: 4;
 }
