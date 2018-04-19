@@ -36,7 +36,7 @@ async function getAllVideoInfo (req, res) {
   try {
     const videoInfo = await VideoInfo.find({}).sort({
       createdAt: 'descending'
-    }).limit(2).exec()
+    }).limit(2).skip(1).exec()
     return videoInfo
   } catch (error) {
     req.session.flash = {
