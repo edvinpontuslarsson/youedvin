@@ -2,13 +2,13 @@
 <!-- height px should be 75 % of width px -->
 <!-- Original: 320 & 240 -->
 <!-- Updated: 400 & height="300" -->
- <video width="95%" autoplay controls>
+ <video width="75%" autoplay controls>
   <source src="/video/{{videoFile.filename}}" type="{{videoFile.contentType}}">
 Your browser does not support the video tag.
 </video> 
 <p class="user">Uploaded by {{videoInfo.createdBy}} on {{videoInfo.createdAt}}</p>
 {{#if videoInfo.canEdit}}
-<br><a href="/delete/{{videoInfo.fileName}}">Delete Video</a>
+<a href="/delete/{{videoInfo.fileName}}">Delete Video</a>
 {{/if}}
 <h2>Description</h2>
 <p>{{videoInfo.description}}</p>

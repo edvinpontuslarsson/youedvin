@@ -94,7 +94,7 @@ app.use((req, res, next) => {
   delete req.session.flash
 
   // updates header menu for logged in users
-  res.locals.loggedIn = req.session.username
+  res.locals.username = req.session.username
 
   next()
 })

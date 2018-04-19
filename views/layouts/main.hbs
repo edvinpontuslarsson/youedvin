@@ -9,7 +9,7 @@
 </head>
 <body>
     <!--  -->
-    {{#if loggedIn }}
+    {{#if username }}
         <div id="mainMenu">
             <div class="menuItem" id="menu1">
                 <a href="/" class="menuLink">Home Page</a>
@@ -20,6 +20,10 @@
             <div class="menuItem" id="menu3">
                 <a href="/upload" class="menuLink">Upload video!</a>
             </div>
+            <!--
+            <div class="menuItem" id="menu4">
+                {{ username }}
+            </div>-->
         </div>     
     {{else}}
         <div id="mainMenu">
