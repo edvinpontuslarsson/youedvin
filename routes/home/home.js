@@ -15,28 +15,36 @@ const VideoInfo = require('../../models/VideoInfo')
 router.route('/')
     .get(async (req, res) => {
       const knownUser = req.session.username
-      const videoInfo = await getAllVideoInfo(req, res)
+      const videoInfo = await getSomeVideoInfo(req, res, 25, 0)
 
       if (!knownUser) {
         // should probably map here and then send in
         res.status(200)
-        return res.render('home/index', { videoInfo })
+        return res.render('home/index', {
+          videoInfo
+        })
       } else {
         res.status(200)
-        return res.render('home/index', { knownUser, videoInfo })
+        return res.render('home/index', {
+          knownUser, videoInfo
+        })
       }
     })
+
+// should have below in VideoLib for consistency
 
 /**
  * Gets Video info, can limit
  * @param {*} req - request
  * @param {*} res - response
+ * @param {number} limit - amount to limit
+ * @param {number} skip - amount to skip
  */
-async function getAllVideoInfo (req, res) {
+async function getSomeVideoInfo (req, res, limit, skip) {
   try {
     const videoInfo = await VideoInfo.find({}).sort({
       createdAt: 'descending'
-    }).limit(2).skip(1).exec()
+    }).limit(limit).skip(skip).exec()
     return videoInfo
   } catch (error) {
     req.session.flash = {
