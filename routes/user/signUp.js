@@ -83,7 +83,6 @@ router.route('/signup')
 
           res.status(201)
           res.redirect('/login')
-
         } catch (error) {
           req.session.flash = {
             type: 'error',

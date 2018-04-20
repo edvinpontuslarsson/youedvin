@@ -37,7 +37,7 @@ router.route('/delete/:id')
         res.status(200)
         res.header({ csrfToken: req.csrfToken() })
         res.render('video/delete', {
-          csrfToken: req.csrfToken(), 
+          csrfToken: req.csrfToken(),
           id: req.params.id,
           title: video.title
         })

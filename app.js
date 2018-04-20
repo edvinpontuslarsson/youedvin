@@ -100,7 +100,7 @@ app.use((req, res, next) => {
 })
 
 // loads routes as "mini-apps"
-app.use('/', require('./routes/home/home'))
+app.use('/', require('./routes/home/index'))
 app.use('/', require('./routes/user/preCookie'))
 app.use('/', require('./routes/user/logIn'))
 app.use('/', require('./routes/user/logOut'))

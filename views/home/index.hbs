@@ -1,11 +1,16 @@
-{{#if knownUser }}
-<h1>Howdy, {{ knownUser }}!</h1>
-{{else}}
-<h1>Howdy, Stranger!</h1>
-{{/if}}
-<h3>Uploaded Videos:</h3>
-{{#each videoInfo}}
+<h1>Uploaded Videos:</h1>
+{{#each videoArr}}
 <p class="user"><a href="/play/{{this.fileName}}">{{this.title}}</a><br>
 Uploaded by {{this.createdBy}} on {{this.createdAt}}
 </p>
 {{/each}}
+{{#if addPage}}
+<!-- see reddit in Firefox for inspiration -->
+<p>
+    View more: 
+    {{#if prevPage}}
+    <a href="/index/{{prevPage}}"> &lt; prev </a>
+    {{/if}}
+    <a href="/index/{{nextPage}}">next &gt; </a>
+</p>
+{{/if}}

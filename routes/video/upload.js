@@ -30,24 +30,22 @@ const csrfProtection = csrf()
 const storage = new GridFsStorage({
   url: process.env.dbURL,
   file: (req, file) => {
-      return new Promise((resolve, reject) => {
-        
-        if (videoLib.okayExtName(file.originalname) === false) {
-          return reject(new Error(`Unsuccesful attempt at uploading ${path.extname(file.originalname)} file`))
-        
-        } else if (!req.session.username) {
-          return reject(new Error('Unauthorized file upload attempt'))
+    return new Promise((resolve, reject) => {
+      if (videoLib.okayExtName(file.originalname) === false) {
+        return reject(new Error(`Unsuccesful attempt at uploading ${path.extname(file.originalname)} file`))
+      } else if (!req.session.username) {
+        return reject(new Error('Unauthorized file upload attempt'))
 
         // changes the file name before storing
-        } else {
-          const fileName = videoLib.randomString() + path.extname(file.originalname)
-          const fileInfo = {
-            filename: fileName,
-            bucketName: 'uploads'
-          }
-          resolve(fileInfo)
+      } else {
+        const fileName = videoLib.randomString() + path.extname(file.originalname)
+        const fileInfo = {
+          filename: fileName,
+          bucketName: 'uploads'
         }
-      })
+        resolve(fileInfo)
+      }
+    })
   }
 })
 const upload = multer({ storage })
@@ -69,7 +67,7 @@ router.route('/upload')
 
     // saves video to DB with upload.single-function
     .post(csrfProtection, upload.single('video'), async (req, res) => {
-        if (req.session.username) {
+      if (req.session.username) {
         // saves video info in separate mongoose model
         const videoInfo = new VideoInfo({
           fileName: req.file.filename,
