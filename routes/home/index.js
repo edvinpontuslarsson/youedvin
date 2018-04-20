@@ -13,7 +13,7 @@ const router = require('express').Router()
 const VideoLib = require('../../lib/VideoLib')
 const videoLib = new VideoLib()
 
-// later replace all twos with 20
+// later replace all twos with 20, almost
 
 // and all threes with 21
 
@@ -37,6 +37,9 @@ router.route('/')
 
 router.route('/index/:id')
     .get(async (req, res) => {
+
+      // put this logic into func and test
+
       const currentPage = parseInt(req.params.id)
       const prevPage = currentPage - 1
       let nextPage = currentPage + 1
