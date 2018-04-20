@@ -7,10 +7,12 @@ Uploaded by {{this.createdBy}} on {{this.createdAt}}
 {{#if addPage}}
 <!-- see reddit in Firefox for inspiration -->
 <p>
-    View more: 
+    View more:
     {{#if prevPage}}
     <a href="/index/{{prevPage}}"> &lt; prev </a>
     {{/if}}
+    {{#if nextPage}}
     <a href="/index/{{nextPage}}">next &gt; </a>
+    {{/if}}
 </p>
 {{/if}}

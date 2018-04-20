@@ -13,6 +13,10 @@ const router = require('express').Router()
 const VideoLib = require('../../lib/VideoLib')
 const videoLib = new VideoLib()
 
+// later replace all twos with 20
+
+// and all threes with 21
+
 router.route('/')
     .get(async (req, res) => { 
       // query for 1 more than to be displayed,
@@ -35,7 +39,7 @@ router.route('/index/:id')
     .get(async (req, res) => {
       const currentPage = parseInt(req.params.id)
       const prevPage = currentPage - 1
-      const nextPage = currentPage + 1
+      let nextPage = currentPage + 1
 
       // how many to skip, depending on how many per page
       const skip = prevPage * 2
@@ -46,7 +50,9 @@ router.route('/index/:id')
         req, res, 3, skip
       )
 
-      const addPage = true ? videoInfo.length > 2 : false
+      if (videoInfo.length < 3) {
+        nextPage = false
+      }
 
       if (videoInfo.length < 1) {
         res.status(404)
@@ -56,7 +62,7 @@ router.route('/index/:id')
 
         res.status(200)
         res.render('home/index', {
-          videoArr, addPage, prevPage, nextPage
+          videoArr, addPage: true, prevPage, nextPage
         })
       }
     }) 
