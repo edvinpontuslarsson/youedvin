@@ -127,6 +127,30 @@ app.use((err, req, res, next) => {
     return res.render('error/404')
     // return res.status(404).sendFile(path.join(__dirname, 'views', 'error', '404.html'))
   }
+
+  // For invalid csrf-tokens
+  if (err.code === 'EBADCSRFTOKEN') {
+    res.status(403)
+    return res.render('error/403')
+  }
+
+  // For failed file upload attempts
+  if (err.message === 'Upload attempt with unsupported file format') {
+    req.session.flash = {
+      type: 'error',
+      text: 'Unsupported file format'
+    }
+    
+    res.status(400)
+    return res.redirect('/upload')
+  }
+
+  // For file upload posts from non-authenticated users
+  if (err.message === 'Unauthorized file upload attempt') {
+    res.status(403)
+    return res.render('error/403')
+  }
+
   console.log(err)
 
   // Unhandled errors render 500 error page

@@ -31,8 +31,10 @@ const storage = new GridFsStorage({
   url: process.env.dbURL,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
+
+      // see the error handling in the app-module for how these errors are handled
       if (videoLib.okayExtName(file.originalname) === false) {
-        return reject(new Error(`Unsuccesful attempt at uploading ${path.extname(file.originalname)} file`))
+        return reject(new Error('Upload attempt with unsupported file format'))
       } else if (!req.session.username) {
         return reject(new Error('Unauthorized file upload attempt'))
 
@@ -94,7 +96,7 @@ router.route('/upload')
           res.redirect('/upload')
         }
       // if the user isn't logged in
-      } else {
+    } else {
         res.status(403)
         res.render('error/403')
       }

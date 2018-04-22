@@ -57,3 +57,25 @@ describe('Test of videoLib.randomString() with vidTest.isIdentical()', () => {
     })
   })
 })
+
+describe('Test of videoLib.makeIndexArr() with vidTest.mockVideoObjArr()', () => {
+  describe(`Tests that videoLib.makeIndexArr() returns an array
+    with the same length as called with if limit is not exceeded`, () => {
+    it(`videoLib.makeIndexArr(5, vidTest.mockVideoObjArr(4)) 
+      should return an array with length 4`, (done) => {
+      const result = videoLib.makeIndexArr(5, vidTest.mockVideoObjArr(4))
+      expect(result.length).to.eql(4)
+      done()
+    })
+  })
+
+  describe(`Tests that videoLib.makeIndexArr() returns an array
+    with the same length as the limit when limit is exceeded by 1`, () => {
+    it(`videoLib.makeIndexArr(3, vidTest.mockVideoObjArr(4)) 
+      should return an array with length 3`, (done) => {
+      const result = videoLib.makeIndexArr(3, vidTest.mockVideoObjArr(4))
+      expect(result.length).to.eql(3)
+      done()
+    })
+  })
+})

@@ -26,6 +26,7 @@ router.route('/login')
         csrfToken: req.csrfToken()
       })
     })
+    
     // checks for existing user and if the password is correct
     .post(csrfProtection, (req, res) => {
       const username = req.body.username

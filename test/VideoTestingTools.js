@@ -42,6 +42,26 @@ class VideoTestingTools {
 
     return identical
   }
+
+  /**
+   * Returns array with specified amount of mock 
+   * video info objects
+   * @param {Number} amount 
+   */
+  mockVideoObjArr (amount) {
+    const mockArr = []
+
+    for (let i = 0; i < amount; i += 1) {
+      const mockObj = {
+        fileName: 'just mock',
+        title: 'just mock',
+        createdBy: 'just mock',
+        createdAt: 'just mock'
+      }
+      mockArr.push(mockObj)
+    }
+    return mockArr
+  }
 }
 
 module.exports = VideoTestingTools
