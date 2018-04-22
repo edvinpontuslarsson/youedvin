@@ -58,7 +58,7 @@ router.route('/index/:id')
       )
 
       // if there should be a next page or not
-      if (videoInfo.length < limit) {
+      if (videoInfo.length <= limit) {
         nextPage = false
       }
 
