@@ -18,42 +18,51 @@ const videoLib = new VideoLib()
 // and all threes with 21
 
 router.route('/')
-    .get(async (req, res) => { 
+    .get(async (req, res) => {
+      // limit of videolinks to be displayed per page
+      const limit = 2
+
       // query for 1 more than to be displayed,
       // to check if new page is needed 
+      const query = limit + 1
+      
       const videoInfo = await videoLib.getSomeVideoInfo(
-            req, res, 3, 0
+            req, res, query, 0
       )
 
-      const addPage = true ? videoInfo.length > 2 : false
+      const addPage = true ? videoInfo.length > limit : false
 
-      const videoArr = videoLib.makeIndexArr(2, videoInfo)
+      const videoArr = videoLib.makeIndexArr(limit, videoInfo)
 
       res.status(200)
       res.render('home/index', {
-        videoArr, addPage, nextPage: 2
+        videoArr, addPage, nextPage: limit
       })
     })
 
 router.route('/index/:id')
     .get(async (req, res) => {
+      const limit = 2
 
-      // put this logic into func and test
-
+      // query for 1 more than to be displayed,
+      // to check if new page is needed 
+      const query = limit + 1
+      
       const currentPage = parseInt(req.params.id)
       const prevPage = currentPage - 1
       let nextPage = currentPage + 1
 
       // how many to skip, depending on how many per page
-      const skip = prevPage * 2
+      const skip = prevPage * limit
 
       // query for 1 more than to be displayed,
       // to check if new page is needed 
       const videoInfo = await videoLib.getSomeVideoInfo(
-        req, res, 3, skip
+        req, res, query, skip
       )
 
-      if (videoInfo.length < 3) {
+      // if there should be a next page or not
+      if (videoInfo.length < limit) {
         nextPage = false
       }
 
@@ -61,7 +70,7 @@ router.route('/index/:id')
         res.status(404)
         res.render('error/404')
       } else {
-        const videoArr = videoLib.makeIndexArr(2, videoInfo)
+        const videoArr = videoLib.makeIndexArr(limit, videoInfo)
 
         res.status(200)
         res.render('home/index', {
