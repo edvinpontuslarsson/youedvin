@@ -39,6 +39,12 @@ router.route('/')
 router.route('/index/:id')
     .get(async (req, res) => {      
       const currentPage = parseInt(req.params.id)
+
+      if (isNaN(currentPage)) {
+        res.status(404)
+        return res.render('error/404')
+      }
+
       const prevPage = currentPage - 1
       let nextPage = currentPage + 1
 
@@ -56,7 +62,7 @@ router.route('/index/:id')
         nextPage = false
       }
 
-      if (videoInfo.length < 1 || isNaN(currentPage)) {
+      if (videoInfo.length < 1) {
         res.status(404)
         res.render('error/404')
       } else {

@@ -29,6 +29,11 @@ router.route('/delete/:id')
 // then renders the page for choosing to delete the Video
     .get(csrfProtection, async (req, res) => {
       const video = await videoLib.getVideoInfoByFileName(req.params.id)
+      
+      if (video === null) {
+        res.status(404)
+        return res.render('error/404')
+      }
 
       if (video.creatorId !== req.session.userid) {
         res.status(403)
