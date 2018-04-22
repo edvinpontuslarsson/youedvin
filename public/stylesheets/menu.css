@@ -1,0 +1,30 @@
+#mainMenu {
+    display: grid;
+    background-color: rgb(28, 28, 28);    
+    grid-template-columns: 13% 120px 120px 120px auto 13%;
+    grid-template-rows: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.menuItem {
+    padding: 10px;
+    text-align: left;
+}
+.menuLink a {
+    color: white;
+    text-decoration: none;
+}
+.menuLink a:hover {
+    text-decoration: underline;
+}
+#menu1 {
+    grid-column-start: 2;
+}
+#menu2 {
+    grid-column-start: 3;
+}
+#menu3 {
+    grid-column-start: 4;
+}

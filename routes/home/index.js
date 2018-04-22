@@ -13,19 +13,15 @@ const router = require('express').Router()
 const VideoLib = require('../../lib/VideoLib')
 const videoLib = new VideoLib()
 
-// later replace all twos with 20, almost
+// limit of videolinks to be displayed per page
+const limit = 2
 
-// and all threes with 21
+// query for 1 more than to be displayed,
+// to check if new page is needed 
+const query = limit + 1
 
 router.route('/')
-    .get(async (req, res) => {
-      // limit of videolinks to be displayed per page
-      const limit = 2
-
-      // query for 1 more than to be displayed,
-      // to check if new page is needed 
-      const query = limit + 1
-      
+    .get(async (req, res) => {  
       const videoInfo = await videoLib.getSomeVideoInfo(
             req, res, query, 0
       )
@@ -41,13 +37,7 @@ router.route('/')
     })
 
 router.route('/index/:id')
-    .get(async (req, res) => {
-      const limit = 2
-
-      // query for 1 more than to be displayed,
-      // to check if new page is needed 
-      const query = limit + 1
-      
+    .get(async (req, res) => {      
       const currentPage = parseInt(req.params.id)
       const prevPage = currentPage - 1
       let nextPage = currentPage + 1
@@ -66,7 +56,7 @@ router.route('/index/:id')
         nextPage = false
       }
 
-      if (videoInfo.length < 1) {
+      if (videoInfo.length < 1 || isNaN(currentPage)) {
         res.status(404)
         res.render('error/404')
       } else {

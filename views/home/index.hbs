@@ -6,13 +6,14 @@ Uploaded by {{this.createdBy}} on {{this.createdAt}}
 {{/each}}
 {{#if addPage}}
 <!-- see reddit in Firefox for inspiration -->
-<p>
+<p class="turnPage">
     View more:
     {{#if prevPage}}
-    <a href="/index/{{prevPage}}"> &lt; prev </a>
+    <button disabled="disabled" class="turnPageBtn"><a href="/index/{{prevPage}}">&lt; prev</a></button>
     {{/if}}
     {{#if nextPage}}
-    <a href="/index/{{nextPage}}">next &gt; </a>
+    <!-- &lt; prev -->
+    <button disabled="disabled" class="turnPageBtn"><a href="/index/{{nextPage}}">next &gt;</a></button>
     {{/if}}
 </p>
 {{/if}}

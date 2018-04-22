@@ -3,7 +3,6 @@ body {
     color: rgb(255, 176, 0);
 }
 #mainSection {
-    color: rgb(255, 176, 0);
     margin-left: auto;
     margin-right: auto;
     margin-top: 45px;
@@ -15,9 +14,6 @@ body {
 a {
     color: white;
     text-decoration: none;
-    /*
-    color: #5aafff;
-    */
 }
 a:hover {
     color: #5aafff;
@@ -25,9 +21,6 @@ a:hover {
 }
 a:visited {
     color: white;
-    /*
-    color: rgb(255, 176, 0);
-    color: #5aafff;*/
 }
 .flash-success {
     padding: 10px;
@@ -43,8 +36,6 @@ a:visited {
 }
 .user {
     color: rgb(255, 176, 0);
-    /*
-    color: rgb(240, 240, 240);*/
 }
 button {
     cursor: pointer;
@@ -56,33 +47,12 @@ button {
     width: 300px;
     height: 150px;
 }
-#mainMenu {
-    display: grid;
-    background-color: rgb(28, 28, 28);    
-    grid-template-columns: 13% 120px 120px 120px auto 13%;
-    grid-template-rows: 40px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+.turnPage a {
+    color: rgb(0, 125, 255);
 }
-.menuItem {
-    padding: 10px;
-    text-align: left;
+.turnPage a:visited {
+    color: rgb(0, 125, 255);
 }
-.menuLink a {
-    color: white;
-    text-decoration: none;
-}
-.menuLink a:hover {
-    text-decoration: underline;
-}
-#menu1 {
-    grid-column-start: 2;
-}
-#menu2 {
-    grid-column-start: 3;
-}
-#menu3 {
-    grid-column-start: 4;
+.turnPageBtn {
+    background-color: rgb(240, 240, 240)
 }
