@@ -1,11 +1,22 @@
+/**
+ * @author Edvin Larsson
+ *
+ * Model for keeping track of the total amount of 
+ * uploaded videos
+ *
+ * @requires mongoose
+ */
+
 'use strict'
 
-/**
- * Every time a video is saved, +1 here
- *
- * Can be useful for being able to shuffle videos,
- * skip - random from 0 to max
- *
- * Can also be used to be able to calculate how many pages
- * with videos there are
- */
+const mongoose = require('mongoose')
+
+const videoAmountSchema = mongoose.Schema({
+    amount: {
+        type: Number, required: true, default: 0
+    }
+})
+
+const VideoAmount = mongoose.model('Amount', videoAmountSchema)
+
+module.exports = VideoAmount

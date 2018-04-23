@@ -1,9 +1,6 @@
 <h1>{{videoInfo.title}}</h1>
-<!-- height px should be 75 % of width px -->
-<!-- Original: 320 & 240 -->
-<!-- Updated: 400 & height="300" -->
  <video width="75%" autoplay controls>
-  <source src="/video/{{videoFile.filename}}" type="{{videoFile.contentType}}">
+  <source src="/video/{{videoInfo.fileName}}" type="{{videoInfo.contentType}}">
 Your browser does not support the video tag.
 </video> 
 <p class="user">Uploaded by {{videoInfo.createdBy}} on {{videoInfo.createdAt}}</p>

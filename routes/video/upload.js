@@ -73,6 +73,7 @@ router.route('/upload')
         // saves video info in separate mongoose model
         const videoInfo = new VideoInfo({
           fileName: req.file.filename,
+          contentType: req.file.contentType,
           title: req.body.title,
           description: req.body.description,
           createdBy: req.session.username,

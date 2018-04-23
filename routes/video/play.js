@@ -55,29 +55,20 @@ router.route('/play/:id')
 
     const videoInfo = await videoLib.getVideoInfoByFileName(fileName)
 
+    // cache video info with redis
+
     if (videoInfo === null) {
       res.status(404)
       res.render('error/404')
     } else {
-    // see if I can do this with async await
-    // similarly to how I get VideoInfo
-      gfs.files.findOne({
-        filename: fileName
-      }, (error, videoFile) => {
-        if (error) {
-          res.status(500)
-          res.redirect('/')
-        }
-
         if (videoInfo.createdBy === req.session.username) {
           videoInfo.canEdit = true
         }
 
         res.status(200)
         res.render('video/play', {
-          videoInfo, videoFile
+          videoInfo
         })
-      })
     }
   })
 

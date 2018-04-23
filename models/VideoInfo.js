@@ -4,7 +4,6 @@
  * Model for video info
  *
  * @requires mongoose
- * @requires crypto
  */
 
 'use strict'
@@ -16,6 +15,9 @@ const videoInfoSchema = mongoose.Schema({
     type: String, required: false
   },
   fileName: {
+    type: String, required: true
+  },
+  contentType: {
     type: String, required: true
   },
   title: {
