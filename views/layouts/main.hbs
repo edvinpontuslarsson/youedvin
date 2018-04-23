@@ -10,9 +10,10 @@
     <link rel="stylesheet" href="/stylesheets/footer.css">
 </head>
 <body>
-    <!--  -->
+    <section id="page">
+        <!--  -->
     {{#if username }}
-        <div id="mainMenu">
+        <header id="mainMenu">
             <div class="menuItem" id="menu1">
                 <a href="/" class="menuLink">Home Page</a>
             </div>
@@ -25,9 +26,9 @@
             <div class="menuItem" id="menu4">
                 {{ username }}
             </div>
-        </div>     
+        </header>     
     {{else}}
-        <div id="mainMenu">
+        <header id="mainMenu">
             <div class="menuItem" id="menu1">
                 <a href="/" class="menuLink">Home Page</a>
             </div>
@@ -37,7 +38,7 @@
             <div class="menuItem" id="menu3">
                 <a href="/presignup" class="menuLink">Sign up!</a>
             </div>
-        </div>
+        </header>
     {{/if}}
     <section id="mainSection">
         <p>{{>flash}}</p>
@@ -51,6 +52,6 @@
             ... uploaded videos
         </div>
     </footer>
-    <script src="/js/footer.js"></script>
+    </section>
 </body>
 </html>

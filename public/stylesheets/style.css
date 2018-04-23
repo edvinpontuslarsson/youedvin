@@ -1,12 +1,24 @@
+html,
 body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
     background-color: rgb(56, 56, 56);
     color: rgb(255, 176, 0);
+}
+/*Inspired by: http://matthewjamestaylor.com/blog/keeping-footers-at-the-bottom-of-the-page*/
+#page {
+    min-height:100%;
+    position:relative;
 }
 #mainSection {
     margin-left: auto;
     margin-right: auto;
-    margin-top: 45px;
-    margin-bottom: auto;
+    /*
+    Padding bottom, same size as the footer,
+    inspired by: http://matthewjamestaylor.com/blog/keeping-footers-at-the-bottom-of-the-page
+     */
+    padding-bottom: 40px;
     width: 75%;
     overflow: auto;
     font-size: 18px;
