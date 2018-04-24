@@ -21,6 +21,7 @@ const storage = new GridFsStorage({
           // changes the file name before storing
         } else {
           const fileName = Lib.make.randomString() + path.extname(file.originalname)
+          console.log(fileName)
           const fileInfo = {
             filename: fileName,
             bucketName: 'uploads'
