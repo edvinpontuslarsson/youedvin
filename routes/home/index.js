@@ -2,7 +2,7 @@
  * @module home.js
  * @author Edvin Larsson
  *
- * Route for the home page
+ * Route for index pages
  *
  * @requires express
  */
@@ -10,7 +10,7 @@
 'use strict'
 
 const router = require('express').Router()
-const VideoLib = require('../../lib/VideoLib')
+const Lib = require('../../lib/Lib')
 
 // limit of videolinks to be displayed per page
 const limit = 2
@@ -21,13 +21,13 @@ const query = limit + 1
 
 router.route('/')
     .get(async (req, res) => {  
-      const videoInfo = await VideoLib.getSomeVideoInfo(
+      const videoInfo = await Lib.get.newestVideos(
             req, res, query, 0
       )
 
       const addPage = true ? videoInfo.length > limit : false
 
-      const videoArr = VideoLib.makeIndexArr(limit, videoInfo)
+      const videoArr = Lib.make.indexArr(limit, videoInfo)
 
       res.status(200)
       res.render('home/index', {
@@ -52,7 +52,7 @@ router.route('/index/:id')
 
       // query for 1 more than to be displayed,
       // to check if new page is needed 
-      const videoInfo = await VideoLib.getSomeVideoInfo(
+      const videoInfo = await Lib.get.newestVideos(
         req, res, query, skip
       )
 
@@ -65,7 +65,7 @@ router.route('/index/:id')
         res.status(404)
         res.render('error/404')
       } else {
-        const videoArr = VideoLib.makeIndexArr(limit, videoInfo)
+        const videoArr = Lib.make.indexArr(limit, videoInfo)
 
         res.status(200)
         res.render('home/index', {

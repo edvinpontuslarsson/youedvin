@@ -2,7 +2,7 @@
 
 const router = require('express').Router()
 const mongoose = require('mongoose')
-const VideoLib = require('../../lib/VideoLib')
+const Lib = require('../../lib/Lib')
 
 /*
 const csrf = require('csurf')
@@ -52,7 +52,7 @@ router.route('/play/:id')
   .get(async (req, res) => {
     const fileName = req.params.id
 
-    const videoInfo = await VideoLib.getVideoInfoByFileName(fileName)
+    const videoInfo = await Lib.get.aVideo(fileName)
 
     // cache video info with redis
 

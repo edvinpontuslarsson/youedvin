@@ -13,7 +13,7 @@
 
 const router = require('express').Router()
 const User = require('../../models/User')
-const UserLib = require('../../lib/UserLib')
+const Lib = require('../../lib/Lib')
 const csrf = require('csurf')
 
 const csrfProtection = csrf()
@@ -53,8 +53,7 @@ router.route('/signup')
         }
       })
 
-      // calls validation function in UserLib
-      const validation = UserLib.signUpValidation(username, password, confirmPassword, ifAlreadyExists)
+      const validation = Lib.validate.registration(username, password, confirmPassword, ifAlreadyExists)
 
       if (validation.okay === false) {
         req.session.flash = {
