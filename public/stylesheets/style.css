@@ -49,6 +49,10 @@ a:visited {
 .user {
     color: rgb(255, 176, 0);
 }
+.description {
+    width: 75%;
+    word-wrap: break-word;
+}
 button {
     cursor: pointer;
 }

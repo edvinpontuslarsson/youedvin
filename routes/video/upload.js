@@ -22,9 +22,7 @@ const csrf = require('csurf')
 const csrfProtection = csrf()
 
 /**
- * Checks that the post comes from a logged in user,
- * also checks file format and
- * defines how to store video file uploads
+ * Defines storage of files with validation
  */
 const storage = new GridFsStorage({
   url: process.env.dbURL,
