@@ -15,7 +15,6 @@ const router = require('express').Router()
 const VideoInfo = require('../../models/VideoInfo')
 const path = require('path')
 const VideoLib = require('../../lib/VideoLib')
-const videoLib = new VideoLib()
 const multer = require('multer')
 const GridFsStorage = require('multer-gridfs-storage')
 
@@ -33,14 +32,14 @@ const storage = new GridFsStorage({
     return new Promise((resolve, reject) => {
 
       // see the error handling in the app-module for how these errors are handled
-      if (videoLib.okayExtName(file.originalname) === false) {
+      if (VideoLib.okayExtName(file.originalname) === false) {
         return reject(new Error('Upload attempt with unsupported file format'))
       } else if (!req.session.username) {
         return reject(new Error('Unauthorized file upload attempt'))
 
         // changes the file name before storing
       } else {
-        const fileName = videoLib.randomString() + path.extname(file.originalname)
+        const fileName = VideoLib.randomString() + path.extname(file.originalname)
         const fileInfo = {
           filename: fileName,
           bucketName: 'uploads'

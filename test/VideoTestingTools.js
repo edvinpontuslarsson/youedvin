@@ -1,10 +1,10 @@
-class VideoTestingTools {
+const VideoTestingTools = {
 /**
  * This is not random
  */
-  notRandom () {
+  notRandom: () => {
     return 'the same thing every time'
-  }
+  },
 
 /**
  * Calls funcToTest as many times as specified in iterations.
@@ -13,7 +13,7 @@ class VideoTestingTools {
  * @param {number} iterations - amount of times to test
  * @returns {boolean} identical
  */
-  isIdentical (funcToTest, iterations) {
+  isIdentical: (funcToTest, iterations) => {
     const testArr = []
     let identical = false
 
@@ -41,14 +41,14 @@ class VideoTestingTools {
     }
 
     return identical
-  }
+  },
 
   /**
    * Returns array with specified amount of mock 
    * video info objects
    * @param {Number} amount 
    */
-  mockVideoObjArr (amount) {
+  mockVideoObjArr: (amount) => {
     const mockArr = []
 
     for (let i = 0; i < amount; i += 1) {
