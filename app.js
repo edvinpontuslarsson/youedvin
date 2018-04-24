@@ -25,6 +25,7 @@ const exphbs = require('express-handlebars')
 const helmet = require('helmet')
 const path = require('path')
 const bodyParser = require('body-parser')
+const VideoAmount = require('./models/VideoAmount')
 
 const app = express()
 const port = process.env.PORT || 8080
@@ -88,7 +89,7 @@ if (process.env.Environment === 'production') {
 
 app.use(session(sessionOptions))
 
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   // for flash messages
   res.locals.flash = req.session.flash
   delete req.session.flash

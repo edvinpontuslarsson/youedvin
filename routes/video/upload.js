@@ -13,6 +13,7 @@
 
 const router = require('express').Router()
 const VideoInfo = require('../../models/VideoInfo')
+const VideoAmount = require('../../models/VideoAmount')
 const path = require('path')
 const Lib = require('../../lib/Lib')
 const multer = require('multer')
@@ -77,6 +78,12 @@ router.route('/upload')
           creatorId: req.session.userid
         })
         await videoInfo.save()
+
+        // updates video amount
+        const videoAmount = new VideoAmount({
+          amount: + 1
+        })
+        await videoAmount.save()
 
         if (req.file) {
           req.session.flash = {
