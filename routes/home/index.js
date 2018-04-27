@@ -44,6 +44,8 @@ router.route('/index/:id')
         return res.render('error/404')
       }
 
+      // Lib.calc.pagination()
+
       const prevPage = currentPage - 1
       let nextPage = currentPage + 1
 

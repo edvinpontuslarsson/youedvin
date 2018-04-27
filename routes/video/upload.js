@@ -63,11 +63,14 @@ router.route('/upload')
           csrfToken: req.csrfToken()
         })
       }
-    })
+    })   
 
-    // saves video to DB with upload.single-function
+    /**
+     * saves video to DB with upload.single-function
+     * validation that the uploader is logged in, also takes place
+     * in that function
+     */
     .post(csrfProtection, upload.single('video'), async (req, res) => {
-      if (req.session.username) {
         // saves video info in separate mongoose model
         const videoInfo = new VideoInfo({
           fileName: req.file.filename,
@@ -85,26 +88,12 @@ router.route('/upload')
         })
         await videoAmount.save()
 
-        if (req.file) {
-          req.session.flash = {
-            type: 'success',
-            text: 'The Video has been succesfully uploaded!'
-          }
-          res.status(201)
-          res.redirect(`/play/${req.file.filename}`)
-        } else {
-          req.session.flash = {
-            type: 'error',
-            text: 'The Video upload failed.'
-          }
-          res.status(500)
-          res.redirect('/upload')
+        req.session.flash = {
+          type: 'success',
+          text: 'The Video has been succesfully uploaded!'
         }
-      // if the user isn't logged in
-    } else {
-        res.status(403)
-        res.render('error/403')
-      }
+        res.status(201)
+        res.redirect(`/play/${req.file.filename}`)
     })
 
 module.exports = router
