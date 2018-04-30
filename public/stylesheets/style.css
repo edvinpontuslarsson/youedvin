@@ -55,6 +55,15 @@ a:visited {
 }
 button {
     cursor: pointer;
+    background-color: rgb(28, 28, 28);
+    color: rgb(255, 176, 0);
+    border: 1px solid rgb(100, 100, 100);
+    padding: 10px;
+    border-radius: 3px;
+}
+button:hover {
+    background-color: rgb(56, 56, 56);
+    color: #5aafff;
 }
 .big-green-btn {
     background-color: green;
@@ -62,6 +71,31 @@ button {
     font-size: 50px;
     width: 300px;
     height: 150px;
+    border: none;
+}
+input[type=text] {
+    color: rgb(255, 176, 0);
+    background-color: rgb(28, 28, 28);
+    border: 1px solid rgb(100, 100, 100);
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px;
+}
+input[type=password] {
+    color: rgb(255, 176, 0);
+    background-color: rgb(28, 28, 28);
+    border: 1px solid rgb(100, 100, 100);
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px;
+}
+textarea {
+    color: rgb(255, 176, 0);
+    background-color: rgb(28, 28, 28);
+    border: 1px solid rgb(100, 100, 100);
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 3px;
 }
 .turnPage a {
     color: rgb(0, 125, 255);
