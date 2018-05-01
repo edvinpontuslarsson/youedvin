@@ -11,25 +11,8 @@
 
 const router = require('express').Router()
 const Lib = require('../../lib/Lib')
-// const redis = require('redis')
-// const client= redis.createClient()
-
-/*
-if (process.env.Environment === 'dev') {
-  // 6379 is default Redis port, 127.0.0.1 for localhost
-  client = redis.createClient(6379, '127.0.0.1')
-} else {
-  // live server
-  client = redis.createClient(6379, 'youedvin.com')
-}
-*/
-/*
-
-// Confirms connection to Redis
-client.on('connect', () => {
-  console.log('Connected to Redis')
-})
-*/
+const redis = require('redis')
+const client= redis.createClient()
 
 // limit of videolinks to be displayed per page
 const limit = 2
@@ -42,21 +25,7 @@ const query = limit + 1
  * Home page
  */
 router.route('/')
-  .get(async (req, res) => {    
-    const videoInfo = await Lib.get.newestVideos(
-      req, res, query, 0
-    )
-
-    const addPage = true ? videoInfo.length > limit : false
-
-    const videoArr = Lib.make.indexArr(limit, videoInfo)
-
-    res.status(200)
-    res.render('home/index', {
-      videoArr, addPage, nextPage: limit
-    })
-
-    /*
+  .get(async (req, res) => {
     let videoInfo
 
     // Looks in Redis cache for video info    
@@ -93,7 +62,7 @@ router.route('/')
 
         client.set('/', videoJSON, (err) => { throw err } )
       }
-    })*/
+    })
   })
 
 /**
