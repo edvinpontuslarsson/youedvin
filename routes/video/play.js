@@ -60,14 +60,14 @@ router.route('/play/:id')
       res.status(404)
       res.render('error/404')
     } else {
-        if (videoInfo.createdBy === req.session.username) {
-          videoInfo.canEdit = true
-        }
+      if (videoInfo.createdBy === req.session.username) {
+        videoInfo.canEdit = true
+      }
 
-        res.status(200)
-        res.render('video/play', {
-          videoInfo
-        })
+      res.status(200)
+      res.render('video/play', {
+        videoInfo
+      })
     }
   })
 

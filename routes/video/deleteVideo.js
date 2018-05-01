@@ -26,60 +26,60 @@ connection.once('open', () => {
 router.route('/delete/:id')
 // checks that the user is the creator of the Video
 // then renders the page for choosing to delete the Video
-    .get(csrfProtection, async (req, res) => {
-      const video = await Lib.get.aVideo(req.params.id) //  Lib.get.aVideo(req.params.id)
-      
-      if (video === null) {
-        res.status(404)
-        return res.render('error/404')
-      }
+  .get(csrfProtection, async (req, res) => {
+    const video = await Lib.get.aVideo(req.params.id) //  Lib.get.aVideo(req.params.id)
 
-      if (video.creatorId !== req.session.userid) {
-        res.status(403)
-        res.render('error/403')
-      } else {
-        res.status(200)
-        res.header({ csrfToken: req.csrfToken() })
-        res.render('video/delete', {
-          csrfToken: req.csrfToken(),
-          id: req.params.id,
-          title: video.title
-        })
-      }
-    })
+    if (video === null) {
+      res.status(404)
+      return res.render('error/404')
+    }
 
-    .post(csrfProtection, async (req, res) => {
-      const video = await Lib.get.aVideo(req.params.id)
+    if (video.creatorId !== req.session.userid) {
+      res.status(403)
+      res.render('error/403')
+    } else {
+      res.status(200)
+      res.header({ csrfToken: req.csrfToken() })
+      res.render('video/delete', {
+        csrfToken: req.csrfToken(),
+        id: req.params.id,
+        title: video.title
+      })
+    }
+  })
 
-      if (video.creatorId !== req.session.userid) {
-        res.status(403)
-        res.render('error/403')
-      } else {
-        res.status(200)
-        // deletes video info
-        await VideoInfo.findOneAndRemove({
-          fileName: req.params.id
-        })
+  .post(csrfProtection, async (req, res) => {
+    const video = await Lib.get.aVideo(req.params.id)
 
-        // deletes the video file
-        gfs.remove({
-          filename: video.fileName, root: 'uploads'
-        }, (error, gridStorage) => {
-          if (error) {
-            req.session.flash = {
-              type: 'error',
-              text: 'Could not delete video.'
-            }
-            res.redirect('/')
-          } else {
-            req.session.flash = {
-              type: 'success',
-              text: 'The Video has been succesfully deleted.'
-            }
-            res.redirect('/')
+    if (video.creatorId !== req.session.userid) {
+      res.status(403)
+      res.render('error/403')
+    } else {
+      res.status(200)
+      // deletes video info
+      await VideoInfo.findOneAndRemove({
+        fileName: req.params.id
+      })
+
+      // deletes the video file
+      gfs.remove({
+        filename: video.fileName, root: 'uploads'
+      }, (error, gridStorage) => {
+        if (error) {
+          req.session.flash = {
+            type: 'error',
+            text: 'Could not delete video.'
           }
-        })
-      }
-    })
+          res.redirect('/')
+        } else {
+          req.session.flash = {
+            type: 'success',
+            text: 'The Video has been succesfully deleted.'
+          }
+          res.redirect('/')
+        }
+      })
+    }
+  })
 
 module.exports = router

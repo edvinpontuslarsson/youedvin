@@ -6,7 +6,7 @@ const VideoTestingTools = {
     return 'the same thing every time'
   },
 
-/**
+  /**
  * Calls funcToTest as many times as specified in iterations.
  * Checks if any of the generated strings are identical.
  * @param {*} funcToTest - function to test
@@ -21,20 +21,20 @@ const VideoTestingTools = {
     for (let i = 0; i < iterations; i += 1) {
       let randomString = funcToTest()
 
-        // populates the test array with the first string
+      // populates the test array with the first string
       if (i === 0) {
         testArr.push(randomString)
       }
 
-        // checks if current string is identical with
-        // any previously generated strings
+      // checks if current string is identical with
+      // any previously generated strings
       for (let j = 0; j < testArr.length; j += 1) {
         if (i !== 0 && randomString === testArr[j]) {
           identical = true
         }
       }
 
-        // populates the test array with the second string and onward
+      // populates the test array with the second string and onward
       if (i >= 1) {
         testArr.push(randomString)
       }
@@ -44,9 +44,9 @@ const VideoTestingTools = {
   },
 
   /**
-   * Returns array with specified amount of mock 
+   * Returns array with specified amount of mock
    * video info objects
-   * @param {Number} amount 
+   * @param {Number} amount
    */
   mockVideoObjArr: (amount) => {
     const mockArr = []

@@ -16,9 +16,6 @@
 
 'use strict'
 
-// for handling environment variables
-require('dotenv').config()
-
 const express = require('express')
 const session = require('express-session')
 const exphbs = require('express-handlebars')
@@ -26,6 +23,15 @@ const helmet = require('helmet')
 const path = require('path')
 const bodyParser = require('body-parser')
 const VideoAmount = require('./models/VideoAmount')
+
+// for handling environment variables
+require('dotenv').config()
+
+/**
+ * ===============================================
+ *  EXPRESS CONFIG
+ * =============================================== 
+ */
 
 const app = express()
 const port = process.env.PORT || 8080
@@ -65,6 +71,12 @@ app.use(bodyParser.json())
 // Sets path to the folder 'public' for static resources
 app.use(express.static(path.join(__dirname, 'public')))
 
+/**
+ * ===============================================
+ *  SESSION CONFIG
+ * =============================================== 
+ */
+
 // Settings for session cookie
 const sessionOptions = {
   name: process.env.CookieName,
@@ -100,6 +112,12 @@ app.use(async (req, res, next) => {
   next()
 })
 
+/**
+ * ===============================================
+ *  ROUTES CONFIG
+ * =============================================== 
+ */
+
 // loads routes as "mini-apps"
 app.use('/', require('./routes/home/index'))
 app.use('/', require('./routes/user/preCookie'))
@@ -110,9 +128,9 @@ app.use('/', require('./routes/video/upload'))
 app.use('/', require('./routes/video/play'))
 app.use('/', require('./routes/video/deleteVideo'))
 
-/**
- * Defines route for 404 not found
- */
+
+ 
+// Defines route for 404 not found
 app.use((req, res, next) => {
   const error = new Error('Not Found')
   error.status = 404
@@ -120,13 +138,15 @@ app.use((req, res, next) => {
 })
 
 /**
- * Handles errors
+ * ===============================================
+ *  ERROR CONFIG
+ * =============================================== 
  */
+
 app.use((err, req, res, next) => {
   if (err.status === 404) {
     res.status(404)
     return res.render('error/404')
-    // return res.status(404).sendFile(path.join(__dirname, 'views', 'error', '404.html'))
   }
 
   // For invalid csrf-tokens
@@ -141,7 +161,7 @@ app.use((err, req, res, next) => {
       type: 'error',
       text: 'Unsupported file format'
     }
-    
+
     res.status(400)
     return res.redirect('/upload')
   }
@@ -158,7 +178,12 @@ app.use((err, req, res, next) => {
   return res.status(500).sendFile(path.join(__dirname, 'views', 'error', '500.html'))
 })
 
-// At start
+/**
+ * ===============================================
+ *  LIFT OFF!
+ * =============================================== 
+ */
+
 app.listen(port, () => {
   console.log('The application is now running on port %s', port)
 })
