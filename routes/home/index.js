@@ -49,7 +49,7 @@ router.route('/')
 
         res.status(200)
         res.render('home/index', {
-          videoArr, addPage, nextPage: limit
+          videoArr, addPage, nextPage: limit, fromRedis: 'Fetched from Redis!'
         })
       
       // else gets video info from DB and stores in Redis
