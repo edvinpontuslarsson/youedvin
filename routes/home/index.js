@@ -11,8 +11,6 @@
 
 const router = require('express').Router()
 const Lib = require('../../lib/Lib')
-const redis = require('redis')
-const client= redis.createClient()
 
 // limit of videolinks to be displayed per page
 const limit = 2
@@ -26,43 +24,17 @@ const query = limit + 1
  */
 router.route('/')
   .get(async (req, res) => {
-    let videoInfo 
+    const videoInfo = await Lib.get.newestVideos(
+      req, res, query, 0
+    )
 
-    // Looks in Redis cache for video info    
-    client.get('/', async (error, vid) => {
-      if (error) { throw error }
+    const addPage = true ? videoInfo.length > limit : false
 
-      // if video info is currently stored in Redis
-      if (vid) {
-        videoInfo = JSON.parse(vid)
+    const videoArr = Lib.make.indexArr(limit, videoInfo)
 
-        const addPage = true ? videoInfo.length > limit : false
-        const videoArr = Lib.make.indexArr(limit, videoInfo)
-
-        res.status(200)
-        res.render('home/index', {
-          videoArr, addPage, nextPage: limit, fromRedis: 'Fetched from Redis!'
-        })
-      
-      // else gets video info from DB and stores in Redis
-      } else {
-        videoInfo = await Lib.get.newestVideos(
-          req, res, query, 0
-        )
-
-        const addPage = true ? videoInfo.length > limit : false
-        const videoArr = Lib.make.indexArr(limit, videoInfo)
-
-        res.status(200)
-        res.render('home/index', {
-          videoArr, addPage, nextPage: limit
-        })
-
-        const videoJSON = JSON.stringify(videoInfo)
-
-        // stores in redis for specified amount of seconds
-        client.setex('/', 5, videoJSON, (err) => { throw err })
-      }
+    res.status(200)
+    res.render('home/index', {
+      videoArr, addPage, nextPage: limit
     })
   })
 
