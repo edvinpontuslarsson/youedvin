@@ -26,7 +26,7 @@ const query = limit + 1
  */
 router.route('/')
   .get(async (req, res) => {
-    let videoInfo
+    let videoInfo 
 
     // Looks in Redis cache for video info    
     client.get('/', async (error, vid) => {
@@ -60,7 +60,8 @@ router.route('/')
 
         const videoJSON = JSON.stringify(videoInfo)
 
-        client.set('/', videoJSON, (err) => { throw err } )
+        // stores in redis for specified amount of seconds
+        client.setex('/', 5, videoJSON, (err) => { throw err })
       }
     })
   })
