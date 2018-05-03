@@ -54,8 +54,6 @@ router.route('/play/:id')
 
     const videoInfo = await Lib.get.aVideo(fileName)
 
-    // cache video info with redis
-
     if (videoInfo === null) {
       res.status(404)
       res.render('error/404')

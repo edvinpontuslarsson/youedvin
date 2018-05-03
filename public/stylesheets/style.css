@@ -56,6 +56,16 @@ a:visited {
 button {
     cursor: pointer;
     background-color: rgb(28, 28, 28);
+    width: 80px;
+    color: white;
+    border: 1px solid rgb(100, 100, 100);
+    padding: 10px;
+    border-radius: 3px;
+}
+input[type=button] {
+    cursor: pointer;
+    background-color: rgb(28, 28, 28);
+    width: 80px;
     color: white;
     border: 1px solid rgb(100, 100, 100);
     padding: 10px;
@@ -65,14 +75,6 @@ button:hover {
     background-color: rgb(56, 56, 56);
     color: #5aafff;
     text-decoration: underline;
-}
-.big-green-btn {
-    background-color: green;
-    color: white;
-    font-size: 50px;
-    width: 300px;
-    height: 150px;
-    border: none;
 }
 input[type=text] {
     color: rgb(255, 176, 0);

@@ -27,7 +27,7 @@ router.route('/delete/:id')
 // checks that the user is the creator of the Video
 // then renders the page for choosing to delete the Video
   .get(csrfProtection, async (req, res) => {
-    const video = await Lib.get.aVideo(req.params.id) //  Lib.get.aVideo(req.params.id)
+    const video = await Lib.get.aVideo(req.params.id)
 
     if (video === null) {
       res.status(404)
@@ -37,6 +37,8 @@ router.route('/delete/:id')
     if (video.creatorId !== req.session.userid) {
       res.status(403)
       res.render('error/403')
+    
+    // if everything is OK
     } else {
       res.status(200)
       res.header({ csrfToken: req.csrfToken() })
@@ -48,6 +50,7 @@ router.route('/delete/:id')
     }
   })
 
+  // to delete video
   .post(csrfProtection, async (req, res) => {
     const video = await Lib.get.aVideo(req.params.id)
 
@@ -56,6 +59,7 @@ router.route('/delete/:id')
       res.render('error/403')
     } else {
       res.status(200)
+      
       // deletes video info
       await VideoInfo.findOneAndRemove({
         fileName: req.params.id

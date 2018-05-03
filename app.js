@@ -27,11 +27,9 @@ const VideoAmount = require('./models/VideoAmount')
 // for handling environment variables
 require('dotenv').config()
 
-/**
- * ===============================================
- *  EXPRESS CONFIG
- * =============================================== 
- */
+//===============================================
+//  EXPRESS CONFIG
+//=============================================== 
 
 const app = express()
 const port = process.env.PORT || 8080
@@ -71,11 +69,9 @@ app.use(bodyParser.json())
 // Sets path to the folder 'public' for static resources
 app.use(express.static(path.join(__dirname, 'public')))
 
-/**
- * ===============================================
- *  SESSION CONFIG
- * =============================================== 
- */
+//===============================================
+//  SESSION CONFIG
+//===============================================
 
 // Settings for session cookie
 const sessionOptions = {
@@ -112,11 +108,9 @@ app.use(async (req, res, next) => {
   next()
 })
 
-/**
- * ===============================================
- *  ROUTES CONFIG
- * =============================================== 
- */
+//===============================================
+//  ROUTES CONFIG
+//===============================================
 
 // loads routes as "mini-apps"
 app.use('/', require('./routes/home/index'))
@@ -127,8 +121,7 @@ app.use('/', require('./routes/user/signUp'))
 app.use('/', require('./routes/video/upload'))
 app.use('/', require('./routes/video/play'))
 app.use('/', require('./routes/video/deleteVideo'))
-
-
+app.use('/', require('./routes/video/editVideo'))
  
 // Defines route for 404 not found
 app.use((req, res, next) => {
@@ -137,11 +130,9 @@ app.use((req, res, next) => {
   next(error)
 })
 
-/**
- * ===============================================
- *  ERROR CONFIG
- * =============================================== 
- */
+//===============================================
+//  ERROR CONFIG
+//===============================================
 
 app.use((err, req, res, next) => {
   if (err.status === 404) {
@@ -178,11 +169,9 @@ app.use((err, req, res, next) => {
   return res.status(500).sendFile(path.join(__dirname, 'views', 'error', '500.html'))
 })
 
-/**
- * ===============================================
- *  LIFT OFF!
- * =============================================== 
- */
+//===============================================
+//  LIFT OFF!
+//===============================================
 
 app.listen(port, () => {
   console.log('The application is now running on port %s', port)

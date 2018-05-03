@@ -7,6 +7,7 @@ Your browser does not support the video tag.
 <p>Uploaded by {{videoInfo.createdBy}} on {{videoInfo.createdAt}}</p>
 {{#if videoInfo.canEdit}}
 <a href="/delete/{{videoInfo.fileName}}">Delete Video</a>
+<a href="/edit/{{videoInfo.fileName}}">Edit Video Information</a>
 {{/if}}
 <h2>Description</h2>
 <p class="description">{{videoInfo.description}}</p>
