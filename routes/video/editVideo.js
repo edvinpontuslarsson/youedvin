@@ -9,7 +9,7 @@ const csrf = require('csurf')
 // to set up csurf protection
 const csrfProtection = csrf()
 
-router.route('/edit/:id')
+router.route('/editvideo/:id')
     // checks that the user is the creator of the Video
     // then renders the page for choosing to edit Video Info
     .get(csrfProtection, async (req, res) => {

@@ -1,0 +1,13 @@
+<h3>Edit account</h3>
+<form action="/editUser" method="POST">
+<input type="hidden" name="_csrf" value="{{csrfToken}}">
+<p>
+    Username: <br>
+    <input type="text" name="username" value="{{username}}">
+</p>
+<input disabled="disabled" id="editPass">
+Change password: If the user clicks here, an input field for password should emerge
+</button>
+<hr>
+<button>Save settings</button>
+</form>

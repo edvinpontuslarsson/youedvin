@@ -60,8 +60,6 @@ router.route('/index/:id')
     const videoInfo = await Lib.get.newestVideos(
       req, res, query, skip
     )
-
-    // do not do it like this, don't know if this is the problem but...
     
     // if there should be a next page or not
     if (videoInfo.length <= limit) {

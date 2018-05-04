@@ -36,14 +36,8 @@ router.route('/login')
       username: username
     }, (error, user) => {
       // server error
-      if (error) {
-        req.session.flash = {
-          type: 'error',
-          text: 'Something went wrong'
-        }
-        res.status(500)
-        res.redirect('/login')
-      }
+      if (error) { throw error }
+      
       // non-existing username
       if (!user) {
         req.session.flash = {
@@ -56,14 +50,8 @@ router.route('/login')
         // uses bcrypt compare function
         user.comparePassword(password, (err, result) => {
           // server error
-          if (err) {
-            req.session.flash = {
-              type: 'error',
-              text: 'Something went wrong'
-            }
-            res.status(500)
-            res.redirect('/login')
-          }
+          if (err) { throw err }
+
           // wrong password
           if (result === false) {
             req.session.flash = {
