@@ -38,29 +38,30 @@ router.route('/edit/:id')
     })
 
     // to update video info
+    // inspired by method used here: https://coursework.vschool.io/mongoose-crud/
     .post(csrfProtection, async (req, res) => {
         const videoInfo = await Lib.get.aVideo(req.params.id)
 
-        if (video.creatorId !== req.session.userid) {
+        if (videoInfo.creatorId !== req.session.userid) {
             res.status(403)
             res.render('error/403')
         } else {
             res.status(200)
 
-            const query = videoInfo.fileName
-            
-            VideoInfo.findOneAndUpdate(query, 
+            const query = videoInfo._id
+
+            await VideoInfo.findByIdAndUpdate(
+                query,
+
                 // updated data
                 {
-                title: req.body.title,
-                description: req.body.description
-                }, 
+                    title: req.body.title,
+                    description: req.body.description
+                },
+                { new: true},
 
-            // False because I don't want to create new object if it doesn't exist
-            {upsert: false}, 
-        
-            // if error occurs
-            (err) => {
+                // if error occurs
+                (err) => {
                 if (err) {
                     req.session.flash = {
                         type: 'error',
@@ -69,15 +70,15 @@ router.route('/edit/:id')
                     res.redirect(`/edit/${req.params.id}`)
                 }
 
-            // if everything goes well
-            req.session.flash = {
-                type: 'success',
-                text: 'Video info has been succesfully updated!'
-                }
+                // if everything goes well
+                req.session.flash = {
+                    type: 'success',
+                    text: 'Video info has been succesfully updated!'
+                    }
 
-            res.redirect(`/play/${req.params.id}`)
-            }
-        )
+                res.redirect(`/play/${req.params.id}`)
+                }
+            )
         }
     })
 
