@@ -61,7 +61,7 @@ router.route('/upload')
       res.render('video/upload', {
         csrfToken: req.csrfToken()
       })
-    }
+     }
   })
 
 /**

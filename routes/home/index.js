@@ -44,9 +44,6 @@ router.route('/')
 router.route('/index/:id')
   .get(async (req, res) => {
 
-    // Redis
-    client.get(`/index/${req.params.id}`)
-
     const currentPage = parseInt(req.params.id)
 
     if (isNaN(currentPage)) {
@@ -64,6 +61,8 @@ router.route('/index/:id')
       req, res, query, skip
     )
 
+    // do not do it like this, don't know if this is the problem but...
+    
     // if there should be a next page or not
     if (videoInfo.length <= limit) {
       nextPage = false
