@@ -18,7 +18,7 @@ body {
     Padding bottom, same size as the footer,
     inspired by: http://matthewjamestaylor.com/blog/keeping-footers-at-the-bottom-of-the-page
      */
-    padding-bottom: 50px;
+    padding-bottom: 120px;
     width: 75%;
     overflow: auto;
     font-size: 18px;
@@ -86,6 +86,14 @@ textarea {
 .turnPageBtn {
     background-color: rgb(240, 240, 240)
 }
-video poster {
-    width: 10px;
- }
+#cookies {
+    background-color: lightgreen;
+    color: black;
+    padding-left: 13%;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+}
