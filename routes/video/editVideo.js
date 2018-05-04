@@ -50,7 +50,7 @@ router.route('/edit/:id')
 
             const query = videoInfo._id
 
-            await VideoInfo.findByIdAndUpdate(
+            VideoInfo.findByIdAndUpdate(
                 query,
 
                 // updated data
