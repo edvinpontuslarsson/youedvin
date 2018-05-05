@@ -6,6 +6,8 @@ const csrf = require('csurf')
 
 const csrfProtection = csrf()
 
+// start with just enabling username change
+
 router.route('/edituser/:id')
     .get(csrfProtection, (req, res) => {
         const userId = req.params.id
@@ -15,7 +17,7 @@ router.route('/edituser/:id')
         // server error
         if (error) { throw error }
 
-        
+            
         }
         )
     })

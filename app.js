@@ -16,6 +16,7 @@
 
 'use strict'
 
+const http = require('http')
 const express = require('express')
 const session = require('express-session')
 const exphbs = require('express-handlebars')
@@ -113,7 +114,7 @@ app.use(async (req, res, next) => {
 //===============================================
 
 // loads routes as "mini-apps"
-app.use('/', require('./routes/home/index'))
+app.use('/', require('./routes/index/index'))
 app.use('/', require('./routes/user/logIn'))
 app.use('/', require('./routes/user/logOut'))
 app.use('/', require('./routes/user/signUp'))
@@ -170,9 +171,14 @@ app.use((err, req, res, next) => {
 })
 
 //===============================================
-//  LIFT OFF!
+//  STARTS SERVER
 //===============================================
-
+/*
 app.listen(port, () => {
+  console.log('The application is now running on port %s', port)
+})*/
+
+// http here internally, https encryption on nginx
+const server = http.createServer(app).listen(port, () => {
   console.log('The application is now running on port %s', port)
 })
