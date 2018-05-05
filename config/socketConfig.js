@@ -6,6 +6,9 @@
  */
 const socketConfig = (server) => {
     const io = require('socket.io')(server)
+
+    // require other modules here
+    // perhaps use promise wrappers
 }
 
 module.exports = socketConfig

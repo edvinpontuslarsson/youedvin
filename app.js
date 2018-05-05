@@ -67,9 +67,6 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
-// To parse incoming json data, mainly for simplifying tests with Postman
-app.use(bodyParser.json())
-
 // Sets path to the folder 'public' for static resources
 app.use(express.static(path.join(__dirname, 'public')))
 
@@ -89,18 +86,16 @@ const sessionOptions = {
   }
 }
 
-/**
- * To trust proxy and make cookies secure in production mode
- * Inspired by demo code from the course 1dv023:
- * https://github.com/1dv023/exercise-pure-approval-SOLUTION/blob/master/app.js
- */
+// To trust proxy and make cookies secure in production mode
 if (process.env.Environment === 'production') {
   app.set('trust proxy', 1)
   sessionOptions.cookie.secure = true
 }
 
+// sets settings
 app.use(session(sessionOptions))
 
+// config for updating view with sessions
 app.use(async (req, res, next) => {
   // for flash messages
   res.locals.flash = req.session.flash
@@ -156,7 +151,6 @@ app.use((err, req, res, next) => {
       type: 'error',
       text: 'Unsupported file format'
     }
-
     res.status(400)
     return res.redirect('/upload')
   }
