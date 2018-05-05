@@ -178,18 +178,17 @@ app.use((err, req, res, next) => {
 //  LIFT OFF!
 //===============================================
 
-/*
 // http here internally, https encryption on nginx server
 const server = http.createServer(app).listen(port, () => {
   console.log('The application is now running on port %s', port)
 })
-*/
 
+/*
 const https = require('https')
 
 const server = https.createServer(app).listen(port, () => {
   console.log('The application is now running on port %s', port)
-})
+})*/
 
 // to set up web socket connection
 socketConfig(server)
