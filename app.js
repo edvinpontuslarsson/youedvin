@@ -16,24 +16,29 @@
 
 'use strict'
 
-const http = require('http')
 const express = require('express')
 const session = require('express-session')
 const exphbs = require('express-handlebars')
 const helmet = require('helmet')
 const path = require('path')
+const http = require('http')
 const bodyParser = require('body-parser')
+const socketConfig = require('./config/socketConfig')
 const VideoAmount = require('./models/VideoAmount')
 
-// for handling environment variables
+
+// environment variables
 require('dotenv').config()
+
+// connects to DB
+require('./config/dbConfig').dbConnect()
 
 //===============================================
 //  EXPRESS CONFIG
 //=============================================== 
 
 const app = express()
-const port = process.env.PORT || 8080
+const port = process.env.PORT
 
 // helmet, for protective HTTP headers
 app.use(helmet())
@@ -41,6 +46,8 @@ app.use(helmet())
 // to only load content generated through my code
 app.use(helmet.contentSecurityPolicy({
   directives: {
+    // connectSrc: self & web socket url
+    connectSrc: ["'self'", process.env.wsURL],
     defaultSrc: ["'self'"],
     styleSrc: ["'self'"]
   }
@@ -48,9 +55,6 @@ app.use(helmet.contentSecurityPolicy({
 
 // otherwise, too much information. No need to showcase that express is being used.
 app.disable('x-powered-by')
-
-// connects to DB
-require('./config/dbConfig').dbConnect()
 
 // View engine
 app.engine('.hbs', exphbs({
@@ -118,7 +122,7 @@ app.use('/', require('./routes/index/index'))
 app.use('/', require('./routes/user/logIn'))
 app.use('/', require('./routes/user/logOut'))
 app.use('/', require('./routes/user/signUp'))
-app.use('/', require('./routes/user/editUser'))
+app.use('/', require('./routes/user/userEdit'))
 app.use('/', require('./routes/video/upload'))
 app.use('/', require('./routes/video/play'))
 app.use('/', require('./routes/video/deleteVideo'))
@@ -171,14 +175,13 @@ app.use((err, req, res, next) => {
 })
 
 //===============================================
-//  STARTS SERVER
+//  LIFT OFF!
 //===============================================
-/*
-app.listen(port, () => {
-  console.log('The application is now running on port %s', port)
-})*/
 
-// http here internally, https encryption on nginx
+// http here internally, https encryption on nginx server
 const server = http.createServer(app).listen(port, () => {
   console.log('The application is now running on port %s', port)
 })
+
+// to set up web socket connection
+socketConfig(server)

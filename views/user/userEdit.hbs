@@ -1,4 +1,10 @@
 <h3>Account settings</h3>
+
+<p>
+    Split into two pages, one for username change one for 
+    password change
+</p>
+
 <form action="/editUser" method="POST">
 <input type="hidden" name="_csrf" value="{{csrfToken}}">
 <p>
@@ -9,12 +15,7 @@
 Change password: If the user clicks here, an input field for password should emerge
 </button>
 
-<!-- 
-Make it hidden with css, 
-remove hidden class with JS if user clicks button above, no web socket needed
-https://www.w3schools.com/howto/howto_js_remove_class.asp
- -->
- <p class="hidden">
+<p>
      New password: <br>
      <input type="password" name="newPass" id="changePass" placeholder="New password">
  </p>

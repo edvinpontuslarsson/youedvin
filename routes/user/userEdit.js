@@ -8,7 +8,7 @@ const csrfProtection = csrf()
 
 // start with just enabling username change
 
-router.route('/edituser/:id')
+router.route('/useredit/:id')
     .get(csrfProtection, (req, res) => {
         const userId = req.params.id
         const user = User.findById({
