@@ -15,12 +15,17 @@ const query = limit + 1
  */
 router.route('/search')
     .get(async (req, res) => {
-        const videoArr = []
-        const addPage = false
+        const videoInfo = await Lib.get.videosByTitle(
+            req.query.search, limit, 0
+        )
 
+        const addPage = true ? videoInfo.length > limit : false
+
+        const videoArr = Lib.make.indexArr(limit, videoInfo)
+        
         res.status(200)
         res.render('home/index', {
-            videoArr, addPage, nextPage: 2
+            videoArr, addPage, nextPage: limit
         })
     })
 
