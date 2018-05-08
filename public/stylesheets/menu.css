@@ -1,7 +1,7 @@
 #mainMenu {
     display: grid;
     background-color: rgb(28, 28, 28);    
-    grid-template-columns: 13% 120px 120px 120px auto 13%;
+    grid-template-columns: 13% 100px 100px 100px 180px auto 13%;
     grid-template-rows: 50px;
 }
 .menuItem {
@@ -15,6 +15,9 @@
 .menuLink a:hover {
     text-decoration: underline;
 }
+#menu0 {
+    grid-column-start: 1;
+}
 #menu1 {
     grid-column-start: 2;
 }
@@ -23,4 +26,12 @@
 }
 #menu3 {
     grid-column-start: 4;
+}
+#menu4 {
+    grid-column-start: 5;
+    padding-right: 2px;
+}
+#menu5 {
+    grid-column-start: 6;
+    padding-left: 2px;
 }

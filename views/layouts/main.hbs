@@ -15,6 +15,9 @@
         <!--  -->
     {{#if username }}
         <header id="mainMenu">
+            <div class="menuItem" id="menu0">
+                {{ username }}
+            </div>
             <div class="menuItem" id="menu1">
                 <a href="/" class="menuLink">Home</a>
             </div>
@@ -22,10 +25,7 @@
                 <a href="/logout" class="menuLink">Log out</a>
             </div>
             <div class="menuItem" id="menu3">
-                <a href="/upload" class="menuLink">Upload video!</a>
-            </div>
-            <div class="menuItem" id="menu4">
-                {{ username }}
+                <a href="/upload" class="menuLink">Upload!</a>
             </div>
         </header>     
     {{else}}
@@ -39,6 +39,14 @@
             <div class="menuItem" id="menu3">
                 <a href="/signup" class="menuLink">Sign up!</a>
             </div>
+            <div class="menuItem" id="menu4">
+                <form action="/search">
+                    <input type="text" name="search" placeholder="Search..." id="searchField">
+                    </div>
+                    <div class="menuItem" id="menu5">
+                    <input type="image" src="/img/search.png" id="searchBtn">
+                    </form>
+                    </div>
         </header>
     {{/if}}
     <section id="mainSection">
