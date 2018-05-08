@@ -19,13 +19,15 @@ router.route('/search')
             req.query.search, limit, 0
         )
 
+        const emptySearch = true ? videoInfo.length < 1 : false
+
         const addPage = true ? videoInfo.length > limit : false
 
         const videoArr = Lib.make.indexArr(limit, videoInfo)
         
         res.status(200)
         res.render('home/index', {
-            videoArr, addPage, nextPage: limit
+            videoArr, addPage, nextPage: limit, emptySearch
         })
     })
 
