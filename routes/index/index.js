@@ -25,7 +25,7 @@ const query = limit + 1
 router.route('/')
   .get(async (req, res) => {
     const videoInfo = await Lib.get.newestVideos(
-      req, res, query, 0
+      query, 0
     )
 
     const addPage = true ? videoInfo.length > limit : false
@@ -58,7 +58,7 @@ router.route('/index/:id')
     const skip = prevPage * limit
 
     const videoInfo = await Lib.get.newestVideos(
-      req, res, query, skip
+      query, skip
     )
     
     // if there should be a next page or not
