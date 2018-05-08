@@ -30,7 +30,7 @@ router.route('/')
 
     const addPage = true ? videoInfo.length > limit : false
 
-    const videoArr = Lib.make.indexArr(limit, videoInfo)
+    const videoArr = Lib.make.indexArr(videoInfo, limit)
 
     res.status(200)
     res.render('home/index', {
@@ -70,7 +70,7 @@ router.route('/index/:id')
       res.status(404)
       res.render('error/404')
     } else {
-      const videoArr = Lib.make.indexArr(limit, videoInfo)
+      const videoArr = Lib.make.indexArr(videoInfo, limit)
 
       res.status(200)
       res.render('home/index', {

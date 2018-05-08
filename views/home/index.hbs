@@ -16,5 +16,11 @@ Uploaded by {{this.createdBy}} on {{this.createdAt}}
     <!-- &lt; prev -->
     <button disabled="disabled" class="turnPageBtn"><a href="/index/{{nextPage}}">next &gt;</a></button>
     {{/if}}
+    {{#if nextSearchPage}}
+    <!-- &lt; prev -->
+    <button disabled="disabled" class="turnPageBtn">
+        <a href="/{{queryString}}{{nextSearchPage}}">next &gt;</a>
+    </button>
+    {{/if}}
 </p>
 {{/if}}
