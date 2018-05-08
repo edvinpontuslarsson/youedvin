@@ -29,9 +29,12 @@
 }
 #menu4 {
     grid-column-start: 5;
-    padding-right: 2px;
+    padding-right: 1px;
 }
 #menu5 {
     grid-column-start: 6;
-    padding-left: 2px;
+    padding-left: 1px;
+}
+#menu8 {
+    grid-column-start: 7;
 }
