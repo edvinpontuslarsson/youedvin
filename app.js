@@ -172,6 +172,14 @@ app.use((err, req, res, next) => {
 //===============================================
 
 const port = process.env.PORT
+
+app.listen(port, () => {
+  console.log('The application is now running on port %s', port)
+})
+
+// For web socket:
+
+/*
 const host = process.env.HOST
 
 // http here internally, https encryption on nginx server
@@ -181,3 +189,4 @@ const server = http.createServer(app).listen(port, host, () => {
 
 // to set up web socket connection
 socketConfig(server)
+*/
