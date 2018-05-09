@@ -61,7 +61,7 @@ describe('Test of Lib.make.indexArr() with VidTest.mockVideoObjArr()', () => {
     with the same length as called with if limit is not exceeded`, () => {
     it(`Lib.make.indexArr(5, VidTest.mockVideoObjArr(4)) 
       should return an array with length 4`, (done) => {
-      const result = Lib.make.indexArr(5, VidTest.mockVideoObjArr(4))
+      const result = Lib.make.indexArr(VidTest.mockVideoObjArr(4), 5)
       expect(result.length).to.eql(4)
       done()
     })
@@ -71,7 +71,7 @@ describe('Test of Lib.make.indexArr() with VidTest.mockVideoObjArr()', () => {
     with the same length as the limit when limit is exceeded by 1`, () => {
     it(`Lib.make.indexArr(3, VidTest.mockVideoObjArr(4)) 
       should return an array with length 3`, (done) => {
-      const result = Lib.make.indexArr(3, VidTest.mockVideoObjArr(4))
+      const result = Lib.make.indexArr(VidTest.mockVideoObjArr(4), 3)
       expect(result.length).to.eql(3)
       done()
     })

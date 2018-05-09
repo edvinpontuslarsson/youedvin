@@ -84,7 +84,9 @@ textarea {
     color: rgb(0, 125, 255);
 }
 .turnPageBtn {
-    background-color: rgb(240, 240, 240)
+    background-color: rgb(240, 240, 240);
+    color: rgb(0, 125, 255);
+    padding: 5px;
 }
 #searchBtn {
     height: 25px;
