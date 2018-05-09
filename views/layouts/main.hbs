@@ -19,13 +19,10 @@
                 <a href="/" class="menuLink">Home</a>
             </div>
             <div class="menuItem" id="menu1">
-                <a href="/surprise" class="menuLink">Surprise!</a>
+                <a href="/surprise" class="menuLink">Surprise</a>
             </div>
             <div class="menuItem" id="menu2">
-                <a href="/logout" class="menuLink">Log out</a>
-            </div>
-            <div class="menuItem" id="menu3">
-                <a href="/upload" class="menuLink">Upload!</a>
+                <a href="/upload" class="menuLink">Upload</a>
             </div>
             <!-- Search -->
             <div class="menuItem" id="menu4">
@@ -37,7 +34,7 @@
                 </form>
             </div>
             <div class="menuItem" id="menu6">
-                {{ username }}
+                <a href="/logout" class="menuLink">Log out</a>
             </div>
           </header>
     {{else}}
@@ -46,13 +43,7 @@
                 <a href="/" class="menuLink">Home</a>
             </div>
             <div class="menuItem" id="menu1">
-                <a href="/surprise" class="menuLink">Surprise!</a>
-            </div>
-            <div class="menuItem" id="menu2">
-               <a href="/login" class="menuLink">Log in!</a> 
-            </div>
-            <div class="menuItem" id="menu3">
-                <a href="/signup" class="menuLink">Sign up!</a>
+                <a href="/surprise" class="menuLink">Surprise</a>
             </div>
             <!-- Search -->
             <div class="menuItem" id="menu4">
@@ -62,6 +53,9 @@
             <div class="menuItem" id="menu5">
                     <input type="image" src="/img/search.png" id="searchBtn">
                 </form>
+            </div>
+            <div class="menuItem" id="menu6">
+                <a href="/login" class="menuLink">Sign in</a>
             </div>
         </header>
     {{/if}}
@@ -75,6 +69,7 @@
         <div class="footerItem" id="iconCredit">
             Icons by: <a href="https://icons8.com/">icons8</a>
         </div>
+            {{ username }}
     </footer>
     </section>
 </body>
