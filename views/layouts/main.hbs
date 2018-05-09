@@ -19,21 +19,20 @@
                 <a href="/" class="menuLink">Home</a>
             </div>
             <div class="menuItem" id="menu1">
-                <a href="/surprise" class="menuLink">Surprise</a>
+                <a href="/surprise" class="menuLink">Surprise me!</a>
             </div>
             <div class="menuItem" id="menu2">
                 <a href="/upload" class="menuLink">Upload</a>
             </div>
             <!-- Search -->
-            <div class="menuItem" id="menu4">
+            <div class="menuItem" id="menu3">
                 <form action="/search" method="GET">
                     <input type="text" name="search" placeholder="Search..." id="searchField">
-            </div>
-            <div class="menuItem" id="menu5">
-                    <input type="image" src="/img/search.png" id="searchBtn">
+                    <button>Search</button>
+                     <!--<input type="image" src="/img/search.png" id="searchBtn">-->
                 </form>
             </div>
-            <div class="menuItem" id="menu6">
+            <div class="menuItem" id="menu4">
                 <a href="/logout" class="menuLink">Log out</a>
             </div>
           </header>
@@ -43,18 +42,17 @@
                 <a href="/" class="menuLink">Home</a>
             </div>
             <div class="menuItem" id="menu1">
-                <a href="/surprise" class="menuLink">Surprise</a>
+                <a href="/surprise" class="menuLink">Surprise me!</a>
             </div>
             <!-- Search -->
-            <div class="menuItem" id="menu4">
+            <div class="menuItem" id="menu3">
                 <form action="/search" method="GET">
                     <input type="text" name="search" placeholder="Search..." id="searchField">
-            </div>
-            <div class="menuItem" id="menu5">
-                    <input type="image" src="/img/search.png" id="searchBtn">
+                    <button>Search</button>
+                    <!--<input type="image" src="/img/search.png" id="searchBtn">-->
                 </form>
             </div>
-            <div class="menuItem" id="menu6">
+            <div class="menuItem" id="menu4">
                 <a href="/login" class="menuLink">Sign in</a>
             </div>
         </header>
@@ -69,7 +67,12 @@
         <div class="footerItem" id="iconCredit">
             Icons by: <a href="https://icons8.com/">icons8</a>
         </div>
+        {{#if username }}
+           <div class="footerItem" id="userFooter">
+            Logged in as: <br> 
             {{ username }}
+            </div> 
+        {{/if}}
     </footer>
     </section>
 </body>

@@ -1,12 +1,13 @@
 #mainMenu {
     display: grid;
     background-color: rgb(28, 28, 28);    
-    grid-template-columns: 13% 100px 100px 100px 180px auto 13%;
-    grid-template-rows: 50px;
+    grid-template-columns: 13% auto auto auto auto 13%;
+    grid-template-rows: 70px;
+    font-size: 18px;
 }
 .menuItem {
-    padding: 10px;
-    text-align: left;
+    padding: 15px;
+    text-align: center;
 }
 .menuLink a {
     color: white;
@@ -29,12 +30,4 @@
 }
 #menu4 {
     grid-column-start: 5;
-    padding-right: 1px;
-}
-#menu5 {
-    grid-column-start: 6;
-    padding-left: 1px;
-}
-#menu8 {
-    grid-column-start: 7;
 }
