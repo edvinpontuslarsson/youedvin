@@ -18,7 +18,7 @@ body {
     Padding bottom, same size as the footer,
     inspired by: http://matthewjamestaylor.com/blog/keeping-footers-at-the-bottom-of-the-page
      */
-    padding-bottom: 70px;
+    padding-bottom: 75px;
     width: 75%;
     overflow: auto;
     font-size: 18px;
@@ -81,4 +81,10 @@ textarea {
     background-color: rgb(240, 240, 240);
     color: rgb(0, 125, 255);
     padding: 5px;
+}
+#searchField {
+    height: 15px;
+}
+#searchIcon {
+    height: 14px;
 }

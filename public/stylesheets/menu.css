@@ -2,7 +2,7 @@
     display: grid;
     background-color: rgb(28, 28, 28);    
     grid-template-columns: 13% auto auto auto auto 13%;
-    grid-template-rows: 70px;
+    grid-template-rows: 75px;
     font-size: 18px;
 }
 .menuItem {
