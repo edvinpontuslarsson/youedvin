@@ -61,7 +61,7 @@ router.route('/login')
             res.status(401)
             res.redirect('/login')
           } else {
-            // saves the username and id in cookie
+            // saves the username and id in session
             req.session.username = user.username
             req.session.userid = user._id
 
