@@ -84,7 +84,8 @@ textarea {
 }
 #searchField {
     height: 15px;
+    width: 50%;
 }
 #searchIcon {
-    height: 14px;
+    height: 13px;
 }
