@@ -1,17 +1,22 @@
+<h3>Change password for {{ username }}</h3>
+
 <form action="/editUser" method="POST">
 <input type="hidden" name="_csrf" value="{{csrfToken}}">
+
 <p>
      New password: <br>
      <input type="password" name="newPass" id="changePass" placeholder="New password">
 </p>
 
-
+<p>
+     Confirm new password: <br>
+     <input type="password" name="newPass" id="changePass" placeholder="New password">
+</p>
 
 <p>
     Current password: <br>
-    <input type="password" name="currentPass">
+    <input type="password" name="currentPass" placeholder="Current password">
 </p>
-<hr>
 <button>Save settings</button>
 </form>
 <p><a href="/">Take me back to the home page!</a></p>

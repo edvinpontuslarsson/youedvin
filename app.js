@@ -22,7 +22,7 @@ const exphbs = require('express-handlebars')
 const helmet = require('helmet')
 const path = require('path')
 const http = require('http')
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser') 
 const socketConfig = require('./config/socketConfig')
 const VideoAmount = require('./models/VideoAmount')
 
@@ -37,6 +37,7 @@ require('./config/dbConfig').dbConnect()
 //  EXPRESS CONFIG
 //=============================================== 
 
+// initializes express app
 const app = express()
 
 // helmet, for protective HTTP headers
@@ -118,6 +119,7 @@ app.use('/', require('./routes/user/logIn'))
 app.use('/', require('./routes/user/logOut'))
 app.use('/', require('./routes/user/signUp'))
 app.use('/', require('./routes/user/userEdit'))
+app.use('/', require('./routes/user/passEdit'))
 app.use('/', require('./routes/video/upload'))
 app.use('/', require('./routes/video/play'))
 app.use('/', require('./routes/video/deleteVideo'))
@@ -182,6 +184,8 @@ app.listen(port, () => {
 
 /*
 const host = process.env.HOST
+
+Hmm, socket needs to be encrypted
 
 // http here internally, https encryption on nginx server
 const server = http.createServer(app).listen(port, host, () => {
