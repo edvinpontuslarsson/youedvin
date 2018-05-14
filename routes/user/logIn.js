@@ -37,7 +37,7 @@ router.route('/login')
     }, (error, user) => {
       // server error
       if (error) { throw error }
-      
+
       // non-existing username
       if (!user) {
         req.session.flash = {

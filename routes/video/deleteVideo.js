@@ -37,7 +37,7 @@ router.route('/delete/:id')
     if (video.creatorId !== req.session.userid) {
       res.status(403)
       res.render('error/403')
-    
+
     // if everything is OK
     } else {
       res.status(200)
@@ -59,7 +59,7 @@ router.route('/delete/:id')
       res.render('error/403')
     } else {
       res.status(200)
-      
+
       // deletes video info
       await VideoInfo.findOneAndRemove({
         fileName: req.params.id

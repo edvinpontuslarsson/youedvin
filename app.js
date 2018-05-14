@@ -22,10 +22,9 @@ const exphbs = require('express-handlebars')
 const helmet = require('helmet')
 const path = require('path')
 const http = require('http')
-const bodyParser = require('body-parser') 
+const bodyParser = require('body-parser')
 const socketConfig = require('./config/socketConfig')
 const VideoAmount = require('./models/VideoAmount')
-
 
 // environment variables
 require('dotenv').config()
@@ -33,9 +32,9 @@ require('dotenv').config()
 // connects to DB
 require('./config/dbConfig').dbConnect()
 
-//===============================================
+//= ==============================================
 //  EXPRESS CONFIG
-//=============================================== 
+//= ==============================================
 
 // initializes express app
 const app = express()
@@ -71,9 +70,9 @@ app.use(bodyParser.urlencoded({
 // Sets path to the folder 'public' for static resources
 app.use(express.static(path.join(__dirname, 'public')))
 
-//===============================================
+//= ==============================================
 //  SESSION CONFIG
-//===============================================
+//= ==============================================
 
 // Settings for session cookie
 const sessionOptions = {
@@ -108,9 +107,9 @@ app.use(async (req, res, next) => {
   next()
 })
 
-//===============================================
+//= ==============================================
 //  ROUTES CONFIG
-//===============================================
+//= ==============================================
 
 // loads routes as "mini-apps"
 app.use('/', require('./routes/index/index'))
@@ -124,7 +123,7 @@ app.use('/', require('./routes/video/upload'))
 app.use('/', require('./routes/video/play'))
 app.use('/', require('./routes/video/deleteVideo'))
 app.use('/', require('./routes/video/editVideo'))
- 
+
 // Defines route for 404 not found
 app.use((req, res, next) => {
   const error = new Error('Not Found')
@@ -132,9 +131,9 @@ app.use((req, res, next) => {
   next(error)
 })
 
-//===============================================
+//= ==============================================
 //  ERROR CONFIG
-//===============================================
+//= ==============================================
 
 app.use((err, req, res, next) => {
   if (err.status === 404) {
@@ -170,9 +169,9 @@ app.use((err, req, res, next) => {
   return res.status(500).sendFile(path.join(__dirname, 'views', 'error', '500.html'))
 })
 
-//===============================================
+//= ==============================================
 //  LIFT OFF!
-//===============================================
+//= ==============================================
 
 const port = process.env.PORT
 

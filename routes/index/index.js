@@ -43,7 +43,6 @@ router.route('/')
  */
 router.route('/index/:id')
   .get(async (req, res) => {
-
     const currentPage = parseInt(req.params.id)
 
     if (isNaN(currentPage)) {
@@ -60,7 +59,7 @@ router.route('/index/:id')
     const videoInfo = await Lib.get.newestVideos(
       query, skip
     )
-    
+
     // if there should be a next page or not
     if (videoInfo.length <= limit) {
       nextPage = false
