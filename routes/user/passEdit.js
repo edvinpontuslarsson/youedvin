@@ -24,22 +24,26 @@ router.route('/passedit/:id')
                 res.header({ csrfToken: req.csrfToken() })
                 res.render('user/passedit', {
                     username: user.username,
-                    id: user._id
+                    id: userid
                 })
             }
         })
     })
 
-    .post(csrfProtection, async (req, res) => {
+    .post(csrfProtection, (req, res) => {
         const newPass = req.body.newPass
         const confirmPass = req.body.confirmPass
         const currentPass = req.body.currentPass
         const userid = req.params.id
 
+        console.log('It starts')
+
         const user = User.findById(userid, 
             (error, user) => {
            // server error
-            if (error) { throw error } 
+            if (error) { throw error }
+
+            console.log('in find by id')
 
             // id in session string, id in DB object
             if (userid != user._id) {
@@ -48,6 +52,7 @@ router.route('/passedit/:id')
             } else {
                 // non-existing user
                 if (!user) {
+                    console.log('No user?')
                     res.status(500)
                     res.render('error/500')
                 } else {
@@ -61,7 +66,9 @@ router.route('/passedit/:id')
                         res.redirect(`/passedit/${userid}`)
                     } else {
                         // uses bcrypt compare function
-                        user.comparePassword(currentPass, (err, result) => {
+                        user.comparePassword(currentPass, async (err, result) => {
+                            console.log('In compare passsword func')
+
                             // server error
                             if (err) { throw err }
 
@@ -77,7 +84,9 @@ router.route('/passedit/:id')
                                // the new password gets salted and hashed
                                // then saved to DB
                                 try {
-                                    await user.save()
+                                    console.log('Gets here???')
+                                    
+                                    // here update password
 
                                     req.session.flash = {
                                         type: 'success',
