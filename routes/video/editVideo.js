@@ -58,7 +58,8 @@ router.route('/editvideo/:id')
           title: req.body.title,
           description: req.body.description
         },
-        { new: true},
+
+        { new: true },
 
         // if error occurs
         (err) => {
@@ -77,8 +78,7 @@ router.route('/editvideo/:id')
           }
 
           res.redirect(`/play/${req.params.id}`)
-        }
-      )
+        })
     }
   })
 

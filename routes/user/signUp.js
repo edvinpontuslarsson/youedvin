@@ -74,6 +74,7 @@ router.route('/signup')
         })
 
         await user.save()
+        
         req.session.flash = {
           type: 'success',
           text: `You are now a registered user, welcome aboard ${username}!`

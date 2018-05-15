@@ -2,12 +2,9 @@
 
 const router = require('express').Router()
 const User = require('../../models/User')
-const csrf = require('csurf')
-
-const csrfProtection = csrf()
 
 router.route('/useredit/:id')
-  .get(csrfProtection, (req, res) => {
+  .get((req, res) => {
     const username = req.params.id
     const user = User.findOne({
       username: username
@@ -22,7 +19,6 @@ router.route('/useredit/:id')
       } else {
         // if everything is OK
         res.status(200)
-        res.header({ csrfToken: req.csrfToken() })
         res.render('user/userEdit', {
           username: user.username,
           id: user._id

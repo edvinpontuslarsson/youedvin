@@ -76,32 +76,34 @@ router.route('/passedit/:id')
                                 res.status(401)
                                 res.redirect(`/passedit/${userid}`) 
                             } else {
-                               // the new password gets salted and hashed
-                               // then saved to DB
+                                // the new password gets salted and hashed
+                                // then saved to DB
                                 try {
-                                    
-                                    // here update password, findbyId update
+                                    user.password = newPass
+
+                                    await user.save()
 
                                     req.session.flash = {
                                         type: 'success',
                                         text: 'Password has been succesfully changed'
-                                      }                                      
-                                      res.status(201)
-                                      res.redirect('/')
+                                        }                                      
+                                    res.status(201)
+                                    res.redirect('/')
+                                    
                                 } catch (e) {
                                     req.session.flash = {
                                         type: 'error',
                                         text: 'Something went wrong'
-                                      }
-                                      res.status(500)
-                                      res.redirect(`/passedit/${userid}`)
-                                    }
+                                        }
+                                    res.status(500)
+                                    res.redirect(`/passedit/${userid}`)
                                 }
-                            })            
-                        }
+                            }
+                        })            
                     }
                 }
-            })
+            }
+        })
     })
 
 module.exports = router
