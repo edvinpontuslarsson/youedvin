@@ -49,7 +49,6 @@ router.route('/passedit/:id')
             } else {
                 // non-existing user
                 if (!user) {
-                    console.log('No user?')
                     res.status(500)
                     res.render('error/500')
                 } else {
@@ -89,7 +88,7 @@ router.route('/passedit/:id')
                                         }                                      
                                     res.status(201)
                                     res.redirect('/')
-                                    
+
                                 } catch (e) {
                                     req.session.flash = {
                                         type: 'error',
