@@ -16,23 +16,24 @@ const upload = () => {
 
     // if a file has been uploaded
     if (fileField.files.length > 0) {
-        // Using a method inspired by: https://www.youtube.com/watch?v=EraNFJiY0Eg
-        const file = this.fileField.files[0]
-        const formData = new FormData()
-        formData.append('fileField', file)
-
-        req.upload.addEventListener('progress', makeProgress, false)
-
-        req.send(formData)
+        makeProgress(fileField.files[0])
     }
 }
 
 /**
- * Inspired by: https://www.youtube.com/watch?v=EraNFJiY0Eg
+ * Inspired by: 
+ * https://www.webcodegeeks.com/javascript/node-js/node-js-file-upload-progress-bar-example/
+ * and:
+ * https://www.youtube.com/watch?v=EraNFJiY0Eg
  */
-const makeProgress = (event) => {
+const makeProgress = (file) => {
     showBar()
-    const percentage = Math.floor((event.loaded / event.total) * 100)
+    const req = new XMLHttpRequest()
+    req.upload.addEventListener('progress', displayProgress)
+    req.open('POST', '/')
+
+
+    const percentage = Math.floor((file.loaded / file.total) * 100)
     const bar = document.getElementById('progressBar')
     const status = document.getElementById('uploadStatus')
     bar.value = percentage
@@ -44,10 +45,12 @@ const makeProgress = (event) => {
  */
 const showBar = () => {
     const template = document.getElementById('progressTemplate')
-    const div = document.importNode(
-        template.content.firstElementChild, true
-    )
+    const paragraph = document.importNode(template.content.firstElementChild, true)
 
     const section = document.getElementById('progressSection')
-    section.appendChild(div)
+    section.appendChild(paragraph)
+}
+
+const displayProgress = () => {
+
 }
