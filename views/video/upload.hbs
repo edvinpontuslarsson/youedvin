@@ -1,6 +1,6 @@
 <!-- -->
 <h3>Upload Video!</h3>
-<form enctype="multipart/form-data" action="/upload?_csrf={{csrfToken}}" method="post">
+<form enctype="multipart/form-data" action="/upload?_csrf={{csrfToken}}" method="POST">
 
 <p>
     Max video file size: 100 MB
@@ -14,7 +14,7 @@
 
 <p>
 <label for="video">File upload:</label>
-<input type="file" accept="video/*" name="video" required>
+<input type="file" accept="video/*" name="video" id="fileField" required>
 </p>
 
 <p><label for="title">Title:</label>
@@ -26,6 +26,17 @@
 </p>
 
 <button id="uploadBtn">Upload</button>
+
+<section id="progressSection"></section>
+
+<template id="progressTemplate">
+    <div id="progressDiv">
+        <progress id="progressBar" value="0" max="100"></progress>
+        <p>
+            <b id="uploadStatus"></b>
+        </p>
+    </div>
+</template>
 </form>
 
 <script src="/js/ProgressBar.js"></script>

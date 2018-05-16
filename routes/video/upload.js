@@ -59,7 +59,7 @@ router.route('/upload')
       res.status(200)
       res.header({ csrfToken: req.csrfToken() })
       res.render('video/upload', {
-        csrfToken: req.csrfToken()
+       csrfToken: req.csrfToken()
       })
     }
   })
