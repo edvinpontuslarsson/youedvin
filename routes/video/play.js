@@ -4,11 +4,6 @@ const router = require('express').Router()
 const mongoose = require('mongoose')
 const Lib = require('../../lib/Lib')
 
-/*
-const csrf = require('csurf')
-const csrfProtection = csrf()
-*/
-
 const connection = mongoose.connection
 const Grid = require('gridfs-stream')
 let gfs
@@ -31,10 +26,6 @@ router.route('/video/:id')
   .get((req, res) => {
     const fileName = req.params.id
 
-    // see if I can do this with async await
-    // similarly to how I get VideoInfo
-    // in separate function
-    // perhaps have a readstream module
     gfs.files.findOne({
       filename: fileName
     }, (error, videoFile) => {
