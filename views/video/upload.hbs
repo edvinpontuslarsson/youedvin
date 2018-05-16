@@ -1,6 +1,7 @@
 <!-- -->
 <h3>Upload Video!</h3>
 <form enctype="multipart/form-data" action="/upload?_csrf={{csrfToken}}" method="POST">
+<input type="hidden" id="csrfToken" value="{{csrfToken}}">
 
 <p>
     Max video file size: 100 MB
