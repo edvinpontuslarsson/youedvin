@@ -33,10 +33,11 @@ const makeProgress = (file) => {
     const token = csrf.value
     req.upload.addEventListener('progress', displayProgress)
     req.open('POST', `/upload?_csrf=${token}`)
-    /*
+    
     const formData = new FormData()
-    formData.append
-    */
+    formData.append(file[0])
+    req.send(formData)
+    
     const percentage = Math.floor((file.loaded / file.total) * 100)
     const bar = document.getElementById('progressBar')
     const status = document.getElementById('uploadStatus')
