@@ -23,26 +23,18 @@ const upload = () => {
 /**
  * Inspired by: 
  * https://www.webcodegeeks.com/javascript/node-js/node-js-file-upload-progress-bar-example/
- * and:
- * https://www.youtube.com/watch?v=EraNFJiY0Eg
  */
 const makeProgress = (file) => {
     showBar()
     const req = new XMLHttpRequest()
     const csrf = document.getElementById('csrfToken')
     const token = csrf.value
-    req.upload.addEventListener('progress', displayProgress)
     req.open('POST', `/upload?_csrf=${token}`)
-    
+    req.upload.addEventListener('progress', displayProgress)
+
     const formData = new FormData()
-    formData.append(file[0])
+    formData.append('video', file[0])
     req.send(formData)
-    
-    const percentage = Math.floor((file.loaded / file.total) * 100)
-    const bar = document.getElementById('progressBar')
-    const status = document.getElementById('uploadStatus')
-    bar.value = percentage
-    status.innerHTML = `${percentage} % uploaded... Please wait`
 }
 
 /**
@@ -56,6 +48,15 @@ const showBar = () => {
     section.appendChild(paragraph)
 }
 
-const displayProgress = () => {
-
+/**
+ * Inspired by:
+ * https://www.youtube.com/watch?v=EraNFJiY0Eg
+ * @param {file} event - file upload
+ */
+const displayProgress = (event) => {
+    const percentage = Math.floor((event.loaded / event.total) * 100)
+    const bar = document.getElementById('progressBar')
+    const status = document.getElementById('uploadStatus')
+    bar.value = percentage
+    status.innerHTML = `${percentage} % uploaded... Please wait`
 }

@@ -1,8 +1,10 @@
 <!-- Have in template, css spinner, when it can play through append -->
+<!-- No buffer, perhaps remove autoplay -->
 <!-- https://www.w3schools.com/jsref/event_oncanplaythrough.asp -->
 
 <h1>{{videoInfo.title}}</h1>
- <video width="75%" playsinline controls src="/video/{{videoInfo.fileName}}" type="{{videoInfo.contentType}}">
+ <video width="75%" autoplay controls>
+  <source src="/video/{{videoInfo.fileName}}" type="{{videoInfo.contentType}}">
 Your browser does not support the video tag.
 </video> 
 <p>Uploaded by {{videoInfo.createdBy}} on {{videoInfo.createdAt}}</p>
