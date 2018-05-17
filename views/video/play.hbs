@@ -1,20 +1,30 @@
 <!-- Have in template, css spinner, when it can play through append -->
 <!-- No buffer, perhaps remove autoplay -->
 <!-- https://www.w3schools.com/jsref/event_oncanplaythrough.asp -->
+<!-- removeChild in section -->
+<section id="videoSection">
+  <h2>Loading, please wait...</h2>
+</section>
 
-<h1>{{videoInfo.title}}</h1>
- <video width="75%" autoplay controls>
-  <source src="/video/{{videoInfo.fileName}}" type="{{videoInfo.contentType}}">
-Your browser does not support the video tag.
-</video> 
-<p>Uploaded by {{videoInfo.createdBy}} on {{videoInfo.createdAt}}</p>
-{{#if videoInfo.canEdit}}
-<p>
-<a href="/delete/{{videoInfo.fileName}}">Delete Video</a>
-</p>
-<p>
-<a href="/editvideo/{{videoInfo.fileName}}">Edit Video Information</a>
-</p>
-{{/if}}
-<h2>Description</h2>
-<p class="description">{{videoInfo.description}}</p>
+<template id="videoTemplate">
+  <div>
+    <h1>{{videoInfo.title}}</h1>
+    <video width="75%" autoplay controls id="videoClip">
+      <source src="/video/{{videoInfo.fileName}}" type="{{videoInfo.contentType}}">
+    Your browser does not support the video tag.
+    </video> 
+    <p>Uploaded by {{videoInfo.createdBy}} on {{videoInfo.createdAt}}</p>
+    {{#if videoInfo.canEdit}}
+    <p>
+    <a href="/delete/{{videoInfo.fileName}}">Delete Video</a>
+    </p>
+    <p>
+    <a href="/editvideo/{{videoInfo.fileName}}">Edit Video Information</a>
+    </p>
+    {{/if}}
+    <h2>Description</h2>
+    <p class="description">{{videoInfo.description}}</p>
+  </div>
+</template>
+
+<script src="/js/videoWait.js"></script>

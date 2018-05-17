@@ -6,6 +6,9 @@
  */
 const _ = id => document.getElementById(id)
 
+/**
+ * When a user uploads a file
+ */
 ;(() => {
     const button = _('uploadBtn')
     button.addEventListener('click', () => {
@@ -21,8 +24,8 @@ const pleaseWait = () => {
     form.classList.add('hidden')
 
     const template = _('uploadingTemplate')
-    const paragraph = document.importNode(template.content.firstElementChild, true)
+    const message = document.importNode(template.content.firstElementChild, true)
 
     const section = _('uploadWait')
-    section.appendChild(paragraph)
+    section.appendChild(message)
 }

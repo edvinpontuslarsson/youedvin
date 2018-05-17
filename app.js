@@ -143,8 +143,12 @@ app.use((err, req, res, next) => {
 
   // For invalid csrf-tokens
   if (err.code === 'EBADCSRFTOKEN') {
-    res.status(403)
-    return res.render('error/403')
+    req.session.flash = {
+      type: 'error',
+      text: 'Something went wrong'
+    }
+    res.status(500)
+    return res.redirect('/')
   }
 
   // For failed file upload attempts
