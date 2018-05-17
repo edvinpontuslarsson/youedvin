@@ -70,6 +70,9 @@ router.route('/upload')
      * in that function
      */
   .post(csrfProtection, upload.single('video'), async (req, res) => {
+    
+    console.log(req.files)
+
     // saves video info in separate mongoose model
     const videoInfo = new VideoInfo({
       fileName: req.file.filename,
@@ -80,6 +83,8 @@ router.route('/upload')
       creatorId: req.session.userid
     })
     await videoInfo.save()
+
+    console.log(req.file)
 
     // updates video amount
     const videoAmount = new VideoAmount({
