@@ -1,7 +1,9 @@
 <!-- -->
-<h3>Upload Video!</h3>
-<form enctype="multipart/form-data" action="/upload?_csrf={{csrfToken}}" method="POST">
+<section id="uploadWait"></section>
+<form enctype="multipart/form-data" action="/upload?_csrf={{csrfToken}}" method="POST" id="uploadForm">
 <input type="hidden" id="csrfToken" value="{{csrfToken}}">
+
+<h3>Upload Video!</h3>
 
 <p>
     Max video file size: 100 MB
@@ -29,16 +31,10 @@
 <button id="uploadBtn">Upload</button>
 </form>
 
-<br>
-<section id="progressSection"></section>
-
-<template id="progressTemplate">
-    <div id="progressParagraph">
-        <progress id="progressBar" value="0" max="100"></progress>
-        <p>
-            <b id="uploadStatus"></b>
-        </p>
-    </div>
+<template id="uploadingTemplate">
+    <h2>
+        Uploading, please wait...
+    </h2>
 </template>
 
-<script src="/js/ProgressBar.js"></script>
+<script src="/js/uploadWait.js"></script>
