@@ -14,40 +14,12 @@
 const router = require('express').Router()
 const VideoInfo = require('../../models/VideoInfo')
 const VideoAmount = require('../../models/VideoAmount')
+const fs = require('fs')
 const path = require('path')
 const Lib = require('../../lib/Lib')
-const multer = require('multer')
-const GridFsStorage = require('multer-gridfs-storage')
 
 const csrf = require('csurf')
 const csrfProtection = csrf()
-
-/**
- * Defines storage of files with validation
- */
-const storage = new GridFsStorage({
-  url: process.env.dbURL,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      // see the error handling in the app-module for how these errors are handled
-      if (Lib.validate.extName(file.originalname) === false) {
-        return reject(new Error('Upload attempt with unsupported file format'))
-      } else if (!req.session.username) {
-        return reject(new Error('Unauthorized file upload attempt'))
-
-        // changes the file name before storing
-      } else {
-        const fileName = Lib.make.randomString() + path.extname(file.originalname)
-        const fileInfo = {
-          filename: fileName,
-          bucketName: 'uploads'
-        }
-        resolve(fileInfo)
-      }
-    })
-  }
-})
-const upload = multer({ storage })
 
 router.route('/upload')
 // renders upload form, only for logged in users

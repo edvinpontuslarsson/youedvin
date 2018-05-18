@@ -9,6 +9,7 @@
  * @requires helmet
  * @requires path
  * @requires body-parser
+ * @requires busboy-body-parser
  * @requires dotenv
  * @requires config/dbConfig
  * @requires routes/
@@ -23,6 +24,7 @@ const helmet = require('helmet')
 const path = require('path')
 const http = require('http')
 const bodyParser = require('body-parser')
+const busboyBodyParser = require('busboy-body-parser')
 const socketConfig = require('./config/socketConfig')
 const VideoAmount = require('./models/VideoAmount')
 
@@ -67,7 +69,12 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
-// Sets path to the folder 'public' for static resources
+// Parses incoming files
+app.use(busboyBodyParser({
+  limit: '120mb'
+}))
+
+// Sets path to the 'public' folder for static resources
 app.use(express.static(path.join(__dirname, 'public')))
 
 //= ==============================================
