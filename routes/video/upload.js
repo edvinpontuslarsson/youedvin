@@ -41,30 +41,42 @@ router.route('/upload')
      * validation that the uploader is logged in, also takes place
      * in that function
      */
-  .post(csrfProtection, upload.single('video'), async (req, res) => {
-    // saves video info in separate mongoose model
-    const videoInfo = new VideoInfo({
-      fileName: req.file.filename,
-      contentType: req.file.contentType,
-      title: req.body.title,
-      description: req.body.description,
-      createdBy: req.session.username,
-      creatorId: req.session.userid
-    })
-    await videoInfo.save()
+  .post(csrfProtection, async (req, res) => {
+    if (!req.session.username) {
+      res.status(403)
+      res.render('error/403')
+    } else {
+      // saves to file system & gets filename
+      const fileName = await Lib.save.file(req)      
+      const publicPath = `/videos/${fileName}` 
 
-    // updates video amount
-    const videoAmount = new VideoAmount({
-      amount: +1
-    })
-    await videoAmount.save()
+      // make thumbnail, call lib func
 
-    req.session.flash = {
-      type: 'success',
-      text: 'The Video has been succesfully uploaded!'
+      // saves video info to DB
+      const videoInfo = new VideoInfo({
+        fileName: fileName,
+        filePath: publicPath,
+        contentType: videoFile.mimetype,
+        title: req.body.title,
+        description: req.body.description,
+        createdBy: req.session.username,
+        creatorId: req.session.userid
+      })
+      await videoInfo.save()
+
+      // updates video amount
+      const videoAmount = new VideoAmount({
+        amount: +1
+      })
+      await videoAmount.save()
+
+      req.session.flash = {
+        type: 'success',
+        text: 'The Video has been succesfully uploaded!'
+      }
+      res.status(201)
+      res.redirect(`/play/${req.file.filename}`)
     }
-    res.status(201)
-    res.redirect(`/play/${req.file.filename}`)
   })
 
 module.exports = router

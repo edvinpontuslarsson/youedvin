@@ -68,11 +68,11 @@ app.set('view engine', '.hbs')
 app.use(bodyParser.urlencoded({
   extended: true
 }))
-
+/*
 // Parses incoming files
 app.use(busboyBodyParser({
   limit: '120mb'
-}))
+}))*/
 
 // Sets path to the 'public' folder for static resources
 app.use(express.static(path.join(__dirname, 'public')))
@@ -168,10 +168,13 @@ app.use((err, req, res, next) => {
     return res.redirect('/upload')
   }
 
-  // For file upload posts from non-authenticated users
-  if (err.message === 'Unauthorized file upload attempt') {
-    res.status(403)
-    return res.render('error/403')
+  if (err.message === 'Upload failed') {
+    req.session.flash = {
+      type: 'error',
+      text: 'Upload failed'
+    }
+    res.status(500)
+    return res.redirect('/upload')
   }
 
   console.log(err)
