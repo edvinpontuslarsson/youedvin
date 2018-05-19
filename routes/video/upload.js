@@ -46,6 +46,19 @@ router.route('/upload')
       res.status(403)
       res.render('error/403')
     } else {
+      if (!req.files) {
+        req.session.flash = {
+          type: 'error',
+          text: 'No file submitted'
+        }
+        res.status(400)
+        return res.redirect('/upload')
+      }
+
+      // check if limit exceeded
+
+      const videoFile = req.files.video
+
       // saves to file system & gets filename
       const fileName = await Lib.save.file(req)      
       const publicPath = `/videos/${fileName}` 

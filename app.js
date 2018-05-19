@@ -20,11 +20,12 @@
 const express = require('express')
 const session = require('express-session')
 const exphbs = require('express-handlebars')
+const fileUpload = require('express-fileupload')
 const helmet = require('helmet')
 const path = require('path')
 const http = require('http')
 const bodyParser = require('body-parser')
-const busboyBodyParser = require('busboy-body-parser')
+// const busboyBodyParser = require('busboy-body-parser')
 const socketConfig = require('./config/socketConfig')
 const VideoAmount = require('./models/VideoAmount')
 
@@ -54,9 +55,6 @@ app.use(helmet.contentSecurityPolicy({
   }
 }))
 
-// otherwise, too much information. No need to showcase that express is being used.
-app.disable('x-powered-by')
-
 // View engine
 app.engine('.hbs', exphbs({
   defaultLayout: 'main',
@@ -68,6 +66,10 @@ app.set('view engine', '.hbs')
 app.use(bodyParser.urlencoded({
   extended: true
 }))
+
+// Gets posted files
+app.use(fileUpload())
+
 /*
 // Parses incoming files
 app.use(busboyBodyParser({

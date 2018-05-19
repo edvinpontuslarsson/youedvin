@@ -51,6 +51,9 @@ router.route('/delete/:id')
   })
 
   // to delete video
+
+  // update videoAmount --
+
   .post(csrfProtection, async (req, res) => {
     const video = await Lib.get.aVideo(req.params.id)
 
