@@ -4,7 +4,7 @@
  * @param {Element} id - id of HTML-element
  * @returns HTML-element
  */
-const _ = id => document.getElementById(id)
+const _ = (id) => { document.getElementById(id) }
 
 /**
  * When a user uploads a file
