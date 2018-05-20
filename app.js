@@ -66,15 +66,11 @@ app.set('view engine', '.hbs')
 app.use(bodyParser.urlencoded({
   extended: true
 }))
-
-// Gets posted files
-app.use(fileUpload())
-
 /*
 // Parses incoming files
 app.use(busboyBodyParser({
   limit: '120mb'
-}))*/
+})) */
 
 // Sets path to the 'public' folder for static resources
 app.use(express.static(path.join(__dirname, 'public')))

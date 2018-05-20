@@ -17,6 +17,23 @@ const VideoAmount = require('../../models/VideoAmount')
 const fs = require('fs')
 const path = require('path')
 const Lib = require('../../lib/Lib')
+const multer = require('multer')
+
+/**
+ * Sets up multer file system storage, changes the name of the file
+ * Inspired by a method described here: https://www.youtube.com/watch?v=9Qzmri1WaaE&index=3&list=LLwTR7eKKJwFR5fxi_wzqzww&t=0s
+ */
+const storage = multer.diskStorage({
+  destination: '../../public/videos/',
+  filename: (req, file, callback) => {
+    callback(null, `${Lib.make.randomString()}${path.extname(file.originalname)}`)
+  }
+})
+
+// Sets up upload function with storage defined above
+const upload = multer({
+  storage: storage
+}).single('video')
 
 const csrf = require('csurf')
 const csrfProtection = csrf()
@@ -41,59 +58,39 @@ router.route('/upload')
     if (!req.session.username) {
       res.status(403)
       res.render('error/403')
-    } else {
-      if (!req.files) {
-        req.session.flash = {
-          type: 'error',
-          text: 'No file submitted'
-        }
-        res.status(400)
-        return res.redirect('/upload')
-      }
-
-      // check if limit exceeded
-
-      const videoFile = req.files.video
-      const oldName = videoFile.name
-
-      if (!Lib.validate.extName(oldName)) {
+    } else {/*
+      const fileName = `${req.files.video.name}`
+      if (!Lib.validate.extName(fileName)) {
         req.session.flash = {
           type: 'error',
           text: 'Unsupported file format'
         }
         res.status(400)
         return res.redirect('/upload')
-      }
+      }*/
 
-      const newName = `${Lib.make.randomString()}${path.extname(oldName)}`
-
-      videoFile.name = newName
-
-      // maybe it could be string templating that mess things up?
-
-      // const publicPath = `/videos/${videoFile.name}`
-      const savePath = `./tempUploads/${videoFile.name}`
-
-      // perhaps have below in separate promise wrapper
-
-      videoFile.mv(savePath, async (error) => {
-        if (error) {
-          console.log(error)
+      upload(req, res, async (err) => {
+        if (err) {
           req.session.flash = {
             type: 'error',
             text: 'Upload failed'
           }
           res.status(500)
-          return res.redirect('/upload')
-        }
+          res.render('video/upload')
+        } else {
+
+          // try to abort here if invalid file format
+          
+          console.log(req.file.filename)
 
         // make thumbnail, call lib func
 
+        // const filePath = req.file.path
+
         // saves video info to DB
         const videoInfo = new VideoInfo({
-          fileName: videoFile.name,
-          // publicPath: publicPath,
-          contentType: videoFile.mimetype,
+          fileName: req.file.filename,
+          contentType: req.file.mimetype,
           title: req.body.title,
           description: req.body.description,
           createdBy: req.session.username,
@@ -113,7 +110,8 @@ router.route('/upload')
         }
         res.status(201)
         res.redirect(`/play/${req.file.filename}`)
-        })
+        }
+      })      
     }
   })
 
