@@ -58,17 +58,7 @@ router.route('/upload')
     if (!req.session.username) {
       res.status(403)
       res.render('error/403')
-    } else {/*
-      const fileName = `${req.files.video.name}`
-      if (!Lib.validate.extName(fileName)) {
-        req.session.flash = {
-          type: 'error',
-          text: 'Unsupported file format'
-        }
-        res.status(400)
-        return res.redirect('/upload')
-      }*/
-
+    } else {
       upload(req, res, async (err) => {
         if (err) {
           req.session.flash = {
@@ -79,9 +69,7 @@ router.route('/upload')
           res.render('video/upload')
         } else {
 
-          // try to abort here if invalid file format
-          
-          console.log(req.file.filename)
+          console.log(req.file)
 
         // make thumbnail, call lib func
 
@@ -109,7 +97,9 @@ router.route('/upload')
           text: 'The Video has been succesfully uploaded!'
         }
         res.status(201)
-        res.redirect(`/play/${req.file.filename}`)
+        // temporarily just redirect to /
+        res.redirect('/')
+        // res.redirect(`/play/${req.file.filename}`)
         }
       })      
     }
