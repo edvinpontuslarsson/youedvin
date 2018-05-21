@@ -9,6 +9,7 @@
  * @requires helmet
  * @requires path
  * @requires body-parser
+ * @requires busboy-body-parser
  * @requires dotenv
  * @requires config/dbConfig
  * @requires routes/
@@ -19,10 +20,12 @@
 const express = require('express')
 const session = require('express-session')
 const exphbs = require('express-handlebars')
+const fileUpload = require('express-fileupload')
 const helmet = require('helmet')
 const path = require('path')
 const http = require('http')
 const bodyParser = require('body-parser')
+// const busboyBodyParser = require('busboy-body-parser')
 const socketConfig = require('./config/socketConfig')
 const VideoAmount = require('./models/VideoAmount')
 
@@ -52,9 +55,6 @@ app.use(helmet.contentSecurityPolicy({
   }
 }))
 
-// otherwise, too much information. No need to showcase that express is being used.
-app.disable('x-powered-by')
-
 // View engine
 app.engine('.hbs', exphbs({
   defaultLayout: 'main',
@@ -66,8 +66,13 @@ app.set('view engine', '.hbs')
 app.use(bodyParser.urlencoded({
   extended: true
 }))
+/*
+// Parses incoming files
+app.use(busboyBodyParser({
+  limit: '120mb'
+})) */
 
-// Sets path to the folder 'public' for static resources
+// Sets path to the 'public' folder for static resources
 app.use(express.static(path.join(__dirname, 'public')))
 
 //= ==============================================
@@ -161,10 +166,13 @@ app.use((err, req, res, next) => {
     return res.redirect('/upload')
   }
 
-  // For file upload posts from non-authenticated users
-  if (err.message === 'Unauthorized file upload attempt') {
-    res.status(403)
-    return res.render('error/403')
+  if (err.message === 'Upload failed') {
+    req.session.flash = {
+      type: 'error',
+      text: 'Upload failed'
+    }
+    res.status(500)
+    return res.redirect('/upload')
   }
 
   console.log(err)
