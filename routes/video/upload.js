@@ -7,6 +7,7 @@
  * @requires express
  * @requires Video
  * @requires csurf
+ * @requires path
  */
 
 'use strict'
