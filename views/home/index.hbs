@@ -1,9 +1,9 @@
 {{#if emptySearch}}
 <p>No matches found</p>
 {{/if}}
-<h3>
+<h2>
     Uploaded Videos:
-</h3>
+</h2>
 {{#each videoArr}}
 <div>
     <a href="/play/{{this.fileName}}" class="indexVideoIcon">
@@ -16,20 +16,21 @@
 </div>
 {{/each}}
 {{#if addPage}}
-<p class="turnPage">
-    View more:
+<div id="turnPage">
+    <div class="turnPageItem" id="viewMore">
+        View more:
+    </div>
+    <div class="turnPageItem" id="switchPage">
     {{#if prevPage}}
-    <!--<button disabled="disabled" class="turnPageBtn"><a href="/index/{{prevPage}}">&lt; prev</a></button>-->
-    <form action="/index/{{prevPage}}">
+    <form action="/index/{{prevPage}}" id="prevPage">
         <input type="submit" value="&lt; prev" class="turnPageBtn">
     </form>
     {{/if}}
     {{#if nextPage}}
-    <!-- &lt; prev -->
-    <!--<button disabled="disabled" class="turnPageBtn"><a href="/index/{{nextPage}}">next &gt;</a></button>-->
     <form action="/index/{{nextPage}}">
         <input type="submit" value="next &gt;" class="turnPageBtn">
     </form>
     {{/if}}
-</p>
+    </div>
+</div>
 {{/if}}
