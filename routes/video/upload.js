@@ -81,11 +81,19 @@ router.route('/upload')
     })
     await videoInfo.save()
 
-    // updates video amount
-    const videoAmount = new VideoAmount({
-      amount: +1
+    // to update video amount
+    const videoAmount = await VideoAmount.findOne({
+      name: 'VideoAmount'
     })
-    await videoAmount.save()
+    
+    if (videoAmount) {
+      videoAmount.amount += 1
+      await videoAmount.save()
+    } else {
+      const newVideoAmount = new VideoAmount()
+      newVideoAmount.amount += 1
+      await newVideoAmount.save()
+    }
 
     req.session.flash = {
       type: 'success',

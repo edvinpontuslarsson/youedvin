@@ -12,7 +12,9 @@
 const mongoose = require('mongoose')
 
 const videoAmountSchema = mongoose.Schema({
-  // save default name here, for calling this specifically
+  name: {
+    type: String, required: true, default: 'VideoAmount'
+  },
   amount: {
     type: Number, required: true, default: 0
   }

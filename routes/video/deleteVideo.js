@@ -3,6 +3,7 @@
 const router = require('express').Router()
 const mongoose = require('mongoose')
 const VideoInfo = require('../../models/VideoInfo')
+const VideoAmount = require('../../models/VideoAmount')
 const Lib = require('../../lib/Lib')
 const csrf = require('csurf')
 
@@ -65,7 +66,14 @@ router.route('/delete/:id')
         fileName: req.params.id
       })
 
-      // deletes the video file
+      // updates video amount
+      const videoAmount = await VideoAmount.findOne({
+        name: 'VideoAmount'
+      })
+      videoAmount.amount -= 1
+      await videoAmount.save()
+
+      // deletes video file
       gfs.remove({
         filename: video.fileName, root: 'uploads'
       }, (error, gridStorage) => {
