@@ -111,7 +111,7 @@ app.use(async (req, res, next) => {
 //  ROUTES CONFIG
 //= ==============================================
 
-// loads routes as "mini-apps"
+// requires all routes
 app.use('/', require('./routes/index/index'))
 app.use('/', require('./routes/index/search'))
 app.use('/', require('./routes/user/logIn'))
@@ -121,6 +121,7 @@ app.use('/', require('./routes/user/userEdit'))
 app.use('/', require('./routes/user/passEdit'))
 app.use('/', require('./routes/video/upload'))
 app.use('/', require('./routes/video/play'))
+app.use('/', require('./routes/video/surprise'))
 app.use('/', require('./routes/video/deleteVideo'))
 app.use('/', require('./routes/video/editVideo'))
 
