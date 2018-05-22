@@ -30,7 +30,7 @@ const storage = new GridFsStorage({
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       // see the error handling in the app-module for how these errors are handled
-      if (Lib.validate.extName(file.originalname) === false) {
+      if (!Lib.validate.mimeType(file)) {
         return reject(new Error('Upload attempt with unsupported file format'))
       } else if (!req.session.username) {
         return reject(new Error('Unauthorized file upload attempt'))

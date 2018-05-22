@@ -1,6 +1,9 @@
 {{#if emptySearch}}
 <p>No matches found</p>
 {{/if}}
+<h3>
+    Uploaded Videos:
+</h3>
 {{#each videoArr}}
 <p><a href="/play/{{this.fileName}}">{{this.title}}</a><br>
 Uploaded by {{this.createdBy}} on {{this.createdAt}}
