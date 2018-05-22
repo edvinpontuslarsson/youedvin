@@ -1,3 +1,7 @@
+/**
+ * Redirects to random video
+ */
+
 'use strict'
 
 const router = require('express').Router()
@@ -10,15 +14,15 @@ router.route('/surprise')
             name: 'VideoAmount'
         })
 
-        if (!videoAmount) {
-            return res.render('error/404')
-        }
+        if (!videoAmount) { return res.render('error/404') }
 
         const amount = videoAmount.amount
         const skip = Lib.make.randomInteger(0, amount)
 
         // selects a random video by skipping a random amount
         const randomVideo = await Lib.get.newestVideos(1, skip)
+        
+        if (!randomVideo[0]) { return res.render('error/404') }
 
         res.redirect(`/play/${randomVideo[0].fileName}`)
     })
