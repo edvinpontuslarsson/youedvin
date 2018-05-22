@@ -46,6 +46,14 @@ a:visited {
     background-color: red;
     color: black;
 }
+.indexVideoIcon {
+    float: left;
+    margin-right: 20px;
+}
+.indexVideoLink {
+    padding-top: 6px;
+    margin-top: 50px;
+}
 .user {
     color: rgb(255, 176, 0);
 }

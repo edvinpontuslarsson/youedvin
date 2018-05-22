@@ -5,9 +5,15 @@
     Uploaded Videos:
 </h3>
 {{#each videoArr}}
-<p><a href="/play/{{this.fileName}}">{{this.title}}</a><br>
-Uploaded by {{this.createdBy}} on {{this.createdAt}}
-</p>
+<div>
+    <a href="/play/{{this.fileName}}" class="indexVideoIcon">
+        <img src="/img/icons/film.png" alt="Video">
+    </a>
+    <p class="indexVideoLink">
+        <a href="/play/{{this.fileName}}">{{this.title}}</a><br>
+        Uploaded by {{this.createdBy}} on {{this.createdAt}}
+    </p>
+</div>
 {{/each}}
 {{#if addPage}}
 <p class="turnPage">

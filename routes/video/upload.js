@@ -64,11 +64,11 @@ router.route('/upload')
     }
   })
 
-    /**
-     * saves video to DB with upload.single-function
-     * validation that the uploader is logged in, also takes place
-     * in that function
-     */
+  /**
+   * saves video to DB with upload.single-function
+   * validation that the uploader is logged in, also takes place
+   * in that function
+   */
   .post(csrfProtection, upload.single('video'), async (req, res) => {
     // saves video info in separate mongoose model
     const videoInfo = new VideoInfo({
