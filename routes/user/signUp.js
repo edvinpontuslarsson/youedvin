@@ -6,7 +6,6 @@
  *
  * @requires express
  * @requires User
- * @requires csurf
  */
 
 'use strict'
@@ -14,27 +13,21 @@
 const router = require('express').Router()
 const User = require('../../models/User')
 const Lib = require('../../lib/Lib')
-const csrf = require('csurf')
-
-const csrfProtection = csrf()
 
 router.route('/signup')
 /**
      * Renders sign up page
      */
-  .get(csrfProtection, (req, res) => {
+  .get((req, res) => {
     res.status(200)
-    res.header({ csrfToken: req.csrfToken() })
-    res.render('user/signup', {
-      csrfToken: req.csrfToken()
-    })
+    res.render('user/signup')
   })
 
 /**
      * Validates username and passwords
      * Saves user information to DB
      */
-  .post(csrfProtection, async (req, res) => {
+  .post(async (req, res) => {
     const username = req.body.username
     const password = req.body.password
     const confirmPassword = req.body.confirmPassword

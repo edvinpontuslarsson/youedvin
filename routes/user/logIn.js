@@ -6,29 +6,22 @@
  *
  * @requires express
  * @requires User
- * @requires csurf
  */
 
 'use strict'
 
 const router = require('express').Router()
 const User = require('../../models/User')
-const csrf = require('csurf')
-
-const csrfProtection = csrf()
 
 router.route('/login')
 // renders log in page
-  .get(csrfProtection, (req, res) => {
+  .get((req, res) => {
     res.status(200)
-    res.header({ csrfToken: req.csrfToken() })
-    res.render('user/login', {
-      csrfToken: req.csrfToken()
-    })
+    res.render('user/login')
   })
 
 // checks for existing user and if the password is correct
-  .post(csrfProtection, (req, res) => {
+  .post((req, res) => {
     const username = req.body.username
     const password = req.body.password
 

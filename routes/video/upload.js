@@ -6,7 +6,6 @@
  *
  * @requires express
  * @requires Video
- * @requires csurf
  */
 
 'use strict'
@@ -18,9 +17,6 @@ const path = require('path')
 const Lib = require('../../lib/Lib')
 const multer = require('multer')
 const GridFsStorage = require('multer-gridfs-storage')
-
-const csrf = require('csurf')
-const csrfProtection = csrf()
 
 /**
  * Defines storage of files with validation
@@ -51,16 +47,13 @@ const upload = multer({ storage })
 
 router.route('/upload')
 // renders upload form, only for logged in users
-  .get(csrfProtection, (req, res) => {
+  .get((req, res) => {
     if (!req.session.username) {
       res.status(403)
       res.render('error/403')
     } else {
       res.status(200)
-      res.header({ csrfToken: req.csrfToken() })
-      res.render('video/upload', {
-       csrfToken: req.csrfToken()
-      })
+      res.render('video/upload')
     }
   })
 
@@ -69,7 +62,7 @@ router.route('/upload')
    * validation that the uploader is logged in, also takes place
    * in that function
    */
-  .post(csrfProtection, upload.single('video'), async (req, res) => {
+  .post(upload.single('video'), async (req, res) => {
     // saves video info in separate mongoose model
     const videoInfo = new VideoInfo({
       fileName: req.file.filename,

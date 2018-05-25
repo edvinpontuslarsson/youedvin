@@ -5,10 +5,6 @@ const mongoose = require('mongoose')
 const VideoInfo = require('../../models/VideoInfo')
 const VideoAmount = require('../../models/VideoAmount')
 const Lib = require('../../lib/Lib')
-const csrf = require('csurf')
-
-// to set up csurf protection
-const csrfProtection = csrf()
 
 const connection = mongoose.connection
 const Grid = require('gridfs-stream')
@@ -27,7 +23,7 @@ connection.once('open', () => {
 router.route('/delete/:id')
 // checks that the user is the creator of the Video
 // then renders the page for choosing to delete the Video
-  .get(csrfProtection, async (req, res) => {
+  .get(async (req, res) => {
     const video = await Lib.get.aVideo(req.params.id)
 
     if (video === null) {
@@ -42,9 +38,7 @@ router.route('/delete/:id')
     // if everything is OK
     } else {
       res.status(200)
-      res.header({ csrfToken: req.csrfToken() })
       res.render('video/delete', {
-        csrfToken: req.csrfToken(),
         id: req.params.id,
         title: video.title
       })
@@ -52,7 +46,7 @@ router.route('/delete/:id')
   })
 
   // to delete video
-  .post(csrfProtection, async (req, res) => {
+  .post(async (req, res) => {
     const video = await Lib.get.aVideo(req.params.id)
 
     if (video.creatorId !== req.session.userid) {

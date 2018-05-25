@@ -2,12 +2,9 @@
 
 const router = require('express').Router()
 const User = require('../../models/User')
-const csrf = require('csurf')
-
-const csrfProtection = csrf()
 
 router.route('/passedit/:id')
-    .get(csrfProtection, (req, res) => {
+    .get((req, res) => {
         const userid = req.params.id
         const user = User.findById(userid, 
             (error, user) => {
@@ -21,9 +18,7 @@ router.route('/passedit/:id')
             } else {
                 // if everything is OK
                 res.status(200)
-                res.header({ csrfToken: req.csrfToken() })
                 res.render('user/passedit', {
-                    csrfToken: req.csrfToken(),
                     username: user.username,
                     id: userid
                 })
@@ -31,7 +26,7 @@ router.route('/passedit/:id')
         })
     })
 
-    .post(csrfProtection, async (req, res) => {
+    .post(async (req, res) => {
         const newPass = req.body.newPass
         const confirmPass = req.body.confirmPass
         const currentPass = req.body.currentPass

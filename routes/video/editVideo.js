@@ -4,15 +4,11 @@ const router = require('express').Router()
 const mongoose = require('mongoose')
 const VideoInfo = require('../../models/VideoInfo')
 const Lib = require('../../lib/Lib')
-const csrf = require('csurf')
-
-// to set up csurf protection
-const csrfProtection = csrf()
 
 router.route('/editvideo/:id')
 // checks that the user is the creator of the Video
 // then renders the page for choosing to edit Video Info
-  .get(csrfProtection, async (req, res) => {
+  .get(async (req, res) => {
     const videoInfo = await Lib.get.aVideo(req.params.id)
 
     if (videoInfo === null) {
@@ -27,9 +23,7 @@ router.route('/editvideo/:id')
       // if everything is OK
     } else {
       res.status(200)
-      res.header({ csrfToken: req.csrfToken() })
       res.render('video/edit', {
-        csrfToken: req.csrfToken(),
         id: req.params.id,
         title: videoInfo.title,
         description: videoInfo.description
@@ -39,7 +33,7 @@ router.route('/editvideo/:id')
 
 // to update video info
 // inspired by method used here: https://coursework.vschool.io/mongoose-crud/
-  .post(csrfProtection, async (req, res) => {
+  .post(async (req, res) => {
     const videoInfo = await Lib.get.aVideo(req.params.id)
 
     if (videoInfo.creatorId !== req.session.userid) {

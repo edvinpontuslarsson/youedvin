@@ -20,11 +20,10 @@ const express = require('express')
 const session = require('express-session')
 const exphbs = require('express-handlebars')
 const helmet = require('helmet')
+const csrf = require('csurf')
 const path = require('path')
 const http = require('http')
 const bodyParser = require('body-parser')
-const socketConfig = require('./config/socketConfig')
-const VideoAmount = require('./models/VideoAmount')
 
 // environment variables
 require('dotenv').config()
@@ -51,9 +50,6 @@ app.use(helmet.contentSecurityPolicy({
     styleSrc: ["'self'"]
   }
 }))
-
-// otherwise, too much information. No need to showcase that express is being used.
-app.disable('x-powered-by')
 
 // View engine
 app.engine('.hbs', exphbs({
@@ -95,6 +91,9 @@ if (process.env.Environment === 'production') {
 // sets settings
 app.use(session(sessionOptions))
 
+// for csrf-protection
+app.use(csrf())
+
 // config for updating view with sessions
 app.use(async (req, res, next) => {
   // for flash messages
@@ -103,6 +102,10 @@ app.use(async (req, res, next) => {
 
   // updates header menu for logged in users
   res.locals.username = req.session.username
+
+  // sets value to hidden csrf-tokens in forms,
+  // inspired by method used by Rasmus Falk here: https://github.com/1dv430/rf222fu-project/blob/master/app.js
+  res.locals.csrfToken = req.csrfToken()
 
   next()
 })
@@ -183,19 +186,3 @@ const port = process.env.PORT
 app.listen(port, () => {
   console.log('The application is now running on port %s', port)
 })
-
-// For web socket:
-
-/*
-const host = process.env.HOST
-
-Hmm, socket needs to be encrypted
-
-// http here internally, https encryption on nginx server
-const server = http.createServer(app).listen(port, host, () => {
-  console.log('The application is now running on port %s', port)
-})
-
-// to set up web socket connection
-socketConfig(server)
-*/
