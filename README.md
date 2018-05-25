@@ -1,3 +1,5 @@
 # el223na-project
 
-Projektets produkt finns publikt på: [youedvin.com](https://youedvin.com)
+This is the repo for the source code of the open source project [youedvin.com](https://youedvin.com)
+
+It's a video sharing web application built with Node.js with the express framework. 
