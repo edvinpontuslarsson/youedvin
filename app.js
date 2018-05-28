@@ -22,7 +22,6 @@ const exphbs = require('express-handlebars')
 const helmet = require('helmet')
 const csrf = require('csurf')
 const path = require('path')
-const http = require('http')
 const bodyParser = require('body-parser')
 
 // environment variables

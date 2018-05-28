@@ -10,22 +10,22 @@ const _ = id => document.getElementById(id)
  * When a user uploads a file
  */
 ;(() => {
-    const button = _('uploadBtn')
-    button.addEventListener('click', () => {
-        pleaseWait()
-    })
+  const button = _('uploadBtn')
+  button.addEventListener('click', () => {
+    pleaseWait()
+  })
 })()
 
 /**
  * Hides upload form & displays waiting message
  */
 const pleaseWait = () => {
-    const form = _('uploadForm')
-    form.classList.add('hidden')
+  const form = _('uploadForm')
+  form.classList.add('hidden')
 
-    const template = _('uploadingTemplate')
-    const message = document.importNode(template.content.firstElementChild, true)
+  const template = _('uploadingTemplate')
+  const message = document.importNode(template.content.firstElementChild, true)
 
-    const section = _('uploadWait')
-    section.appendChild(message)
+  const section = _('uploadWait')
+  section.appendChild(message)
 }

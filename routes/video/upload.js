@@ -78,7 +78,7 @@ router.route('/upload')
     const videoAmount = await VideoAmount.findOne({
       name: 'VideoAmount'
     })
-    
+
     if (videoAmount) {
       videoAmount.amount += 1
       await videoAmount.save()
