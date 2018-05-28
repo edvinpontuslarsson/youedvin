@@ -6,7 +6,7 @@ const User = require('../../models/User')
 router.route('/useredit/:id')
   .get((req, res) => {
     const username = req.params.id
-    const user = User.findOne({
+    User.findOne({
       username: username
     }, (error, user) => {
       // server error
