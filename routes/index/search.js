@@ -11,7 +11,7 @@ router.route('/search')
     const queryString = req.query.search
     const videoInfo = await Lib.get.videosByTitle(queryString)
 
-    const emptySearch = true ? videoInfo.length < 1 : false
+    const emptySearch = videoInfo.length < 1
 
     const videoArr = Lib.make.indexArr(videoInfo)
 

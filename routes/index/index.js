@@ -28,7 +28,7 @@ router.route('/')
       query, 0
     )
 
-    const addPage = true ? videoInfo.length > limit : false
+    const addPage = videoInfo.length > limit
 
     const videoArr = Lib.make.indexArr(videoInfo, limit)
 

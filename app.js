@@ -30,9 +30,9 @@ require('dotenv').config()
 // connects to DB
 require('./config/dbConfig').dbConnect()
 
-//= ==============================================
+// ==============================================
 //  EXPRESS CONFIG
-//= ==============================================
+// ==============================================
 
 // initializes express app
 const app = express()
@@ -65,9 +65,9 @@ app.use(bodyParser.urlencoded({
 // Sets path to the folder 'public' for static resources
 app.use(express.static(path.join(__dirname, 'public')))
 
-//= ==============================================
+// ==============================================
 //  SESSION CONFIG
-//= ==============================================
+// ==============================================
 
 // Settings for session cookie
 const sessionOptions = {
@@ -109,9 +109,9 @@ app.use(async (req, res, next) => {
   next()
 })
 
-//= ==============================================
+// ==============================================
 //  ROUTES CONFIG
-//= ==============================================
+// ==============================================
 
 // requires all routes
 app.use('/', require('./routes/index/index'))
@@ -134,9 +134,9 @@ app.use((req, res, next) => {
   next(error)
 })
 
-//= ==============================================
+// ==============================================
 //  ERROR CONFIG
-//= ==============================================
+// ==============================================
 
 app.use((err, req, res, next) => {
   if (err.status === 404) {
@@ -176,12 +176,12 @@ app.use((err, req, res, next) => {
   return res.status(500).sendFile(path.join(__dirname, 'views', 'error', '500.html'))
 })
 
-//= ==============================================
+// ==============================================
 //  LIFT OFF!
-//= ==============================================
+// ==============================================
 
 const port = process.env.PORT
 
 app.listen(port, () => {
-  console.log('The application is now running on port %s', port)
+  console.log(`The application is now running on port ${port}`)
 })
