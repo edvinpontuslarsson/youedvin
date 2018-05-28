@@ -32,7 +32,7 @@ router.route('/passedit/:id')
     const currentPass = req.body.currentPass
     const userid = req.params.id
 
-    const user = User.findById(userid,
+    User.findById(userid,
       (error, user) => {
         // server error
         if (error) { throw error }
