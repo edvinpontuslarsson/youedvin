@@ -1,0 +1,14 @@
+/* DEVELOPER */
+
+Edvin Larsson,
+Web Programming student at Linnaeus University, Kalmar, Sweden.
+https://github.com/edvinpontuslarsson
+
+/* THANKS */
+
+Anton Strand, creator of the website's icons
+
+/* SITE */
+
+Last update: June 2018
+Software: Nginx, Node.js, Express, MongoDB
