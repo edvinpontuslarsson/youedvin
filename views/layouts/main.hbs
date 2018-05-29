@@ -12,7 +12,7 @@
 </head>
 <body>
     <section id="page">
-        <!--  -->
+    <!-- Logged in -->
     {{#if username }}
         <header id="mainMenu">
             <div class="menuItem" id="menu0">
@@ -35,7 +35,7 @@
                 <a href="/logout" class="menuLink">Log out</a>
             </div>
           </header>
-    {{else}}
+    {{else}}    <!-- Not logged in -->
         <header id="mainMenu">
             <div class="menuItem" id="menu0">
                 <a href="/" class="menuLink">Home</a>
@@ -58,7 +58,7 @@
     <section id="mainSection">
         <!-- Flash messages -->
         <p>{{>flash}}</p>
-        <!-- Content -->
+        <!-- Page content -->
         {{{ body }}}
     </section>
     <footer id="mainFooter">
