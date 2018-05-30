@@ -1,17 +1,5 @@
 /**
- * @author Edvin Larsson
- *
  * Starting point of the application
- *
- * @requires express
- * @requires express-session
- * @requires express-handlebars
- * @requires helmet
- * @requires path
- * @requires body-parser
- * @requires dotenv
- * @requires config/dbConfig
- * @requires routes/
  */
 
 'use strict'
@@ -43,8 +31,7 @@ app.use(helmet())
 // to only load content generated through my code
 app.use(helmet.contentSecurityPolicy({
   directives: {
-    // connectSrc: self & web socket url
-    connectSrc: ["'self'", process.env.wsURL],
+    connectSrc: ["'self'"],
     defaultSrc: ["'self'"],
     styleSrc: ["'self'"]
   }
@@ -62,7 +49,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 
-// Sets path to the folder 'public' for static resources
+// Directs to the folder 'public' for static resources
 app.use(express.static(path.join(__dirname, 'public')))
 
 // ==============================================
@@ -87,13 +74,13 @@ if (process.env.Environment === 'production') {
   sessionOptions.cookie.secure = true
 }
 
-// sets settings
+// sets cookie settings
 app.use(session(sessionOptions))
 
 // for csrf-protection
 app.use(csrf())
 
-// config for updating view with sessions
+// config for updating html with sessions
 app.use(async (req, res, next) => {
   // for flash messages
   res.locals.flash = req.session.flash
@@ -102,8 +89,7 @@ app.use(async (req, res, next) => {
   // updates header menu for logged in users
   res.locals.username = req.session.username
 
-  // sets value to hidden csrf-tokens in forms,
-  // inspired by method used by Rasmus Falk here: https://github.com/1dv430/rf222fu-project/blob/master/app.js
+  // sets value to hidden csrf-tokens in forms
   res.locals.csrfToken = req.csrfToken()
 
   next()

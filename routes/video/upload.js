@@ -1,11 +1,5 @@
 /**
- * @module upload
- * @author Edvin Larsson
- *
- * Route for uploading videos
- *
- * @requires express
- * @requires Video
+ * Route for uploading video files
  */
 
 'use strict'
