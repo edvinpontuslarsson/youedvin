@@ -40,7 +40,6 @@ router.route('/upload')
       res.render('error/403')
     } else { 
       // renders upload form
-      res.status(200)
       res.render('video/upload')
     }
   })

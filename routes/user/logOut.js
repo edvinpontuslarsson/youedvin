@@ -19,7 +19,6 @@ router.route('/logout')
       res.status(403)
       res.render('error/403')
     } else {
-      res.status(200)
       res.render('user/logout')
     }
   })

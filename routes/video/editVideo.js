@@ -18,10 +18,7 @@ router.route('/editvideo/:id')
     if (videoInfo.creatorId !== req.session.userid) {
       res.status(403)
       res.render('error/403')
-
-      // if everything is OK
     } else {
-      res.status(200)
       res.render('video/edit', {
         id: req.params.id,
         title: videoInfo.title,
@@ -39,8 +36,6 @@ router.route('/editvideo/:id')
       res.status(403)
       res.render('error/403')
     } else {
-      res.status(200)
-
       const query = videoInfo._id
 
       VideoInfo.findByIdAndUpdate(

@@ -19,7 +19,6 @@ router.route('/signup')
      * Renders sign up page
      */
   .get((req, res) => {
-    res.status(200)
     res.render('user/signup')
   })
 

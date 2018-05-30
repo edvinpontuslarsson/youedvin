@@ -17,8 +17,6 @@ router.route('/useredit/:id')
         res.status(403)
         res.render('error/403')
       } else {
-        // if everything is OK
-        res.status(200)
         res.render('user/userEdit', {
           username: user.username,
           id: user._id

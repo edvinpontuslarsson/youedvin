@@ -37,7 +37,6 @@ router.route('/delete/:id')
 
     // if everything is OK
     } else {
-      res.status(200)
       res.render('video/delete', {
         id: req.params.id,
         title: video.title
@@ -53,8 +52,6 @@ router.route('/delete/:id')
       res.status(403)
       res.render('error/403')
     } else {
-      res.status(200)
-
       // deletes video info
       await VideoInfo.findOneAndRemove({
         fileName: req.params.id

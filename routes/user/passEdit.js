@@ -16,8 +16,6 @@ router.route('/passedit/:id')
           res.status(403)
           res.render('error/403')
         } else {
-          // if everything is OK
-          res.status(200)
           res.render('user/passedit', {
             username: user.username,
             id: userid

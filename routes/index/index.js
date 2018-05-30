@@ -25,8 +25,7 @@ router.route('/')
 
     // array with info to display
     const videoArr = Lib.make.indexArr(videoInfo, limit)
-
-    res.status(200)
+   
     res.render('home/index', {
       videoArr, addPage, nextPage: limit
     })
@@ -60,7 +59,6 @@ router.route('/count/:id')
     } else {
       const videoArr = Lib.make.indexArr(videoInfo, limit)
 
-      res.status(200)
       res.render('home/index', {
         videoArr, addPage: true, prevPage, nextPage
       })

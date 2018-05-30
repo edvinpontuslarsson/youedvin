@@ -53,7 +53,6 @@ router.route('/play/:id')
         videoInfo.canEdit = true
       }
 
-      res.status(200)
       res.render('video/play', {
         videoInfo
       })

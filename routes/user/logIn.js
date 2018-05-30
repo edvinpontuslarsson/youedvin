@@ -16,7 +16,6 @@ const User = require('../../models/User')
 router.route('/login')
 // renders log in page
   .get((req, res) => {
-    res.status(200)
     res.render('user/login')
   })
 
