@@ -1,3 +1,7 @@
+/**
+ * Delete video route
+ */
+
 'use strict'
 
 const router = require('express').Router()
@@ -21,8 +25,7 @@ connection.once('open', () => {
 })
 
 router.route('/delete/:id')
-// checks that the user is the creator of the Video
-// then renders the page for choosing to delete the Video
+  // renders delete video form for authenticated user
   .get(async (req, res) => {
     const video = await Lib.get.aVideo(req.params.id)
 
@@ -34,8 +37,6 @@ router.route('/delete/:id')
     if (video.creatorId !== req.session.userid) {
       res.status(403)
       res.render('error/403')
-
-    // if everything is OK
     } else {
       res.render('video/delete', {
         id: req.params.id,
