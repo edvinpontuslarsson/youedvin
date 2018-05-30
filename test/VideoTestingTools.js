@@ -1,18 +1,25 @@
-const VideoTestingTools = {
 /**
- * This is not random
+ * Module with helper functions for the automated tests of
+ * functions for video handling
  */
+
+'use strict'
+
+const VideoTestingTools = {
+  /**
+   * @returns string === 'the same thing every time'
+   */
   notRandom: () => {
     return 'the same thing every time'
   },
 
   /**
- * Calls funcToTest as many times as specified in iterations.
- * Checks if any of the generated strings are identical.
- * @param {*} funcToTest - function to test
- * @param {number} iterations - amount of times to test
- * @returns {boolean} identical
- */
+   * Calls funcToTest as many times as specified in iterations.
+   * Checks if any of the generated strings are identical.
+   * @param {*} funcToTest - function to test
+   * @param {number} iterations - amount of times to test
+   * @returns {boolean} identical
+   */
   isIdentical: (funcToTest, iterations) => {
     const testArr = []
     let identical = false
@@ -48,7 +55,7 @@ const VideoTestingTools = {
    * video info objects
    * @param {Number} amount
    */
-  mockVideoObjArr: (amount) => {
+  mockVideoObjArr: amount => {
     const mockArr = []
 
     for (let i = 0; i < amount; i += 1) {
