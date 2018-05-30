@@ -4,48 +4,6 @@ const expect = require('chai').expect
 const Lib = require('../lib/Lib')
 const VidTest = require('./VideoTestingTools')
 
-describe('Test of Lib.validate.mimeType()', () => {
-  describe('Test with unsupported mimetype', () => {
-    it(`Lib.validate.mimeType(mockRiskyFileObj) should return false`, (done) => {
-      const mockRiskyFileObj = {}
-      mockRiskyFileObj.mimetype = 'application/octet-stream'
-      const answer = Lib.validate.mimeType(mockRiskyFileObj)
-      expect(answer).to.eql(false)
-      done()
-    })
-  })
-
-  describe('Test with supported mimetype', () => {
-    it(`Lib.validate.mimeType(mockMP4Obj) should return true`, (done) => {
-      const mockMP4obj = {}
-      mockMP4obj.mimetype = 'video/mp4'
-      const answer = Lib.validate.mimeType(mockMP4obj)
-      expect(answer).to.eql(true)
-      done()
-    })
-  })
-
-  describe('Test with supported mimetype', () => {
-    it(`Lib.validate.mimeType(mockWEBMobj) should return true`, (done) => {
-      const mockWEBMobj = {}
-      mockWEBMobj.mimetype = 'video/webm'
-      const answer = Lib.validate.mimeType(mockWEBMobj)
-      expect(answer).to.eql(true)
-      done()
-    })
-  })
-
-  describe('Test with supported mimetype', () => {
-    it(`Lib.validate.mimeType(mockOGGobj) should return true`, (done) => {
-      const mockOGGobj = {}
-      mockOGGobj.mimetype = 'video/ogg'
-      const answer = Lib.validate.mimeType(mockOGGobj)
-      expect(answer).to.eql(true)
-      done()
-    })
-  })
-})
-
 describe('Test of Lib.make.randomString() with VidTest.isIdentical()', () => {
   describe('Tests the logic of this testing method', () => {
     it('VidTest.isIdentical(VidTest.notRandom, 2) should return true', (done) => {

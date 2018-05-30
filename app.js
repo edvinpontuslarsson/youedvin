@@ -80,7 +80,7 @@ app.use(session(sessionOptions))
 // for csrf-protection
 app.use(csrf())
 
-// config for updating html with sessions
+// config for updating html
 app.use(async (req, res, next) => {
   // for flash messages
   res.locals.flash = req.session.flash

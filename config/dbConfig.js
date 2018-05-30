@@ -1,7 +1,5 @@
 /**
  * Database configuration with Mongoose
- *
- * @author Edvin Larsson
  */
 
 'use strict'
@@ -11,7 +9,7 @@ require('dotenv').config()
 
 module.exports = {
   /**
-   * For connecting to a database
+   * For connecting to database
    * Inspired by demo code in the course 1dv023
    * https://github.com/1dv023/syllabus/tree/master/lectures/03/demo
    */
