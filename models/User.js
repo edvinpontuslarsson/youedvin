@@ -1,11 +1,5 @@
 /**
- * @module User.js
- * @author Edvin Larsson
- *
- * Model for users
- *
- * @requires mongoose
- * @requires bcrypt
+ * Defines DB storage of users
  */
 
 'use strict'
@@ -24,9 +18,8 @@ userSchema.path('password').validate((password) => {
   return password.length >= 5
 }, 'The password must be at least 5 characters long.')
 
-/**
- * Salts and hashes password before saving it to DB
- */
+
+// Salts and hashes password before saving it to DB
 userSchema.pre('save', function (next) {
   const user = this
   bcrypt.genSalt(10, (err, salt) => {
@@ -44,9 +37,7 @@ userSchema.pre('save', function (next) {
   })
 })
 
-/**
- * Validates the password the user tries to log in with
- */
+// Validates the password the user tries to log in with
 userSchema.methods.comparePassword = function (candidatePassword, callback) {
   bcrypt.compare(candidatePassword, this.password, function (err, result) {
     if (err) {

@@ -1,16 +1,13 @@
 /**
- * @author Edvin Larsson
- *
  * Model for keeping track of the total amount of
  * uploaded videos
- *
- * @requires mongoose
  */
 
 'use strict'
 
 const mongoose = require('mongoose')
 
+// Defines schema
 const videoAmountSchema = mongoose.Schema({
   name: {
     type: String, required: true, default: 'VideoAmount'
@@ -20,6 +17,7 @@ const videoAmountSchema = mongoose.Schema({
   }
 })
 
+// Creates the model object
 const VideoAmount = mongoose.model('Amount', videoAmountSchema)
 
 module.exports = VideoAmount

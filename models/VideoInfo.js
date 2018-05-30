@@ -1,19 +1,13 @@
 /**
- * @author Edvin Larsson
- *
- * Model for video info
- *
- * @requires mongoose
+ * Defines DB storage of video info
  */
 
 'use strict'
 
 const mongoose = require('mongoose')
 
+// Defines schema
 const videoInfoSchema = mongoose.Schema({
-  fileNick: {
-    type: String, required: false
-  },
   fileName: {
     type: String, required: true
   },
@@ -24,21 +18,6 @@ const videoInfoSchema = mongoose.Schema({
     type: String, required: true
   },
   description: {
-    type: String, required: false
-  },
-  category: {
-    type: String, required: true, default: 'Lifestyle'
-  },
-  views: {
-    type: String, required: false
-  },
-  likes: {
-    type: String, required: false
-  },
-  dislikes: {
-    type: String, required: false
-  },
-  amountOfComments: {
     type: String, required: false
   },
   createdAt: {
@@ -52,6 +31,7 @@ const videoInfoSchema = mongoose.Schema({
   }
 })
 
+// Creates the model object
 const Videoinfo = mongoose.model('Video', videoInfoSchema)
 
 module.exports = Videoinfo
