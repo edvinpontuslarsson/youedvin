@@ -1,11 +1,5 @@
 /**
- * @module logIn.js
- * @author Edvin Larsson
- *
- * Route for the loging in
- *
- * @requires express
- * @requires User
+ * Log in route
  */
 
 'use strict'
