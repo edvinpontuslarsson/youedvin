@@ -29,25 +29,32 @@ const app = express()
 app.use(helmet())
 
 // to only load content generated through my code
-app.use(helmet.contentSecurityPolicy({
-  directives: {
-    connectSrc: ["'self'"],
-    defaultSrc: ["'self'"],
-    styleSrc: ["'self'"]
-  }
-}))
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      connectSrc: ["'self'"],
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'"]
+    }
+  })
+)
 
 // View engine
-app.engine('.hbs', exphbs({
-  defaultLayout: 'main',
-  extname: '.hbs'
-}))
+app.engine(
+  '.hbs',
+  exphbs({
+    defaultLayout: 'main',
+    extname: '.hbs'
+  })
+)
 app.set('view engine', '.hbs')
 
 // Parses incoming text data
-app.use(bodyParser.urlencoded({
-  extended: true
-}))
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+)
 
 // Directs to the folder 'public' for static resources
 app.use(express.static(path.join(__dirname, 'public')))
@@ -141,7 +148,7 @@ app.use((err, req, res, next) => {
   }
 
   // For failed file upload attempts
-  if (err.message === 'Upload attempt with unsupported file format') {
+  if (err.message === 'Unsupported file format') {
     req.session.flash = {
       type: 'error',
       text: 'Unsupported file format'
@@ -159,7 +166,9 @@ app.use((err, req, res, next) => {
   console.log(err)
 
   // Unhandled errors render 500 error page
-  return res.status(500).sendFile(path.join(__dirname, 'views', 'error', '500.html'))
+  return res
+    .status(500)
+    .sendFile(path.join(__dirname, 'views', 'error', '500.html'))
 })
 
 // ==============================================

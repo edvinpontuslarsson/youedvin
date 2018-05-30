@@ -33,6 +33,7 @@
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
+    "file-type": "^8.0.0",
     "gridfs-stream": "^1.1.1",
     "helmet": "^3.12.0",
     "mongoose": "^5.0.4",

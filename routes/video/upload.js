@@ -11,45 +11,68 @@ const path = require('path')
 const Lib = require('../../lib/Lib')
 const multer = require('multer')
 const GridFsStorage = require('multer-gridfs-storage')
+const inspectFileType = require('file-type')
 
 // Defines storage of files with validation
 const storage = new GridFsStorage({
   url: process.env.dbURL,
   file: (req, file) => {
+    // const validFormat = await Lib.validate.mimeType(req)
+
+    const data = []
+
+    req.on('data', chunk => {
+      req.destroy()
+      const fileType = inspectFileType(chunk)
+      console.log(fileType)
+    })
+    /*
+    req.on('end', () => {
+      const buffer = Buffer.concat(data)
+      const fileType = inspectFileType(buffer[0])
+      console.log(fileType)
+    })*/
+
+    /*
     return new Promise((resolve, reject) => {
+      if (!validFormat) {
+        return reject(new Error('Unsupported file format'))
+      }
+
       if (!req.session.username) {
         return reject(new Error('Unauthorized file upload attempt'))
-      } else {
-        // changes the file name before storing
-        const fileName = Lib.make.randomString() + path.extname(file.originalname)
-        const fileInfo = {
-          filename: fileName,
-          bucketName: 'uploads'
-        }
-        resolve(fileInfo)
       }
-    })
+
+      // changes the file name before storing
+      const fileName = Lib.make.randomString() + path.extname(file.originalname)
+      const fileInfo = {
+        filename: fileName,
+        bucketName: 'uploads'
+      }
+      resolve(fileInfo)
+    })*/
   }
 })
 const upload = multer({ storage })
 
-router.route('/upload')
+router
+  .route('/upload')
   .get((req, res) => {
     if (!req.session.username) {
       res.status(403)
       res.render('error/403')
-    } else { 
+    } else {
       // renders upload form
       res.render('video/upload')
     }
   })
 
-  // saves video to DB with upload.single-function 
+  // saves video to DB with upload.single-function
   .post(upload.single('video'), async (req, res) => {
     if (!req.session.username) {
       res.status(403)
       res.render('error/403')
-    } else { 
+    } else {
       // saves video info in separate mongoose model
       const videoInfo = new VideoInfo({
         fileName: req.file.filename,
@@ -60,12 +83,12 @@ router.route('/upload')
         creatorId: req.session.userid
       })
       await videoInfo.save()
-  
+
       // to update video amount
       const videoAmount = await VideoAmount.findOne({
         name: 'VideoAmount'
       })
-  
+
       if (videoAmount) {
         videoAmount.amount += 1
         await videoAmount.save()
@@ -74,14 +97,14 @@ router.route('/upload')
         newVideoAmount.amount += 1
         await newVideoAmount.save()
       }
-  
+
       req.session.flash = {
         type: 'success',
         text: 'The Video has been succesfully uploaded!'
       }
       res.status(201)
       res.redirect(`/play/${req.file.filename}`)
-    } 
+    }
   })
 
 module.exports = router
