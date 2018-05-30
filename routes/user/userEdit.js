@@ -1,8 +1,13 @@
+/**
+ * Account settings route
+ */
+
 'use strict'
 
 const router = require('express').Router()
 const User = require('../../models/User')
 
+// renders account settings page for authenticated user
 router.route('/useredit/:id')
   .get((req, res) => {
     const username = req.params.id
@@ -12,7 +17,7 @@ router.route('/useredit/:id')
       // server error
       if (error) { throw error }
 
-      // id in session string, id in DB object
+      // id in session === string, id in DB === object
       if (req.session.userid != user._id) {
         res.status(403)
         res.render('error/403')
