@@ -6,9 +6,7 @@
  */
 const _ = id => document.getElementById(id)
 
-/**
- * When a user uploads a file
- */
+// When file is uploaded
 ;(() => {
   const button = _('uploadBtn')
   button.addEventListener('click', () => {

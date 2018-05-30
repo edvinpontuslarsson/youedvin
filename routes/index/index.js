@@ -1,10 +1,5 @@
 /**
- * @module home.js
- * @author Edvin Larsson
- *
  * Route for index pages
- *
- * @requires express
  */
 
 'use strict'
@@ -13,23 +8,22 @@ const router = require('express').Router()
 const Lib = require('../../lib/Lib')
 
 // limit of videolinks to be displayed per page
-const limit = 2
+const limit = parseInt(process.env.pageLimit)
 
 // query for 1 more than to be displayed,
 // to check if new page is needed
 const query = limit + 1
 
-/**
- * Home page
- */
+// Home page
 router.route('/')
   .get(async (req, res) => {
-    const videoInfo = await Lib.get.newestVideos(
-      query, 0
-    )
+    const videoInfo = await 
+      Lib.get.newestVideos(query, 0)
 
+    // add page or not
     const addPage = videoInfo.length > limit
 
+    // array with info to display
     const videoArr = Lib.make.indexArr(videoInfo, limit)
 
     res.status(200)
@@ -38,10 +32,8 @@ router.route('/')
     })
   })
 
-/**
- * Index pages
- */
-router.route('/index/:id')
+// For more pages
+router.route('/count/:id')
   .get(async (req, res) => {
     const currentPage = parseInt(req.params.id)
 
@@ -53,14 +45,11 @@ router.route('/index/:id')
     const prevPage = currentPage - 1
     let nextPage = currentPage + 1
 
-    // how many to skip, depending on how many per page
     const skip = prevPage * limit
 
-    const videoInfo = await Lib.get.newestVideos(
-      query, skip
-    )
+    const videoInfo = await 
+      Lib.get.newestVideos(query, skip)
 
-    // if there should be a next page or not
     if (videoInfo.length <= limit) {
       nextPage = false
     }

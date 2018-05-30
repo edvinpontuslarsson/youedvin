@@ -19,12 +19,12 @@
     </div>
     <div class="turnPageItem" id="switchPage">
     {{#if prevPage}}
-    <form action="/index/{{prevPage}}" id="prevPage">
+    <form action="/count/{{prevPage}}" id="prevPage">
         <input type="submit" value="&lt; prev" class="turnPageBtn">
     </form>
     {{/if}}
     {{#if nextPage}}
-    <form action="/index/{{nextPage}}">
+    <form action="/count/{{nextPage}}">
         <input type="submit" value="next &gt;" class="turnPageBtn">
     </form>
     {{/if}}
