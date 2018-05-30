@@ -1,3 +1,7 @@
+/**
+ * Play video route
+ */
+
 'use strict'
 
 const router = require('express').Router()
@@ -39,6 +43,7 @@ router.route('/video/:id')
     })
   })
 
+// Renders the video to be played
 router.route('/play/:id')
   .get(async (req, res) => {
     const fileName = req.params.id

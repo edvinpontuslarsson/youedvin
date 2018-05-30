@@ -1,3 +1,7 @@
+/**
+ * Edit video route
+ */
+
 'use strict'
 
 const router = require('express').Router()
@@ -5,8 +9,7 @@ const VideoInfo = require('../../models/VideoInfo')
 const Lib = require('../../lib/Lib')
 
 router.route('/editvideo/:id')
-// checks that the user is the creator of the Video
-// then renders the page for choosing to edit Video Info
+  // renders edit video form for authenticated user
   .get(async (req, res) => {
     const videoInfo = await Lib.get.aVideo(req.params.id)
 
@@ -27,8 +30,6 @@ router.route('/editvideo/:id')
     }
   })
 
-// to update video info
-// inspired by method used here: https://coursework.vschool.io/mongoose-crud/
   .post(async (req, res) => {
     const videoInfo = await Lib.get.aVideo(req.params.id)
 
@@ -38,6 +39,8 @@ router.route('/editvideo/:id')
     } else {
       const query = videoInfo._id
 
+      // updates video info
+      // inspired by method used here: https://coursework.vschool.io/mongoose-crud/
       VideoInfo.findByIdAndUpdate(
         query,
 
@@ -49,14 +52,14 @@ router.route('/editvideo/:id')
 
         { new: true },
 
-        // if error occurs
+        // if server error occurs
         (err) => {
           if (err) {
             req.session.flash = {
               type: 'error',
               text: 'Something went wrong'
             }
-            res.redirect(`/edit/${req.params.id}`)
+            return res.redirect(`/edit/${req.params.id}`)
           }
 
           // if everything goes well
