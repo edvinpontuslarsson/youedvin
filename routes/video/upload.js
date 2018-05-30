@@ -19,6 +19,11 @@ const storage = new GridFsStorage({
   file: (req, file) => {
     // const validFormat = await Lib.validate.mimeType(req)
 
+    // for reference:
+    // https://stackoverflow.com/questions/49217543/sending-a-buffer-in-multipart-form-data-post-request-node-express-request
+
+    // https://www.npmjs.com/package/file-type
+
     const data = []
 
     req.on('data', chunk => {

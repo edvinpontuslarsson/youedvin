@@ -1,141 +1,143 @@
 html,
 body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background-color: rgb(56, 56, 56);
-    color: rgb(255, 176, 0);
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: rgb(56, 56, 56);
+  color: rgb(255, 176, 0);
 }
 /*Inspired by: http://matthewjamestaylor.com/blog/keeping-footers-at-the-bottom-of-the-page*/
 #page {
-    min-height:100%;
-    position:relative;
+  min-height: 100%;
+  position: relative;
 }
 #mainSection {
-    margin-left: auto;
-    margin-right: auto;
-    /*
+  margin-left: auto;
+  margin-right: auto;
+  /*
     Padding bottom, same size as the footer,
     inspired by: http://matthewjamestaylor.com/blog/keeping-footers-at-the-bottom-of-the-page
      */
-    padding-bottom: 75px;
-    width: 75%;
-    overflow: auto;
-    font-size: 18px;
+  padding-bottom: 75px;
+  width: 75%;
+  overflow: auto;
+  font-size: 18px;
 }
 a {
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 a:hover {
-    color: #5aafff;
-    text-decoration: underline;
+  color: #5aafff;
+  text-decoration: underline;
 }
 a:visited {
-    color: white;
+  color: white;
 }
 .flash-success {
-    padding: 10px;
-    display: inline;
-    background-color: lightgreen;
-    color: black;
+  padding: 10px;
+  display: inline;
+  background-color: lightgreen;
+  color: black;
 }
 .flash-error {
-    padding: 10px;
-    display: inline;
-    background-color: red;
-    color: black;
+  padding: 10px;
+  display: inline;
+  background-color: red;
+  color: black;
 }
 .indexVideoIcon {
-    float: left;
-    margin-right: 20px;
+  float: left;
+  margin-right: 20px;
 }
 .indexVideoLink {
-    padding-top: 6px;
-    margin-top: 30px;
-    margin-bottom: 30px;
+  padding-top: 6px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 .description {
-    width: 75%;
-    word-wrap: break-word;
+  width: 75%;
+  word-wrap: break-word;
 }
-input[type=text] {
-    color: rgb(255, 176, 0);
-    background-color: rgb(28, 28, 28);
-    border: 1px solid rgb(100, 100, 100);
-    padding: 5px;
-    padding-left: 10px;
-    border-radius: 3px;
+input[type='text'] {
+  color: rgb(255, 176, 0);
+  background-color: rgb(28, 28, 28);
+  border: 1px solid rgb(100, 100, 100);
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 3px;
 }
-input[type=password] {
-    color: rgb(255, 176, 0);
-    background-color: rgb(28, 28, 28);
-    border: 1px solid rgb(100, 100, 100);
-    padding: 5px;
-    padding-left: 10px;
-    border-radius: 3px;
+input[type='password'] {
+  color: rgb(255, 176, 0);
+  background-color: rgb(28, 28, 28);
+  border: 1px solid rgb(100, 100, 100);
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 3px;
 }
 textarea {
-    color: rgb(255, 176, 0);
-    background-color: rgb(28, 28, 28);
-    border: 1px solid rgb(100, 100, 100);
-    padding: 5px;
-    padding-left: 10px;
-    border-radius: 3px;
+  color: rgb(255, 176, 0);
+  background-color: rgb(28, 28, 28);
+  border: 1px solid rgb(100, 100, 100);
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 3px;
 }
 #searchField {
-    height: 15px;
-    width: 50%;
+  height: 15px;
+  width: 50%;
 }
 #searchIcon {
-    height: 13px;
+  height: 13px;
 }
 .hidden {
-    visibility: hidden;
+  visibility: hidden;
 }
 /* Load spinner, using a method described here: https://www.youtube.com/watch?v=BxpjA9t4dJE
  */
 .spinner:before {
-    content: "";
-    box-sizing: border-box;
-    position: absolute;
-    top: 250px;
-    left: 18%;
-    height: 70px;
-    width: 70px;
-    margin-top: -35px;
-    margin-left: 35px;
-    border-radius: 50%;
-    border: 4px solid rgb(28, 28, 28);
-    border-top-color: rgb(255, 176, 0);
-    animation: spinner 0.5s linear infinite;
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 250px;
+  left: 18%;
+  height: 70px;
+  width: 70px;
+  margin-top: -35px;
+  margin-left: 35px;
+  border-radius: 50%;
+  border: 4px solid rgb(28, 28, 28);
+  border-top-color: rgb(255, 176, 0);
+  animation: spinner 0.5s linear infinite;
 }
 /* Also for the load spinner
 */
 @keyframes spinner {
-    to {
-        transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
+  }
 }
 .turnPageBtn {
-    background-color: rgb(240, 240, 240);
-    color: rgb(0, 125, 255);
-    padding: 5px;
+  background-color: rgb(240, 240, 240);
+  color: rgb(0, 125, 255);
+  padding: 5px;
 }
 #turnPage {
-    margin-top: 80px;
-    display: grid;
-    grid-template-columns: 120px 300px;
-    position: absolute;
-    bottom: 100px;
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: 65px 300px;
+  position: absolute;
+  bottom: 100px;
 }
 #viewMore {
-    grid-column-start: 1;
+  padding-top: 4px;
+  grid-column-start: 1;
 }
 #switchPage {
-    grid-column-start: 2;
+  grid-column-start: 2;
+  text-align: left;
 }
 #prevPage {
-    float: left;
-    margin-right: 8px;
+  float: left;
+  margin-right: 8px;
 }
