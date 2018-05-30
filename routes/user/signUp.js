@@ -40,41 +40,39 @@ router.route('/signup')
     // uses lib function to validate input
     const validation = Lib.validate.registration(username, password, confirmPassword, ifAlreadyExists)
 
-    if (validation.okay === false) {
+    if (!validation.okay) {
       req.session.flash = {
         type: 'error',
         text: validation.message
       }
       res.status(validation.status)
-      res.redirect('/signup')
+      return res.redirect('/signup')
     }
 
-    if (validation.okay === true) {
-      // the password gets salted and hashed
-      // then the user is saved to DB
-      try {
-        const user = await new User({
-          username: username,
-          password: password
-        })
+    // the password gets salted and hashed
+    // then the user is saved to DB
+    try {
+      const user = await new User({
+        username: username,
+        password: password
+      })
 
-        await user.save()
+      await user.save()
 
-        req.session.flash = {
-          type: 'success',
-          text: `You are now a registered user, welcome aboard ${username}!`
-        }
-
-        res.status(201)
-        res.redirect('/login')
-      } catch (error) {
-        req.session.flash = {
-          type: 'error',
-          text: 'Something went wrong'
-        }
-        res.status(500)
-        res.redirect('/signup')
+      req.session.flash = {
+        type: 'success',
+        text: `You are now a registered user, welcome aboard ${username}!`
       }
+
+      res.status(201)
+      res.redirect('/login')
+    } catch (error) {
+      req.session.flash = {
+        type: 'error',
+        text: 'Something went wrong'
+      }
+      res.status(500)
+      res.redirect('/signup')
     }
   })
 
