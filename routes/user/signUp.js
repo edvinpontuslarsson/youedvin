@@ -1,11 +1,5 @@
 /**
- * @module user
- * @author Edvin Larsson
- *
- * Route for signing up
- *
- * @requires express
- * @requires User
+ * User registration route
  */
 
 'use strict'
@@ -15,23 +9,21 @@ const User = require('../../models/User')
 const Lib = require('../../lib/Lib')
 
 router.route('/signup')
-/**
-     * Renders sign up page
-     */
+  // Renders sign up form
   .get((req, res) => {
     res.render('user/signup')
   })
 
-/**
-     * Validates username and passwords
-     * Saves user information to DB
-     */
+  /**
+   * Validates username and passwords
+   * Saves user info to DB
+   */
   .post(async (req, res) => {
     const username = req.body.username
     const password = req.body.password
     const confirmPassword = req.body.confirmPassword
 
-    // searches DB for the username
+    // searches DB for username
     const ifAlreadyExists = await User.findOne({
       username: username
     }, (error) => {
@@ -45,6 +37,7 @@ router.route('/signup')
       }
     })
 
+    // uses lib function to validate input
     const validation = Lib.validate.registration(username, password, confirmPassword, ifAlreadyExists)
 
     if (validation.okay === false) {

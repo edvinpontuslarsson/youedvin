@@ -1,10 +1,5 @@
 /**
- * @module logOut.js
- * @author Edvin Larsson
- *
- * Route for the loging out
- *
- * @requires express
+ * Log out route
  */
 
 'use strict'
@@ -23,7 +18,7 @@ router.route('/logout')
     }
   })
 
-// destroys the session
+  // destroys the session
   .post((req, res) => {
     req.session.destroy()
 

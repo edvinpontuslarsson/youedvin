@@ -1,9 +1,14 @@
+/**
+ * Route for changing password
+ */
+
 'use strict'
 
 const router = require('express').Router()
 const User = require('../../models/User')
 
 router.route('/passedit/:id')
+  // renders form
   .get((req, res) => {
     const userid = req.params.id
     User.findById(userid,
@@ -11,7 +16,7 @@ router.route('/passedit/:id')
         // server error
         if (error) { throw error }
 
-        // id in session string, id in DB object
+        // id in session === string, id in DB === object
         if (req.session.userid != user._id) {
           res.status(403)
           res.render('error/403')
@@ -24,6 +29,7 @@ router.route('/passedit/:id')
       })
   })
 
+  // handles post
   .post(async (req, res) => {
     const newPass = req.body.newPass
     const confirmPass = req.body.confirmPass
@@ -35,7 +41,7 @@ router.route('/passedit/:id')
         // server error
         if (error) { throw error }
 
-        // id in session string, id in DB object
+        // id in session === string, id in DB === object
         if (userid != user._id) {
           res.status(403)
           res.render('error/403')
@@ -54,7 +60,7 @@ router.route('/passedit/:id')
               res.status(401)
               res.redirect(`/passedit/${userid}`)
             } else {
-              // uses bcrypt compare function
+              // uses bcrypt comparePassword function
               user.comparePassword(currentPass, async (err, result) => {
                 // server error
                 if (err) { throw err }

@@ -8,12 +8,12 @@ const router = require('express').Router()
 const User = require('../../models/User')
 
 router.route('/login')
-// renders log in page
+// renders log in form
   .get((req, res) => {
     res.render('user/login')
   })
 
-// checks for existing user and if the password is correct
+  // validates username & password
   .post((req, res) => {
     const username = req.body.username
     const password = req.body.password
@@ -33,13 +33,13 @@ router.route('/login')
         res.status(401)
         res.redirect('/login')
       } else {
-        // uses bcrypt compare function
+        // uses bcrypt comparePassword function
         user.comparePassword(password, (err, result) => {
           // server error
           if (err) { throw err }
 
-          // wrong password
-          if (result === false) {
+          // incorrect password
+          if (result === false) { 
             req.session.flash = {
               type: 'error',
               text: 'Incorrect login info'
