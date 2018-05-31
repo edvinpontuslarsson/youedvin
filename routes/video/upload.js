@@ -11,57 +11,63 @@ const path = require('path')
 const Lib = require('../../lib/Lib')
 const multer = require('multer')
 const GridFsStorage = require('multer-gridfs-storage')
-const inspectFileType = require('file-type')
+const fileType = require('file-type')
+
+// https://medium.com/the-everyday-developer/detect-file-mime-type-using-magic-numbers-and-javascript-16bc513d4e1e
 
 // Defines storage of files with validation
 const storage = new GridFsStorage({
   url: process.env.dbURL,
   file: (req, file) => {
-    // const validFormat = await Lib.validate.mimeType(req)
-
-    // for reference:
-    // https://stackoverflow.com/questions/49217543/sending-a-buffer-in-multipart-form-data-post-request-node-express-request
-
-    // https://www.npmjs.com/package/file-type
-
     const data = []
 
     req.on('data', chunk => {
-      req.destroy()
-      const fileType = inspectFileType(chunk)
-      console.log(fileType)
+      data.push(chunk)
+      const test = fileType(chunk)
+      console.log(test)
     })
-    /*
+
     req.on('end', () => {
-      const buffer = Buffer.concat(data)
-      const fileType = inspectFileType(buffer[0])
-      console.log(fileType)
-    })*/
+      return new Promise((resolve, reject) => {
+        const buffer = Buffer.concat(data)
+        console.log(buffer)
 
-    /*
-    return new Promise((resolve, reject) => {
-      if (!validFormat) {
-        return reject(new Error('Unsupported file format'))
-      }
+        const fType = fileType(buffer)
+        console.log(fType)
 
-      if (!req.session.username) {
-        return reject(new Error('Unauthorized file upload attempt'))
-      }
+        if (fType === null) {
+          return reject(new Error('Unsupported file format'))
+        }
 
-      // changes the file name before storing
-      const fileName = Lib.make.randomString() + path.extname(file.originalname)
-      const fileInfo = {
-        filename: fileName,
-        bucketName: 'uploads'
-      }
-      resolve(fileInfo)
-    })*/
+        if (
+          fType.mime !== 'video/mp4' ||
+          fType.mime !== 'video/webm' ||
+          fType.mime !== 'video/ogg'
+        ) {
+          return reject(new Error('Unsupported file format'))
+        }
+
+        if (!req.session.username) {
+          return reject(new Error('Unauthorized file upload attempt'))
+        }
+
+        // changes the file name before storing
+        const fileName =
+          Lib.make.randomString() + path.extname(file.originalname)
+        const fileInfo = {
+          filename: fileName,
+          bucketName: 'uploads'
+        }
+        resolve(fileInfo)
+      })
+    })
   }
 })
 const upload = multer({ storage })
 
 router
   .route('/upload')
+
   .get((req, res) => {
     if (!req.session.username) {
       res.status(403)
@@ -74,10 +80,14 @@ router
 
   // saves video to DB with upload.single-function
   .post(upload.single('video'), async (req, res) => {
+    console.log(req.file.filename)
     if (!req.session.username) {
       res.status(403)
       res.render('error/403')
     } else {
+      // file gets saved to DB with upload.single-function
+      // some other stuff happens here that aren't really relevant
+
       // saves video info in separate mongoose model
       const videoInfo = new VideoInfo({
         fileName: req.file.filename,
