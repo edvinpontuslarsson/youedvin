@@ -6,9 +6,9 @@
 
 const router = require('express').Router()
 
-// Renders log out page
-// Non-logged in users cannot access this page
 router.route('/logout')
+
+  // Renders log out page
   .get((req, res) => {
     if (!req.session.username) {
       res.status(403)

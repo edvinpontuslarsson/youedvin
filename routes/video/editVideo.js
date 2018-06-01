@@ -9,6 +9,7 @@ const VideoInfo = require('../../models/VideoInfo')
 const Lib = require('../../lib/Lib')
 
 router.route('/editvideo/:id')
+  
   // renders edit video form for authenticated user
   .get(async (req, res) => {
     const videoInfo = await Lib.get.aVideo(req.params.id)

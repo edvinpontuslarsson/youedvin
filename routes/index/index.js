@@ -14,8 +14,9 @@ const limit = parseInt(process.env.pageLimit)
 // to check if new page is needed
 const query = limit + 1
 
-// Home page
 router.route('/')
+
+  // Home page
   .get(async (req, res) => {
     const videoInfo = await 
       Lib.get.newestVideos(query, 0)
@@ -31,8 +32,9 @@ router.route('/')
     })
   })
 
-// For more pages
 router.route('/count/:id')
+
+  // For more pages
   .get(async (req, res) => {
     const currentPage = parseInt(req.params.id)
 

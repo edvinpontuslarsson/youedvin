@@ -7,8 +7,9 @@
 const router = require('express').Router()
 const Lib = require('../../lib/Lib')
 
-// Searches for query & displays result
 router.route('/search')
+  
+  // Searches for query & displays result
   .get(async (req, res) => {
     const queryString = req.query.search
     const videoInfo = await Lib.get.videosByTitle(queryString)

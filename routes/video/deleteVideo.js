@@ -25,6 +25,7 @@ connection.once('open', () => {
 })
 
 router.route('/delete/:id')
+  
   // renders delete video form for authenticated user
   .get(async (req, res) => {
     const video = await Lib.get.aVideo(req.params.id)

@@ -8,7 +8,8 @@ const router = require('express').Router()
 const User = require('../../models/User')
 
 router.route('/login')
-// renders log in form
+
+  // renders log in form
   .get((req, res) => {
     res.render('user/login')
   })

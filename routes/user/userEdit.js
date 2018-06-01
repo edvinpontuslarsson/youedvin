@@ -7,8 +7,9 @@
 const router = require('express').Router()
 const User = require('../../models/User')
 
-// renders account settings page for authenticated user
 router.route('/useredit/:id')
+  
+  // renders account settings page for authenticated user
   .get((req, res) => {
     const username = req.params.id
     User.findOne({

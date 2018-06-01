@@ -8,8 +8,11 @@ const router = require('express').Router()
 const VideoAmount = require('../../models/VideoAmount')
 const Lib = require('../../lib/Lib')
 
+
+router.route('/surprise')
+
 // Redirects to random video
-router.route('/surprise').get(async (req, res) => {
+.get(async (req, res) => {
   const videoAmount = await VideoAmount.findOne({
     name: 'VideoAmount'
   })
