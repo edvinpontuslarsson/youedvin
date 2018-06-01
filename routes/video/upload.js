@@ -13,6 +13,9 @@ const Lib = require('../../lib/Lib')
 const multer = require('multer')
 const fileType = require('file-type')
 
+// https://www.manthanhd.com/2016/06/26/handling-file-uploads-in-express/
+// https://stackoverflow.com/questions/45805890/node-multer-memory-storage-how-to-release-memory
+
 /**
  * Sets up multer file system storage, changes the name of the file
  * Inspired by a method described here: https://www.youtube.com/watch?v=9Qzmri1WaaE&index=3&list=LLwTR7eKKJwFR5fxi_wzqzww&t=0s
@@ -27,7 +30,15 @@ const storage = multer.diskStorage({
 
 // Sets up upload function with storage defined above
 const upload = multer({
-  storage: storage
+  storage: storage,
+  /**
+   * checks mimetype of file, 
+   * more thorough file-type inspection executes
+   * when file is in file system
+   */
+  fileFilter: (req, file, cB) => {
+    Lib.validate.mimeType(file, cB)
+  }
 }).single('video')
 
 router.route('/upload')
@@ -48,27 +59,6 @@ router.route('/upload')
       res.status(403)
       res.render('error/403')
     } else {
-      const data = []
-      
-      // collects chunks of file into array, inspired by: https://stackoverflow.com/questions/49217543/sending-a-buffer-in-multipart-form-data-post-request-node-express-request
-      req.on('data', chunk => {
-        data.push(chunk)
-      })
-      
-      req.on('end', () => {
-        const buffer = Buffer.concat(data)
-        const fType = fileType(buffer)
-
-        if (fType === null) {
-          req.session.flash = {
-            type: 'error',
-            text: 'Unsupported file format'
-          }
-          res.status(500)
-          res.redirect('video/upload')
-        }
-      })
-
       upload(req, res, async (err) => {
         if (err) {
           req.session.flash = {
@@ -76,8 +66,11 @@ router.route('/upload')
             text: 'Upload failed'
           }
           res.status(500)
-          res.redirect('video/upload')
+          res.render('video/upload')
         } else {
+
+          // more thorough file validation here, remove if mp4 for example
+
           // saves video info in separate mongoose model
           const videoInfo = new VideoInfo({
             fileName: req.file.filename,

@@ -150,9 +150,7 @@ app.use((err, req, res, next) => {
   console.log(err)
 
   // Unhandled errors render 500 error page
-  return res
-    .status(500)
-    .sendFile(path.join(__dirname, 'views', 'error', '500.html'))
+  return res.status(500).sendFile(path.join(__dirname, 'views', 'error', '500.html'))
 })
 
 // ==============================================
