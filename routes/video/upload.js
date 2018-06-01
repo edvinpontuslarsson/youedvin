@@ -7,19 +7,17 @@
 const router = require('express').Router()
 const VideoInfo = require('../../models/VideoInfo')
 const VideoAmount = require('../../models/VideoAmount')
+const fs 
 const path = require('path')
 const Lib = require('../../lib/Lib')
 const multer = require('multer')
-const GridFsStorage = require('multer-gridfs-storage')
 const fileType = require('file-type')
 
-// Defines storage of files with validation
-const storage = new GridFsStorage({
+// Ol' storage, with eventemitters
+const gfsStorage = new GridFsStorage({
   url: process.env.dbURL,
   file: async (req, file) => {    
     return new Promise((resolve, reject) => {
-      const validFormat = await
-
       const data = []
 
       // collects chunks of file into array, inspired by: https://stackoverflow.com/questions/49217543/sending-a-buffer-in-multipart-form-data-post-request-node-express-request
@@ -58,22 +56,37 @@ const storage = new GridFsStorage({
     })
   }
 })
-const upload = multer({ storage })
 
-router
-  .route('/upload')
+/**
+ * Sets up multer file system storage, changes the name of the file
+ * Inspired by a method described here: https://www.youtube.com/watch?v=9Qzmri1WaaE&index=3&list=LLwTR7eKKJwFR5fxi_wzqzww&t=0s
+ */
+const storage = multer.diskStorage({
+  destination: './public/videos',
+  filename: (req, file, cB) => {
+    cB(null, Lib.make.randomString() +
+      path.extname(file.originalname))
+  }
+})
 
+// Sets up upload function with storage defined above
+const upload = multer({
+  storage: storage
+}).single('video')
+
+router.route('/upload')
+
+  // for rendering upload form
   .get((req, res) => {
     if (!req.session.username) {
       res.status(403)
       res.render('error/403')
     } else {
-      // renders upload form
       res.render('video/upload')
     }
   })
 
-  // saves video to DB with upload.single-function
+  // for video storage
   .post(upload.single('video'), async (req, res) => {
     if (!req.session.username) {
       res.status(403)
