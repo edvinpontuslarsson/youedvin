@@ -25,7 +25,7 @@ connection.once('open', () => {
 /**
  * Creates a readstream to the video file
  * Inspired by: https://www.youtube.com/watch?v=3f5Q9wDePzY&t=2422s
- */
+ *//*
 router.route('/video/:id')
   .get((req, res) => {
     const fileName = req.params.id
@@ -41,7 +41,7 @@ router.route('/video/:id')
       const readStream = gfs.createReadStream(videoFile.filename)
       readStream.pipe(res)
     })
-  })
+  })*/
 
 router.route('/play/:id')
   
