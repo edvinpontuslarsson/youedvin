@@ -13,25 +13,22 @@ const multer = require('multer')
 const GridFsStorage = require('multer-gridfs-storage')
 const fileType = require('file-type')
 
-// https://medium.com/the-everyday-developer/detect-file-mime-type-using-magic-numbers-and-javascript-16bc513d4e1e
-
 // Defines storage of files with validation
 const storage = new GridFsStorage({
   url: process.env.dbURL,
-  file: (req, file) => {
-    const data = []
+  file: async (req, file) => {    
+    return new Promise((resolve, reject) => {
+      const validFormat = await
 
-    req.on('data', chunk => {
-      data.push(chunk)
-      const test = fileType(chunk)
-      console.log(test)
-    })
+      const data = []
 
-    req.on('end', () => {
-      return new Promise((resolve, reject) => {
+      // collects chunks of file into array, inspired by: https://stackoverflow.com/questions/49217543/sending-a-buffer-in-multipart-form-data-post-request-node-express-request
+      req.on('data', chunk => {
+        data.push(chunk)
+      })
+
+      req.on('end', () => {
         const buffer = Buffer.concat(data)
-        console.log(buffer)
-
         const fType = fileType(buffer)
         console.log(fType)
 
@@ -39,14 +36,12 @@ const storage = new GridFsStorage({
           return reject(new Error('Unsupported file format'))
         }
 
-        if (
-          fType.mime !== 'video/mp4' ||
-          fType.mime !== 'video/webm' ||
-          fType.mime !== 'video/ogg'
-        ) {
+        if (fType.mime !== 'video/webm' ||
+            fType.mime !== 'video/ogg') {
           return reject(new Error('Unsupported file format'))
         }
 
+        // user is not logged in
         if (!req.session.username) {
           return reject(new Error('Unauthorized file upload attempt'))
         }
@@ -59,7 +54,7 @@ const storage = new GridFsStorage({
           bucketName: 'uploads'
         }
         resolve(fileInfo)
-      })
+      })    
     })
   }
 })
@@ -80,14 +75,10 @@ router
 
   // saves video to DB with upload.single-function
   .post(upload.single('video'), async (req, res) => {
-    console.log(req.file.filename)
     if (!req.session.username) {
       res.status(403)
       res.render('error/403')
     } else {
-      // file gets saved to DB with upload.single-function
-      // some other stuff happens here that aren't really relevant
-
       // saves video info in separate mongoose model
       const videoInfo = new VideoInfo({
         fileName: req.file.filename,
