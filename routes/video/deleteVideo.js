@@ -7,6 +7,7 @@
 const router = require('express').Router()
 const mongoose = require('mongoose')
 const VideoInfo = require('../../models/VideoInfo')
+const VideoAmount = require('../../models/VideoAmount')
 const fsDAO = require('../../models/fsDAO')
 const Lib = require('../../lib/Lib')
 
@@ -44,7 +45,7 @@ router.route('/delete/:id')
       const filePath = `./public/uploads/videos/${fileName}`
 
       // deletes video file
-      await fsDAO.deleteFile()
+      await fsDAO.deleteFile(filePath)
 
       // deletes video info
       await VideoInfo.findOneAndRemove({
@@ -52,6 +53,17 @@ router.route('/delete/:id')
       })
 
       // updates video amount
+      const videoAmount = await VideoAmount.findOne({
+        name: 'VideoAmount'
+      })
+      videoAmount.amount -= 1
+      await videoAmount.save()
+
+      req.session.flash = {
+        type: 'success',
+        text: 'The Video has been succesfully deleted.'
+      }
+      res.redirect('/')
     }
   })
 

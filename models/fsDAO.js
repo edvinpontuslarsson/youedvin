@@ -41,8 +41,18 @@ const fsDAO = {
     })
   },
 
+  /**
+   * Asynchronously removes file
+   * @param {string} filePath
+   * @returns true if succesful
+   */
   deleteFile: (filePath) => {
-
+    return new Promise((resolve, reject) => {
+      fs.unlink(filePath, (err) => {
+        if (err) throw err
+        resolve(true)
+      })
+    })
   }
 }
 
