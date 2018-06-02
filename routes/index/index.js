@@ -18,7 +18,7 @@ router.route('/')
 
   // Home page
   .get(async (req, res) => {
-    const videoInfo = await 
+    const videoInfo = await
       Lib.get.newestVideos(query, 0)
 
     // add page or not
@@ -26,7 +26,7 @@ router.route('/')
 
     // array with info to display
     const videoArr = Lib.make.indexArr(videoInfo, limit)
-   
+
     res.render('home/index', {
       videoArr, addPage, nextPage: limit
     })
@@ -48,7 +48,7 @@ router.route('/count/:id')
 
     const skip = prevPage * limit
 
-    const videoInfo = await 
+    const videoInfo = await
       Lib.get.newestVideos(query, skip)
 
     if (videoInfo.length <= limit) {

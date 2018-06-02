@@ -8,7 +8,7 @@ const router = require('express').Router()
 const User = require('../../models/User')
 
 router.route('/useredit/:id')
-  
+
   // renders account settings page for authenticated user
   .get((req, res) => {
     const username = req.params.id

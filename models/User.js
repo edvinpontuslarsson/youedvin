@@ -18,7 +18,6 @@ userSchema.path('password').validate((password) => {
   return password.length >= 5
 }, 'The password must be at least 5 characters long.')
 
-
 // Salts and hashes password before saving it to DB
 userSchema.pre('save', function (next) {
   const user = this

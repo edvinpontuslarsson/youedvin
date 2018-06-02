@@ -40,7 +40,7 @@ router.route('/login')
           if (err) { throw err }
 
           // incorrect password
-          if (result === false) { 
+          if (result === false) {
             req.session.flash = {
               type: 'error',
               text: 'Incorrect login info'

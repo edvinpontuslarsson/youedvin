@@ -9,7 +9,7 @@ const User = require('../../models/User')
 const Lib = require('../../lib/Lib')
 
 router.route('/signup')
-  
+
   // Renders sign up form
   .get((req, res) => {
     res.render('user/signup')

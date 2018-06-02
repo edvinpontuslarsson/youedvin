@@ -9,22 +9,8 @@ const mongoose = require('mongoose')
 const VideoInfo = require('../../models/VideoInfo')
 const Lib = require('../../lib/Lib')
 
-const connection = mongoose.connection
-const Grid = require('gridfs-stream')
-let gfs
-
-/**
- * Connects gridfs-stream to the database
- * Inspired by: https://www.youtube.com/watch?v=3f5Q9wDePzY&t=2422s
- */
-connection.once('open', () => {
-  gfs = Grid(connection.db, mongoose.mongo)
-  gfs.collection('uploads')
-  console.log('Ready for deleting videos')
-})
-
 router.route('/delete/:id')
-  
+
   // renders delete video form for authenticated user
   .get(async (req, res) => {
     const video = await Lib.get.aVideo(req.params.id)
@@ -57,13 +43,13 @@ router.route('/delete/:id')
       await VideoInfo.findOneAndRemove({
         fileName: req.params.id
       })
-/*
+      /*
       // updates video amount
       const videoAmount = await VideoAmount.findOne({
         name: 'VideoAmount'
       })
       videoAmount.amount -= 1
-      await videoAmount.save()*/
+      await videoAmount.save() */
 
       // deletes video file
       gfs.remove({

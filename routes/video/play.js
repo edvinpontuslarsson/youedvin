@@ -8,7 +8,7 @@ const router = require('express').Router()
 const Lib = require('../../lib/Lib')
 
 router.route('/play/:id')
-  
+
   // Renders the video to be played
   .get(async (req, res) => {
     const fileName = req.params.id
