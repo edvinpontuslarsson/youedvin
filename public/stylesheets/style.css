@@ -21,7 +21,7 @@ body {
   padding-bottom: 75px;
   width: 75%;
   overflow: auto;
-  font-size: 27px;
+  font-size: 22px;
 }
 a {
   color: white;
@@ -91,7 +91,7 @@ textarea {
   height: 13px;
 }
 .thumbnail {
-  height: 75px;
+  height: 85px;
 }
 .hidden {
   visibility: hidden;
