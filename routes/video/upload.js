@@ -44,6 +44,8 @@ router.route('/upload')
       const fType = fileType(buffer)
       console.log(fType)
 
+      // fs.writefile
+
       // './public/videoUploads'
 
       // Lib.make.randomString() +
