@@ -1,8 +1,10 @@
 const fsDAO = require('./models/fsDAO')
 
 ;(async () => {
-    const jsonVAmount = await fsDAO.getFile('./uploads/videoAmount.json')
+    const filePath = './uploads/videoAmount.json'
+    const jsonVAmount = await fsDAO.getFile(filePath)
     const vAmount = JSON.parse(jsonVAmount)
     vAmount.count += 1
-    console.log(vAmount)
+    const update = JSON.stringify(vAmount)
+    fsDAO.putFile(filePath, update)
 })()
