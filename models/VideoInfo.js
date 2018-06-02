@@ -11,6 +11,9 @@ const videoInfoSchema = mongoose.Schema({
   fileName: {
     type: String, required: true
   },
+  thumbnailName: {
+    type: String
+  },
   contentType: {
     type: String, required: true
   },

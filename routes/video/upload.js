@@ -55,11 +55,13 @@ router.route('/upload')
         const thumbnailDir = './public/uploads/thumbnails/'
 
         // Generates and saves thumbnail
-        await Lib.make.thumbnail(filePath, thumbnailDir)
+        const thumbnailName = 
+          await Lib.make.thumbnail(filePath, thumbnailDir)
 
         // saves video info in separate mongoose model
         const videoInfo = new VideoInfo({
           fileName: fileName,
+          thumbnailName: thumbnailName,
           contentType: fType.mime,
           title: req.body.title,
           description: req.body.description,
@@ -87,7 +89,7 @@ router.route('/upload')
           text: 'The Video has been succesfully uploaded!'
         }
         res.status(201)
-        res.redirect(`/play/${fileName}`) 
+        res.redirect(`/play/${fileName}`)
       }
     }
   })
