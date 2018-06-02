@@ -7,11 +7,12 @@
 const router = require('express').Router()
 const mongoose = require('mongoose')
 const VideoInfo = require('../../models/VideoInfo')
+const fsDAO = require('../../models/fsDAO')
 const Lib = require('../../lib/Lib')
 
 router.route('/delete/:id')
 
-  // renders delete video form for authenticated user
+  // for rendering delete video form
   .get(async (req, res) => {
     const video = await Lib.get.aVideo(req.params.id)
 
@@ -33,42 +34,24 @@ router.route('/delete/:id')
 
   // to delete video
   .post(async (req, res) => {
-    const video = await Lib.get.aVideo(req.params.id)
+    const fileName = req.params.id
+    const video = await Lib.get.aVideo(fileName)
 
     if (video.creatorId !== req.session.userid) {
       res.status(403)
       res.render('error/403')
     } else {
-      // deletes video info
-      await VideoInfo.findOneAndRemove({
-        fileName: req.params.id
-      })
-      /*
-      // updates video amount
-      const videoAmount = await VideoAmount.findOne({
-        name: 'VideoAmount'
-      })
-      videoAmount.amount -= 1
-      await videoAmount.save() */
+      const filePath = `./public/uploads/videos/${fileName}`
 
       // deletes video file
-      gfs.remove({
-        filename: video.fileName, root: 'uploads'
-      }, (error, gridStorage) => {
-        if (error) {
-          req.session.flash = {
-            type: 'error',
-            text: 'Could not delete video.'
-          }
-          res.redirect('/')
-        } else {
-          req.session.flash = {
-            type: 'success',
-            text: 'The Video has been succesfully deleted.'
-          }
-          res.redirect('/')
-        }
+      await fsDAO.deleteFile()
+
+      // deletes video info
+      await VideoInfo.findOneAndRemove({
+        fileName: fileName
       })
+
+      // updates video amount
     }
   })
 

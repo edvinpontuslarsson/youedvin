@@ -52,22 +52,12 @@ router.route('/upload')
         const fileName = Lib.make.randomString() +
             path.extname(fileContent.originalname)
 
-        const filePath = `./uploads/videos/${fileName}`
+        const filePath = `./public/uploads/videos/${fileName}`
 
         // saves file to fs
         await fsDAO.putFile(filePath, buffer)
 
-        const videoAmountPath =
-            './uploads/videoAmount.json'
-
-        // gets total video amount to update
-        const jsonVAmount =
-            await fsDAO.getFile(videoAmountPath)
-        const videoAmount = JSON.parse(jsonVAmount)
-        videoAmount.count += 1
-
-        const update = JSON.stringify(videoAmount)
-        await fsDAO.putFile(videoAmountPath, update)
+        console.log('File saved?')
 
         // saves video info in separate mongoose model
         const videoInfo = new VideoInfo({
@@ -80,12 +70,28 @@ router.route('/upload')
         })
         await videoInfo.save()
 
+        console.log('video info saved?')
+
+        const videoAmountPath =
+            './public/uploads/videoAmount.json'
+
+        // gets total video amount to update
+        const jsonVAmount =
+            await fsDAO.getFile(videoAmountPath)
+        const videoAmount = JSON.parse(jsonVAmount)
+        videoAmount.count += 1
+
+        const update = JSON.stringify(videoAmount)
+        await fsDAO.putFile(videoAmountPath, update)
+
+        console.log('JSON updated?')
+
         req.session.flash = {
           type: 'success',
           text: 'The Video has been succesfully uploaded!'
         }
         res.status(201)
-        res.redirect(`/play/${fileName}`)
+        res.redirect(`/play/${fileName}`) 
       }
     }
   })
