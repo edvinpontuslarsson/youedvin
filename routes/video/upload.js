@@ -85,7 +85,7 @@ router.route('/upload')
             text: 'The Video has been succesfully uploaded!'
           }
           res.status(201)
-          res.redirect(`/play/${req.file.filename}`)
+          res.redirect(`/play/${fileName}`)
         }
     }
   })
