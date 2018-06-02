@@ -52,6 +52,11 @@ router.route('/upload')
         // saves file to fs
         await fsDAO.putFile(filePath, buffer)
 
+        const thumbnailDir = './public/uploads/thumbnails/'
+
+        // Generates and saves thumbnail
+        await Lib.make.thumbnail(filePath, thumbnailDir)
+
         // saves video info in separate mongoose model
         const videoInfo = new VideoInfo({
           fileName: fileName,
