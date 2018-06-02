@@ -36,14 +36,18 @@ router.route('/upload')
     } else {
       const videoFile = req.file
       const buffer = videoFile.buffer
-
       const fType = fileType(buffer)
-      
-      
 
-      
-
-      // fs.writefile
+      if (!path.extname(videoFile.originalname) ||
+        !Lib.validate.mimeType(fType.mime)) {
+          req.session.flash = {
+            type: 'error',
+            text: 'Unsupported file format'
+          }
+          res.status(400)
+          res.redirect('/upload')
+        } else {
+          // fs.writefile
 
       // './public/videoUploads'
 
@@ -52,8 +56,8 @@ router.route('/upload')
         /*
         // saves video info in separate mongoose model
         const videoInfo = new VideoInfo({
-          fileName: req.file.filename,
-          contentType: req.file.mimetype,
+          fileName: ,
+          contentType: fType.mime,
           title: req.body.title,
           description: req.body.description,
           createdBy: req.session.username,
@@ -82,6 +86,7 @@ router.route('/upload')
         res.status(201)
         res.redirect('/')
         //res.redirect(`/play/${req.file.filename}`)
+        }
     }
   })
 
