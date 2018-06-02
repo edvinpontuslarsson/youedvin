@@ -11,6 +11,7 @@ const helmet = require('helmet')
 const csrf = require('csurf')
 const path = require('path')
 const bodyParser = require('body-parser')
+const busboyBodyParser = require('busboy-body-parser')
 
 // environment variables
 require('dotenv').config()
@@ -50,11 +51,14 @@ app.engine(
 app.set('view engine', '.hbs')
 
 // Parses incoming text data
-app.use(
-  bodyParser.urlencoded({
+app.use(bodyParser.urlencoded({
     extended: true
-  })
-)
+  }))
+
+// Parses incoming files
+app.use(busboyBodyParser({
+  limit: '120mb'
+  }))
 
 // Directs to the folder 'public' for static resources
 app.use(express.static(path.join(__dirname, 'public')))

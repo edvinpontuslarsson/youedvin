@@ -9,13 +9,7 @@ const VideoInfo = require('../../models/VideoInfo')
 const fsDAO = require('../../models/fsDAO')
 const path = require('path')
 const Lib = require('../../lib/Lib')
-const multer = require('multer')
 const fileType = require('file-type')
-
-// sets up memory storage
-const fileInMemory = multer({
-  storage: multer.memoryStorage()
-})
 
 router.route('/upload')
 
@@ -30,17 +24,17 @@ router.route('/upload')
   })
 
   // for video storage
-  .post(fileInMemory.single('video'), async (req, res) => {
+  .post(async (req, res) => {
     if (!req.session.username) {
       res.status(403)
       res.render('error/403')
     } else {
-      const fileContent = req.file
-      const buffer = fileContent.buffer
+      const fileContent = req.files.video
+      const buffer = fileContent.data
       const fType = fileType(buffer)
 
       // validates the file format
-      if (!path.extname(fileContent.originalname) ||
+      if (!path.extname(fileContent.name) ||
         !Lib.validate.mimeType(fType.mime)) {
         req.session.flash = {
           type: 'error',
@@ -50,14 +44,12 @@ router.route('/upload')
         res.redirect('/upload')
       } else {
         const fileName = Lib.make.randomString() +
-            path.extname(fileContent.originalname)
+            path.extname(fileContent.name)
 
         const filePath = `./public/uploads/videos/${fileName}`
 
         // saves file to fs
         await fsDAO.putFile(filePath, buffer)
-
-        console.log('File saved?')
 
         // saves video info in separate mongoose model
         const videoInfo = new VideoInfo({
@@ -69,9 +61,7 @@ router.route('/upload')
           creatorId: req.session.userid
         })
         await videoInfo.save()
-
-        console.log('video info saved?')
-
+        
         const videoAmountPath =
             './public/uploads/videoAmount.json'
 
@@ -80,11 +70,10 @@ router.route('/upload')
             await fsDAO.getFile(videoAmountPath)
         const videoAmount = JSON.parse(jsonVAmount)
         videoAmount.count += 1
-
+        
         const update = JSON.stringify(videoAmount)
+        // problem below
         await fsDAO.putFile(videoAmountPath, update)
-
-        console.log('JSON updated?')
 
         req.session.flash = {
           type: 'success',
