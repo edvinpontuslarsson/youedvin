@@ -6,6 +6,7 @@
 
 const router = require('express').Router()
 const VideoInfo = require('../../models/VideoInfo')
+const VideoAmount = require('../../models/VideoAmount')
 const fsDAO = require('../../models/fsDAO')
 const path = require('path')
 const Lib = require('../../lib/Lib')
@@ -62,18 +63,19 @@ router.route('/upload')
         })
         await videoInfo.save()
         
-        const videoAmountPath =
-            './public/uploads/videoAmount.json'
-
-        // gets total video amount to update
-        const jsonVAmount =
-            await fsDAO.getFile(videoAmountPath)
-        const videoAmount = JSON.parse(jsonVAmount)
-        videoAmount.count += 1
+        // to update video amount
+        const videoAmount = await VideoAmount.findOne({
+          name: 'VideoAmount'
+        })
         
-        const update = JSON.stringify(videoAmount)
-        // problem below
-        await fsDAO.putFile(videoAmountPath, update)
+        if (videoAmount) {
+          videoAmount.amount += 1
+          await videoAmount.save()
+        } else {
+          const newVideoAmount = new VideoAmount()
+          newVideoAmount.amount += 1
+          await newVideoAmount.save()
+        }
 
         req.session.flash = {
           type: 'success',
