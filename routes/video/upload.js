@@ -6,12 +6,13 @@
 
 const router = require('express').Router()
 const VideoInfo = require('../../models/VideoInfo')
-const fs = require('fs')
+const fsDAO = require('../../models/fsDAO')
 const path = require('path')
 const Lib = require('../../lib/Lib')
 const multer = require('multer')
 const fileType = require('file-type')
 
+// sets up memory storage
 const fileInMemory = multer({
   storage: multer.memoryStorage()
 })
@@ -34,11 +35,12 @@ router.route('/upload')
       res.status(403)
       res.render('error/403')
     } else {
-      const videoFile = req.file
-      const buffer = videoFile.buffer
+      const fileContent = req.file
+      const buffer = fileContent.buffer
       const fType = fileType(buffer)
 
-      if (!path.extname(videoFile.originalname) ||
+      // validates the file format
+      if (!path.extname(fileContent.originalname) ||
         !Lib.validate.mimeType(fType.mime)) {
           req.session.flash = {
             type: 'error',
@@ -47,45 +49,43 @@ router.route('/upload')
           res.status(400)
           res.redirect('/upload')
         } else {
-          // fs.writefile
+          const fileName = Lib.make.randomString() +
+            path.extname(fileContent.originalname)
 
-      // './public/videoUploads'
+          const filePath = `./uploads/videos/${fileName}`
 
-      // Lib.make.randomString() +
-      // path.extname(file.originalname)
-        /*
-        // saves video info in separate mongoose model
-        const videoInfo = new VideoInfo({
-          fileName: ,
-          contentType: fType.mime,
-          title: req.body.title,
-          description: req.body.description,
-          createdBy: req.session.username,
-          creatorId: req.session.userid
-        })
-        await videoInfo.save()
+          // saves file to fs
+          await fsDAO.putFile(filePath, buffer)
 
-        // to update video amount
-        const videoAmount = await VideoAmount.findOne({
-          name: 'VideoAmount'
-        })
+          const videoAmountPath =
+            './uploads/videoAmount.json'
 
-        if (videoAmount) {
-          videoAmount.amount += 1
-          await videoAmount.save()
-        } else {
-          const newVideoAmount = new VideoAmount()
-          newVideoAmount.amount += 1
-          await newVideoAmount.save()
-        }*/
+          // gets total video amount to update
+          const jsonVAmount = 
+            await fsDAO.getFile(videoAmountPath)
+          const videoAmount = JSON.parse(jsonVAmount)
+          videoAmount.count += 1
 
-        req.session.flash = {
-          type: 'success',
-          text: 'The Video has been succesfully uploaded!'
-        }
-        res.status(201)
-        res.redirect('/')
-        //res.redirect(`/play/${req.file.filename}`)
+          const update = JSON.stringify(videoAmount)
+          await fsDAO.putFile(videoAmountPath, update)
+          
+          // saves video info in separate mongoose model
+          const videoInfo = new VideoInfo({
+            fileName: fileName,
+            contentType: fType.mime,
+            title: req.body.title,
+            description: req.body.description,
+            createdBy: req.session.username,
+            creatorId: req.session.userid
+          })
+          await videoInfo.save()
+
+          req.session.flash = {
+            type: 'success',
+            text: 'The Video has been succesfully uploaded!'
+          }
+          res.status(201)
+          res.redirect(`/play/${req.file.filename}`)
         }
     }
   })
