@@ -6,15 +6,11 @@
 
 const router = require('express').Router()
 const VideoInfo = require('../../models/VideoInfo')
-const VideoAmount = require('../../models/VideoAmount')
 const fs = require('fs')
 const path = require('path')
 const Lib = require('../../lib/Lib')
 const multer = require('multer')
 const fileType = require('file-type')
-
-// https://www.manthanhd.com/2016/06/26/handling-file-uploads-in-express/
-// https://stackoverflow.com/questions/45805890/node-multer-memory-storage-how-to-release-memory
 
 const fileInMemory = multer({
   storage: multer.memoryStorage()
@@ -42,7 +38,10 @@ router.route('/upload')
       const buffer = videoFile.buffer
 
       const fType = fileType(buffer)
-      console.log(fType)
+      
+      
+
+      
 
       // fs.writefile
 

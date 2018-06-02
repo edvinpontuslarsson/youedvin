@@ -7,7 +7,6 @@
 const router = require('express').Router()
 const mongoose = require('mongoose')
 const VideoInfo = require('../../models/VideoInfo')
-const VideoAmount = require('../../models/VideoAmount')
 const Lib = require('../../lib/Lib')
 
 const connection = mongoose.connection
@@ -58,13 +57,13 @@ router.route('/delete/:id')
       await VideoInfo.findOneAndRemove({
         fileName: req.params.id
       })
-
+/*
       // updates video amount
       const videoAmount = await VideoAmount.findOne({
         name: 'VideoAmount'
       })
       videoAmount.amount -= 1
-      await videoAmount.save()
+      await videoAmount.save()*/
 
       // deletes video file
       gfs.remove({
