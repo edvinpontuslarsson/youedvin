@@ -52,13 +52,13 @@ app.set('view engine', '.hbs')
 
 // Parses incoming text data
 app.use(bodyParser.urlencoded({
-    extended: true
-  }))
+  extended: true
+}))
 
 // Parses incoming files
 app.use(busboyBodyParser({
   limit: '120mb'
-  }))
+}))
 
 // Directs to the folder 'public' for static resources
 app.use(express.static(path.join(__dirname, 'public')))

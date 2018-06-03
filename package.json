@@ -32,11 +32,9 @@
     "csurf": "^1.9.0",
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
-    "express-ensure-ctype": "^1.0.0",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
     "file-type": "^8.0.0",
-    "gridfs-stream": "^1.1.1",
     "helmet": "^3.12.0",
     "mongoose": "^5.0.4",
     "video-thumbnail-generator": "^1.1.3"

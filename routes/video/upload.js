@@ -55,7 +55,7 @@ router.route('/upload')
         const thumbnailDir = './public/uploads/thumbnails/'
 
         // Generates and saves thumbnail
-        const thumbnailName = 
+        const thumbnailName =
           await Lib.make.thumbnail(filePath, thumbnailDir)
 
         // saves video info in separate mongoose model
@@ -69,12 +69,12 @@ router.route('/upload')
           creatorId: req.session.userid
         })
         await videoInfo.save()
-        
+
         // to update video amount
         const videoAmount = await VideoAmount.findOne({
           name: 'VideoAmount'
         })
-        
+
         if (videoAmount) {
           videoAmount.amount += 1
           await videoAmount.save()

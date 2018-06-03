@@ -11,14 +11,14 @@ const Lib = require('../../lib/Lib')
 router.route('/surprise')
 
 // Redirects to random video
-  .get(async (req, res) => { 
-  const videoAmount = await VideoAmount.findOne({
-    name: 'VideoAmount'
-  })
+  .get(async (req, res) => {
+    const videoAmount = await VideoAmount.findOne({
+      name: 'VideoAmount'
+    })
 
-  if (!videoAmount) {
-    return res.render('error/404')
-  } 
+    if (!videoAmount) {
+      return res.render('error/404')
+    }
     const amount = videoAmount.amount
     const skip = Lib.make.randomInteger(0, amount)
 
