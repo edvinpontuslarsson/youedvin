@@ -135,6 +135,7 @@ textarea {
 #viewMore {
   padding-top: 4px;
   grid-column-start: 1;
+  margin-right: 5px;
 }
 #switchPage {
   grid-column-start: 2;
@@ -143,5 +144,4 @@ textarea {
 #prevPage {
   float: left;
   margin-right: 11px;
-  margin-left: 5px;
 }
