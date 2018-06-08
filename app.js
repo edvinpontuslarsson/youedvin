@@ -1,5 +1,9 @@
 /**
  * Starting point of the application
+ * 
+ * For updating remote repo url:
+ * 
+ * $ git remote set-url origin <xxx>
  */
 
 'use strict'
