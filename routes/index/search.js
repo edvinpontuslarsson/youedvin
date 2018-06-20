@@ -1,5 +1,5 @@
 /**
- * Search route
+ * Search route.
  */
 
 'use strict'
