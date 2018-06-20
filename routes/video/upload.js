@@ -48,8 +48,8 @@ router.route('/upload')
           req.session.flash = {
             type: 'error',
             text: `
-              Title cannot be longer than 50 words,
-              and description cannot be longer than 500 words.
+              Title cannot be longer than 50 characters,
+              and description cannot be longer than 500 characters.
             `
           }
           res.status(400)
