@@ -43,6 +43,17 @@ router.route('/upload')
         }
         res.status(400)
         res.redirect('/upload')
+      } else if (req.body.title.length > 50 ||
+        req.body.description.length > 500) {
+          req.session.flash = {
+            type: 'error',
+            text: `
+              Title cannot be longer than 50 words,
+              and description cannot be longer than 500 words.
+            `
+          }
+          res.status(400)
+          res.redirect('/upload')
       } else {
         const fileName = Lib.make.randomString() +
             path.extname(fileContent.name)
