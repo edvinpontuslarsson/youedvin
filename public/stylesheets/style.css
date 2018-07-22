@@ -93,6 +93,9 @@ textarea {
 .thumbnail {
   height: 85px;
 }
+#videoClip {
+  width: 75%;
+}
 .hidden {
   visibility: hidden;
 }

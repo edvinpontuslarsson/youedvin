@@ -1,9 +1,9 @@
-<!--  -->
+<!-- -->
 <h1>{{videoInfo.title}}</h1>
-<video width="75%" autoplay controls id="videoClip">
+<video autoplay controls id="videoClip">
   <source src="/uploads/videos/{{videoInfo.fileName}}" type="{{videoInfo.contentType}}">
 Your browser does not support the video tag.
-</video> 
+</video>
 <p>Uploaded by {{videoInfo.createdBy}} on {{videoInfo.createdAt}}</p>
 {{#if videoInfo.canEdit}}
 <p>
@@ -15,3 +15,5 @@ Your browser does not support the video tag.
 {{/if}}
 <h2>Description</h2>
 <p class="description">{{videoInfo.description}}</p>
+
+<script src="/js/og.js"></script>
