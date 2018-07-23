@@ -128,10 +128,6 @@ app.use('/', require('./routes/video/surprise'))
 app.use('/', require('./routes/video/deleteVideo'))
 app.use('/', require('./routes/video/editVideo'))
 
-app.get('/test', (req, res) => {
-  res.sendFile(`${__dirname}/public/test/metaTagTest.html`)
-})
-
 // Defines route for 404 not found
 app.use((req, res, next) => {
   const error = new Error('Not Found')
