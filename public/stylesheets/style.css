@@ -96,6 +96,9 @@ textarea {
 #videoClip {
   width: 75%;
 }
+video::-webkit-media-controls {
+  display: initial;
+}
 .hidden {
   visibility: hidden;
 }
