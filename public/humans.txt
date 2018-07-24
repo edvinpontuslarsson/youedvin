@@ -10,5 +10,5 @@ Anton Strand, creator of the website's icons
 
 /* SITE */
 
-Last update: June 2018
+Last update: July 2018
 Software: Nginx, Node.js, Express, MongoDB
