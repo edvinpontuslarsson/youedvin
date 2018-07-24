@@ -10,12 +10,12 @@ My video sharing web application built with Node.js with the express framework.
 
 To run this application, you need a .env-file with these variables:
 
-PORT=*port to run application on*<br/>
-CookieName=*cookie name of your choice*<br/>
-CookieSecret=*secret cookie code*<br/>
-dbURL=*path to a Mongo Database*<br/>
-pageLimit=*Limit of video links to display per index page, e.g. 20*<br/>
-Environment=*optional: production*<br/>
+PORT=`<port to run application on>`<br/>
+CookieName=`<cookie name of your choice>`<br/>
+CookieSecret=`<secret cookie code>`<br/>
+dbURL=`<path to a Mongo Database>`<br/>
+pageLimit=`<Limit of video links to display per index page, e.g. 20>`<br/>
+Environment=`<optional: production>`<br/>
 
 ### npm commands
 
