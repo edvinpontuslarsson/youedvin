@@ -6,6 +6,8 @@ My video sharing web application built with Node.js with the express framework.
 
 ## Running application
 
+You need to have FFmpeg installed to run this application.
+
 ### Environment variables
 
 To run this application, you need a .env-file with these variables:
