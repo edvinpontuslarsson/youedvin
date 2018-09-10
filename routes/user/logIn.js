@@ -5,6 +5,7 @@
 'use strict'
 
 const router = require('express').Router()
+const sanitize = require('mongo-sanitize')
 const User = require('../../models/User')
 
 router.route('/login')
@@ -16,8 +17,8 @@ router.route('/login')
 
   // validates username & password
   .post((req, res) => {
-    const username = req.body.username
-    const password = req.body.password
+    const username = sanitize(req.body.username)
+    const password = sanitize(req.body.password)
 
     User.findOne({
       username: username

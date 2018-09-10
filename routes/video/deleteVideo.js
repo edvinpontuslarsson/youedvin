@@ -5,6 +5,7 @@
 'use strict'
 
 const router = require('express').Router()
+const sanitize = require('mongo-sanitize')
 const VideoInfo = require('../../models/VideoInfo')
 const VideoAmount = require('../../models/VideoAmount')
 const fsDAO = require('../../models/fsDAO')
@@ -14,7 +15,8 @@ router.route('/delete/:id')
 
   // for rendering delete video form
   .get(async (req, res) => {
-    const video = await Lib.get.aVideo(req.params.id)
+    const fileName = sanitize(req.params.id)
+    const video = await Lib.get.aVideo(fileName)
 
     if (video === null) {
       res.status(404)
@@ -26,7 +28,7 @@ router.route('/delete/:id')
       res.render('error/403')
     } else {
       res.render('video/delete', {
-        id: req.params.id,
+        id: fileName,
         title: video.title
       })
     }
@@ -34,7 +36,7 @@ router.route('/delete/:id')
 
   // to delete video
   .post(async (req, res) => {
-    const fileName = req.params.id
+    const fileName = sanitize(req.params.id)
     const video = await Lib.get.aVideo(fileName)
 
     if (video.creatorId !== req.session.userid) {
