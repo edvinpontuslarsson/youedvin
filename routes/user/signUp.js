@@ -6,7 +6,6 @@
 
 const router = require('express').Router()
 const User = require('../../models/User')
-const sanitize = require('mongo-sanitize')
 const Lib = require('../../lib/Lib')
 
 router.route('/signup')
@@ -21,10 +20,9 @@ router.route('/signup')
    * Saves user info to DB
    */
   .post(async (req, res) => {
-    const cleanBody = sanitize(req.body)
-    const username = cleanBody.username
-    const password = cleanBody.password
-    const confirmPassword = cleanBody.confirmPassword
+    const username = req.body.username
+    const password = req.body.password
+    const confirmPassword = req.body.confirmPassword
 
     // searches DB for username
     const ifAlreadyExists = await User.findOne({

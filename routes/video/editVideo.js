@@ -6,15 +6,13 @@
 
 const router = require('express').Router()
 const VideoInfo = require('../../models/VideoInfo')
-const sanitize = require('mongo-sanitize')
 const Lib = require('../../lib/Lib')
 
 router.route('/editvideo/:id')
 
   // renders edit video form for authenticated user
   .get(async (req, res) => {
-    const fileName = sanitize(req.params.id)
-    const videoInfo = await Lib.get.aVideo(fileName)
+    const videoInfo = await Lib.get.aVideo(req.params.id)
 
     if (videoInfo === null) {
       res.status(404)
@@ -26,7 +24,7 @@ router.route('/editvideo/:id')
       res.render('error/403')
     } else {
       res.render('video/edit', {
-        id: fileName,
+        id: req.params.id,
         title: videoInfo.title,
         description: videoInfo.description
       })
@@ -34,8 +32,7 @@ router.route('/editvideo/:id')
   })
 
   .post(async (req, res) => {
-    const fileName = sanitize(req.params.id)
-    const videoInfo = await Lib.get.aVideo(fileName)
+    const videoInfo = await Lib.get.aVideo(req.params.id)
 
     if (videoInfo.creatorId !== req.session.userid) {
       res.status(403)
@@ -50,8 +47,8 @@ router.route('/editvideo/:id')
 
         // updated data
         {
-          title: sanitize(req.body.title),
-          description: sanitize(req.body.description)
+          title: req.body.title,
+          description: req.body.description
         },
 
         { new: true },
@@ -63,7 +60,7 @@ router.route('/editvideo/:id')
               type: 'error',
               text: 'Something went wrong'
             }
-            return res.redirect(`/edit/${fileName}`)
+            return res.redirect(`/edit/${req.params.id}`)
           }
 
           // if everything goes well
@@ -72,7 +69,7 @@ router.route('/editvideo/:id')
             text: 'Video info has been succesfully updated!'
           }
 
-          res.redirect(`/play/${fileName}`)
+          res.redirect(`/play/${req.params.id}`)
         })
     }
   })

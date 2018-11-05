@@ -5,14 +5,13 @@
 'use strict'
 
 const router = require('express').Router()
-const sanitize = require('mongo-sanitize')
 const User = require('../../models/User')
 
 router.route('/passedit/:id')
 
   // renders form
   .get((req, res) => {
-    const userid = sanitize(req.params.id)
+    const userid = req.params.id
     User.findById(userid,
       (error, user) => {
         // server error
@@ -33,11 +32,10 @@ router.route('/passedit/:id')
 
   // handles post
   .post(async (req, res) => {
-    const cleanBody = sanitize(req.body)
-    const newPass = cleanBody.newPass
-    const confirmPass = cleanBody.confirmPass
-    const currentPass = cleanBody.currentPass
-    const userid = sanitize(req.params.id)
+    const newPass = req.body.newPass
+    const confirmPass = req.body.confirmPass
+    const currentPass = req.body.currentPass
+    const userid = req.params.id
 
     User.findById(userid,
       (error, user) => {

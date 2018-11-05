@@ -5,7 +5,6 @@
 'use strict'
 
 const router = require('express').Router()
-const sanitize = require('mongo-sanitize')
 const VideoInfo = require('../../models/VideoInfo')
 const VideoAmount = require('../../models/VideoAmount')
 const fsDAO = require('../../models/fsDAO')
@@ -31,8 +30,6 @@ router.route('/upload')
       res.status(403)
       res.render('error/403')
     } else {
-      const cleanBody = sanitize(req.body)
-
       const fileContent = req.files.video
       const buffer = fileContent.data
       const fType = fileType(buffer)
@@ -46,8 +43,8 @@ router.route('/upload')
         }
         res.status(400)
         res.redirect('/upload')
-      } else if (cleanBody.title.length > 50 ||
-        cleanBody.description.length > 500) {
+      } else if (req.body.title.length > 50 ||
+        req.body.description.length > 500) {
           req.session.flash = {
             type: 'error',
             text: `
@@ -77,8 +74,8 @@ router.route('/upload')
           fileName: fileName,
           thumbnailName: thumbnailName,
           contentType: fType.mime,
-          title: cleanBody.title,
-          description: cleanBody.description,
+          title: req.body.title,
+          description: req.body.description,
           createdBy: req.session.username,
           creatorId: req.session.userid
         })

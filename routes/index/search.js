@@ -6,7 +6,6 @@
 
 const router = require('express').Router()
 const xssFilters = require('xss-filters')
-const sanitize = require('mongo-sanitize')
 const Lib = require('../../lib/Lib')
 
 router.route('/search')
@@ -14,7 +13,7 @@ router.route('/search')
   // Searches for query & displays result
   .get(async (req, res) => {
     const queryInput = req.query.search
-    const queryString = sanitize(xssFilters.inHTMLData(queryInput))
+    const queryString = xssFilters.inHTMLData(queryInput)
     const videoInfo = await Lib.get.videosByTitle(queryString)
 
     // matches found or not
