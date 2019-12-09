@@ -5,13 +5,14 @@
 'use strict'
 
 const router = require('express').Router()
+const sanitize = require('mongo-sanitize')
 const User = require('../../models/User')
 
 router.route('/useredit/:id')
 
   // renders account settings page for authenticated user
   .get((req, res) => {
-    const username = req.params.id
+    const username = sanitize(req.params.id)
     User.findOne({
       username: username
     }, (error, user) => {

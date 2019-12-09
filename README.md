@@ -1,6 +1,8 @@
 # Youedvin
 
-This is the repo for the source code of my video sharing web application built with Node.js with the express framework. 
+This is the repo for the source code of [youedvin.com](https://youedvin.com)
+
+My video sharing web application built with Node.js with the express framework. 
 
 ## Running application
 
