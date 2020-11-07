@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/1dv430/el223na-project.git"
+    "url": "git+https://github.com/edvinpontuslarsson/youedvin.git"
   },
   "keywords": [
     "nodejs",
@@ -22,9 +22,9 @@
   "author": "Edvin Larsson",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/1dv430/el223na-project/issues"
+    "url": "https://github.com/edvinpontuslarsson/youedvin/issues"
   },
-  "homepage": "https://github.com/1dv430/el223na-project#readme",
+  "homepage": "https://github.com/edvinpontuslarsson/youedvin#readme",
   "dependencies": {
     "bcrypt": "^1.0.3",
     "body-parser": "^1.14.2",
